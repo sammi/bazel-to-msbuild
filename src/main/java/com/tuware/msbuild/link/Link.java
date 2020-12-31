@@ -1,4 +1,4 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.link;
 
 import com.tuware.msbuild.link.EnableCOMDATFolding;
 import com.tuware.msbuild.link.GenerateWindowsMetadata;

@@ -1,5 +1,6 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.project;
 
+import com.tuware.msbuild.midl.Midl;
 import lombok.*;
 
 import javax.xml.bind.annotation.XmlAttribute;

@@ -1,4 +1,4 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.project;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,17 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class ApplicationDefinition {
-    @XmlAttribute(name = "Include")
-    private String include;
+public class Import {
 
-    @XmlElement(name = "SubType")
-    private String subType;
+    @XmlAttribute(name = "Project")
+    private String project;
+
+    @XmlAttribute(name = "Condition")
+    private String condition;
 }

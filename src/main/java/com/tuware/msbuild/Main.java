@@ -1,17 +1,20 @@
-package com.tuware;
+package com.tuware.msbuild;
 
-import com.tuware.msbuild.*;
+import com.tuware.msbuild.midl.Midl;
+import com.tuware.msbuild.project.*;
 import com.tuware.msbuild.property.PlatformToolset;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Main {
 
     public static void main(String[] args) {
-        Project project = new Project().builder()
+        Project project = Project.builder()
                 .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
                 .defaultTargets("Build")
                 .initialTargets("Test")
@@ -21,7 +24,7 @@ public class Main {
                 .itemGroupList(
                         Arrays.asList(
                                 ItemGroup.builder().midlList(
-                                        Arrays.asList(
+                                        Collections.singletonList(
                                                 Midl.builder()
                                                         .include("Config.idl")
                                                         .dependentUpon("Config.xml")
@@ -29,7 +32,7 @@ public class Main {
                                         )
                                 ).build(),
                                 ItemGroup.builder().projectConfigurationList(
-                                        Arrays.asList(
+                                        Collections.singletonList(
                                                 ProjectConfiguration.builder()
                                                         .include("Debug|x64")
                                                         .configuration("Debug")
@@ -38,7 +41,7 @@ public class Main {
                                         )
                                 ).build(),
                                 ItemGroup.builder().clIncludeList(
-                                        Arrays.asList(
+                                        Collections.singletonList(
                                                 ClInclude.builder()
                                                         .include("Cluster.h")
                                                         .dependentUpon("Cluster.idl")
@@ -47,7 +50,7 @@ public class Main {
                                 ).build()
                         )
                 )
-                .propertyGroupList(Arrays.asList(
+                .propertyGroupList(Collections.singletonList(
                         PropertyGroup.builder().platformToolsetList(
                                 Arrays.asList(
                                         PlatformToolset.builder().condition("'$(VisualStudioVersion)' == '15.0'").value("v141").build(),

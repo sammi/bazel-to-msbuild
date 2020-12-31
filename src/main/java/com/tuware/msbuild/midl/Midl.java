@@ -1,4 +1,4 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.midl;
 
 
 import com.tuware.msbuild.midl.*;

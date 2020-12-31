@@ -1,4 +1,4 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.project;
 
 import com.tuware.msbuild.property.*;
 import lombok.AccessLevel;

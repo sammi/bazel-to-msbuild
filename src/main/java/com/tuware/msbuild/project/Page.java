@@ -1,4 +1,4 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.project;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,13 +13,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class ClInclude {
+public class Page {
     @XmlAttribute(name = "Include")
     private String include;
 
-    @XmlElement(name = "DependentUpon")
-    private String dependentUpon;
+    @XmlElement(name = "SubType")
+    private String subType;
 
     @XmlElement(name = "Filter")
     private String filter;
+
+    @XmlElement(name = "ShowAllFiles")
+    private boolean showAllFiles;
 }

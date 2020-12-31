@@ -1,5 +1,4 @@
-package com.tuware.msbuild;
-
+package com.tuware.msbuild.project;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,15 +13,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class ProjectConfiguration {
-
+public class ApplicationDefinition {
     @XmlAttribute(name = "Include")
     private String include;
 
-    @XmlElement(name = "Configuration")
-    private String configuration;
-
-    @XmlElement(name = "Platform")
-    private String platform;
-
+    @XmlElement(name = "SubType")
+    private String subType;
 }

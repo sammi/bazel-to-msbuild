@@ -1,4 +1,4 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.clcompile;
 
 import com.tuware.msbuild.clcompile.*;
 import lombok.AccessLevel;
