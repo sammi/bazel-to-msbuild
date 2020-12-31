@@ -1,8 +1,12 @@
-package com.tuware.msbuild.server;
+package com.tuware.msbuild.server.service;
 
 import com.tuware.msbuild.domain.midl.Midl;
 import com.tuware.msbuild.domain.project.*;
 import com.tuware.msbuild.domain.property.PlatformToolset;
+import com.tuware.msbuild.grpc.helloworld.GreeterGrpc;
+import com.tuware.msbuild.grpc.helloworld.HelloReply;
+import com.tuware.msbuild.grpc.helloworld.HelloRequest;
+import io.grpc.stub.StreamObserver;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -11,9 +15,11 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Main {
+public class GreeterService extends GreeterGrpc.GreeterImplBase {
 
-    public static void main(String[] args) {
+    @Override
+    public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
+
         Project project = Project.builder()
                 .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
                 .defaultTargets("Build")
@@ -59,8 +65,9 @@ public class Main {
                         ).build()
                 ))
                 .build();
+        JAXBContext jaxbContext;
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Project.class);
+            jaxbContext = JAXBContext.newInstance(Project.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -71,8 +78,14 @@ public class Main {
 
             System.out.print(stringWriter.toString());
 
+            HelloReply reply = HelloReply.newBuilder().setMessage(
+                    "Hello " + req.getName() + stringWriter.toString()
+            ).build();
+            responseObserver.onNext(reply);
+            responseObserver.onCompleted();
         } catch (JAXBException e) {
             e.printStackTrace();
         }
+
     }
 }
