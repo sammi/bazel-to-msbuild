@@ -1,8 +1,9 @@
 package com.tuware.msbuild;
 
 import com.tuware.msbuild.api.GreeterApi;
+import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,17 +11,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 @SpringBootApplication
+@Slf4j
 public class MsbuildApplication implements CommandLineRunner{
-    private static final Logger logger = Logger.getLogger(MsbuildApplication.class.getName());
-    private io.grpc.Server server;
-    private int port = 50051;
 
+    private Integer port;
     private GreeterApi greeterApi;
 
-    public MsbuildApplication(GreeterApi greeterApi) {
+    public MsbuildApplication(@Value("${port:50051}") Integer port, GreeterApi greeterApi) {
+        this.port = port;
         this.greeterApi = greeterApi;
     }
 
@@ -31,12 +31,12 @@ public class MsbuildApplication implements CommandLineRunner{
     @Override
     public void run(String... args) throws IOException, InterruptedException {
 
-        server = ServerBuilder.forPort(port)
+        Server server = ServerBuilder.forPort(port)
                 .addService(greeterApi)
                 .build()
                 .start();
 
-        logger.info("Server started, listening on " + port);
+        log.info("Server started, listening on " + port);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.err.println("*** shutting down gRPC server since JVM is shutting down");
