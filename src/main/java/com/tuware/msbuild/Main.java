@@ -8,7 +8,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Main {
