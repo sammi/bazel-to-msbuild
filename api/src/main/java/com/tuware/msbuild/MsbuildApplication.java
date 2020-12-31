@@ -16,12 +16,12 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class MsbuildApplication implements CommandLineRunner{
 
-    private Integer port;
-    private GreeterApi greeterApi;
+    private Server server;
 
     public MsbuildApplication(@Value("${port:50051}") Integer port, GreeterApi greeterApi) {
-        this.port = port;
-        this.greeterApi = greeterApi;
+        server = ServerBuilder.forPort(port)
+                .addService(greeterApi)
+                .build();
     }
 
     public static void main(String[] args) {
@@ -31,23 +31,20 @@ public class MsbuildApplication implements CommandLineRunner{
     @Override
     public void run(String... args) throws IOException, InterruptedException {
 
-        Server server = ServerBuilder.forPort(port)
-                .addService(greeterApi)
-                .build()
-                .start();
+        server.start();
 
-        log.info("Server started, listening on " + port);
+        log.info("Server started, listening on {}", server.getPort());
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.err.println("*** shutting down gRPC server since JVM is shutting down");
+            log.error("*** shutting down gRPC server since JVM is shutting down");
             try {
                 if (server != null) {
                     server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace(System.err);
+                log.error("server did not shut down gracefully",e);
             }
-            System.err.println("*** server shut down");
+            log.error("*** server shut down");
         }));
 
         if (server != null) {
