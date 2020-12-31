@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.tuware.msbuild.grpc.helloworld";
+option java_package = "com.tuware.msbuild.proto.helloworld";
+option java_outer_classname = "HelloWorldProto";
 package helloworld;
 
 service Greeter {

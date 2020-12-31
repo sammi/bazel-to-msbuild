@@ -3,9 +3,9 @@ package com.tuware.msbuild.server.service;
 import com.tuware.msbuild.domain.midl.Midl;
 import com.tuware.msbuild.domain.project.*;
 import com.tuware.msbuild.domain.property.PlatformToolset;
-import com.tuware.msbuild.grpc.helloworld.GreeterGrpc;
-import com.tuware.msbuild.grpc.helloworld.HelloReply;
-import com.tuware.msbuild.grpc.helloworld.HelloRequest;
+import com.tuware.msbuild.proto.helloworld.GreeterGrpc;
+import com.tuware.msbuild.proto.helloworld.HelloReply;
+import com.tuware.msbuild.proto.helloworld.HelloRequest;
 import io.grpc.stub.StreamObserver;
 
 import javax.xml.bind.JAXBContext;

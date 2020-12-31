@@ -53,6 +53,7 @@
 
     <modules>
         <module>domain</module>
+        <module>proto</module>
         <module>server</module>
     </modules>
 
