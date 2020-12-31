@@ -3,13 +3,34 @@ package com.tuware.msbuild.server.service;
 import com.tuware.msbuild.domain.midl.Midl;
 import com.tuware.msbuild.domain.project.*;
 import com.tuware.msbuild.domain.property.PlatformToolset;
+import org.springframework.stereotype.Component;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
 
+@Component
 public class ProjectService {
 
-    public Project createProject() {
+    public String createProjectXml() throws JAXBException {
+
+        Project project = createProject();
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Project.class);
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+        StringWriter stringWriter = new StringWriter();
+        stringWriter.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+        marshaller.marshal(project, stringWriter);
+        return stringWriter.toString();
+    }
+
+    private Project createProject() {
         return Project.builder()
                 .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
                 .defaultTargets("Build")
