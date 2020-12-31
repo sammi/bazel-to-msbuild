@@ -1,7 +1,4 @@
-"# msbuild"
+msbuild project file service
+----------------------------
 
-## Generate Project XML File
-```cmd
-mvn clean package
-java -cp .\target\msbuild.jar com.tuware.msbuild.Main
-```
+Ingest bazel event payload and generate visual studio project file
