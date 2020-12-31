@@ -9,21 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>server</artifactId>
+    <artifactId>api</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.tuware.msbuild</groupId>
-            <artifactId>domain</artifactId>
+            <artifactId>service</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.tuware.msbuild</groupId>
-            <artifactId>proto</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
     </dependencies>
 
 </project>

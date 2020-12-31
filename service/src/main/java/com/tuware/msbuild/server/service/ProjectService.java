@@ -3,24 +3,14 @@ package com.tuware.msbuild.server.service;
 import com.tuware.msbuild.domain.midl.Midl;
 import com.tuware.msbuild.domain.project.*;
 import com.tuware.msbuild.domain.property.PlatformToolset;
-import com.tuware.msbuild.proto.helloworld.GreeterGrpc;
-import com.tuware.msbuild.proto.helloworld.HelloReply;
-import com.tuware.msbuild.proto.helloworld.HelloRequest;
-import io.grpc.stub.StreamObserver;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class GreeterService extends GreeterGrpc.GreeterImplBase {
+public class ProjectService {
 
-    @Override
-    public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
-
-        Project project = Project.builder()
+    public Project createProject() {
+        return Project.builder()
                 .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
                 .defaultTargets("Build")
                 .initialTargets("Test")
@@ -65,27 +55,5 @@ public class GreeterService extends GreeterGrpc.GreeterImplBase {
                         ).build()
                 ))
                 .build();
-        JAXBContext jaxbContext;
-        try {
-            jaxbContext = JAXBContext.newInstance(Project.class);
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FRAGMENT, true);
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-            StringWriter stringWriter = new StringWriter();
-            stringWriter.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-            marshaller.marshal(project, stringWriter);
-
-            System.out.print(stringWriter.toString());
-
-            HelloReply reply = HelloReply.newBuilder().setMessage(
-                    "Hello " + req.getName() + stringWriter.toString()
-            ).build();
-            responseObserver.onNext(reply);
-            responseObserver.onCompleted();
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-
     }
 }

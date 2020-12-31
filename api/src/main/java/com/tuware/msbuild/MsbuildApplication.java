@@ -1,6 +1,5 @@
-package com.tuware.msbuild.server;
+package com.tuware.msbuild;
 
-import com.tuware.msbuild.server.service.GreeterService;
 import io.grpc.ServerBuilder;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -9,8 +8,8 @@ import java.util.logging.Logger;
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
-public class Server {
-    private static final Logger logger = Logger.getLogger(Server.class.getName());
+public class MsbuildApplication {
+    private static final Logger logger = Logger.getLogger(MsbuildApplication.class.getName());
 
     private io.grpc.Server server;
 
@@ -18,7 +17,7 @@ public class Server {
         /* The port on which the server should run */
         int port = 50051;
         server = ServerBuilder.forPort(port)
-                .addService(new GreeterService())
+                .addService(new com.tuware.msbuild.api.GreeterApi())
                 .build()
                 .start();
         logger.info("Server started, listening on " + port);
@@ -26,7 +25,7 @@ public class Server {
             // Use stderr here since the logger may have been reset by its JVM shutdown hook.
             System.err.println("*** shutting down gRPC server since JVM is shutting down");
             try {
-                Server.this.stop();
+                MsbuildApplication.this.stop();
             } catch (InterruptedException e) {
                 e.printStackTrace(System.err);
             }
@@ -53,9 +52,9 @@ public class Server {
      * Main launches the server from the command line.
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        final Server server = new Server();
-        server.start();
-        server.blockUntilShutdown();
+        final MsbuildApplication msbuildApplication = new MsbuildApplication();
+        msbuildApplication.start();
+        msbuildApplication.blockUntilShutdown();
     }
 
 }
