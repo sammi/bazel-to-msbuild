@@ -17,3 +17,13 @@ java -jar api\target\api.jar -p 50052 -t 10
 java -jar -Dlogging.level.root=warn -Dspring.main.banner-mode=off api\target\api.jar
 
 ```
+
+## Test gRPC service
+
+Open Terminal as administrator
+```
+choco install bloomrpc
+```
+Windows Start find BloomRPC app, start it by importing proto file, it will generate sample request for you.
+
+
