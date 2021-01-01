@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class MsbuildApplication implements CommandLineRunner {
 
-    @Parameter(names={"--port", "-p"})
+    @Parameter(names = { "--port", "-p" }, description = "server listening port")
     int port = 50051;
 
-    @Parameter(names={"--timeout", "-t"})
+    @Parameter(names={"--timeout", "-t"}, description = "max wait seconds for shutting down server")
     int waitShutdownTimeoutSeconds = 30;
 
     @Autowired
@@ -32,12 +32,12 @@ public class MsbuildApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws IOException, InterruptedException {
+    public void run(String... argv) throws IOException, InterruptedException {
 
         JCommander.newBuilder()
                 .addObject(this)
                 .build()
-                .parse(args);
+                .parse(argv);
 
         Server server = ServerBuilder.forPort(port)
                 .addService(greeterApi)
@@ -50,18 +50,13 @@ public class MsbuildApplication implements CommandLineRunner {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             log.error("*** shutting down gRPC server on port {} since JVM is shutting down", port);
             try {
-                if (server != null) {
-                    server.shutdown().awaitTermination(waitShutdownTimeoutSeconds, TimeUnit.SECONDS);
-                }
+                server.shutdown().awaitTermination(waitShutdownTimeoutSeconds, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 log.error("server did not shut down gracefully", e);
             }
             log.error("*** server shut down");
-
         }));
 
-        if (server != null) {
-            server.awaitTermination();
-        }
+        server.awaitTermination();
     }
 }
