@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package api.v1;
+
+import "api/v1/file.proto";
+
+// Request passed into GetAction
+message GetActionRequest {
+  // The selector defining which action(s) to retrieve.
+  ActionSelector selector = 1;
+
+  // The next_page_token value returned from a previous request, if any.
+  string page_token = 2;
+}
+
+// Response from calling GetAction
+message GetActionResponse {
+  // Actions matching the request, possibly capped a server limit.
+  repeated Action action = 1;
+
+  // Token to retrieve the next page of results, or empty if there are no
+  // more results in the list.
+  string next_page_token = 2;
+}
+
+// An action that happened as part of a configured target. This action could be
+// a build, a test, or another type of action.
+message Action {
+  // The resource ID components that identify the Action.
+  message Id {
+    // The Invocation ID.
+    string invocation_id = 1;
+
+    // The Target ID.
+    string target_id = 2;
+
+    // The Configuration ID.
+    string configuration_id = 3;
+
+    // The Action ID.
+    string action_id = 4;
+  }
+
+  // The resource ID components that identify the Action.
+  Id id = 1;
+
+  // A list of file references for action level files.
+  repeated File file = 2;
+}
+
+// The selector used to specify which actions to return.
+message ActionSelector {
+  // Required: The Invocation ID.
+  // All actions returned will be scoped to this invocation.
+  string invocation_id = 1;
+
+  // Optional: The Target ID.
+  // If set, all actions returned will be scoped to this target.
+  string target_id = 2;
+
+  // Optional: The Configuration ID.
+  // If set, all actions returned will be scoped to this configuration.
+  string configuration_id = 3;
+
+  // Optional: The Action ID.
+  // If set, only the action with this action id will be returned.
+  string action_id = 4;
+}

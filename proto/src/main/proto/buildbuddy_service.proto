@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "api_key.proto";
+import "bazel_config.proto";
+import "execution_stats.proto";
+import "grp.proto";
+import "invocation.proto";
+import "target.proto";
+import "user.proto";
+
+package buildbuddy.service;
+
+service BuildBuddyService {
+  // Invocation API
+  rpc GetInvocation(invocation.GetInvocationRequest)
+      returns (invocation.GetInvocationResponse);
+  rpc SearchInvocation(invocation.SearchInvocationRequest)
+      returns (invocation.SearchInvocationResponse);
+  rpc GetInvocationStat(invocation.GetInvocationStatRequest)
+      returns (invocation.GetInvocationStatResponse);
+  rpc UpdateInvocation(invocation.UpdateInvocationRequest)
+      returns (invocation.UpdateInvocationResponse);
+  rpc DeleteInvocation(invocation.DeleteInvocationRequest)
+      returns (invocation.DeleteInvocationResponse);
+
+  // Bazel Config API
+  rpc GetBazelConfig(bazel_config.GetBazelConfigRequest)
+      returns (bazel_config.GetBazelConfigResponse);
+
+  // User API
+  rpc CreateUser(user.CreateUserRequest) returns (user.CreateUserResponse);
+  rpc GetUser(user.GetUserRequest) returns (user.GetUserResponse);
+
+  // Groups API
+  rpc GetGroup(grp.GetGroupRequest) returns (grp.GetGroupResponse);
+  rpc GetGroupUsers(grp.GetGroupUsersRequest)
+      returns (grp.GetGroupUsersResponse);
+  rpc UpdateGroupUsers(grp.UpdateGroupUsersRequest)
+      returns (grp.UpdateGroupUsersResponse);
+  rpc JoinGroup(grp.JoinGroupRequest) returns (grp.JoinGroupResponse);
+  rpc CreateGroup(grp.CreateGroupRequest) returns (grp.CreateGroupResponse);
+  rpc UpdateGroup(grp.UpdateGroupRequest) returns (grp.UpdateGroupResponse);
+
+  // API Keys API
+  rpc GetApiKeys(api_key.GetApiKeysRequest)
+      returns (api_key.GetApiKeysResponse);
+  rpc CreateApiKey(api_key.CreateApiKeyRequest)
+      returns (api_key.CreateApiKeyResponse);
+  rpc UpdateApiKey(api_key.UpdateApiKeyRequest)
+      returns (api_key.UpdateApiKeyResponse);
+  rpc DeleteApiKey(api_key.DeleteApiKeyRequest)
+      returns (api_key.DeleteApiKeyResponse);
+
+  // Execution API
+  rpc GetExecution(execution_stats.GetExecutionRequest)
+      returns (execution_stats.GetExecutionResponse);
+
+  // Target API
+  rpc GetTarget(target.GetTargetRequest) returns (target.GetTargetResponse);
+}

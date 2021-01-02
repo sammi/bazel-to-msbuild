@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+import "api_key.proto";
+import "context.proto";
+
+package bazel_config;
+
+message ConfigOption {
+  // The full configuration line as it would be written in a config file.
+  // Ex. build:local --remote_cache=grpc://localhost:1985
+  string body = 1;
+
+  // When this option is applied in the bazel lifecycle. For example:
+  //   "build:local"
+  //   "test:ci"
+  //   "build"
+  string option_lifecycle = 2;
+
+  // The config flag name. Ex. "remote_cache"
+  string flag_name = 3;
+
+  // The flag value. Ex. "grpc://localhost:1985"
+  string flag_value = 4;
+}
+
+message GetBazelConfigRequest {
+  context.RequestContext request_context = 1;
+
+  // The host of the page making the request. Ex: "localhost"
+  string host = 2;
+
+  // The protocol of the page making the request. Ex: "https"
+  string protocol = 3;
+
+  // Set to true to receive certificate information.
+  bool include_certificate = 4;
+}
+
+message GetBazelConfigResponse {
+  context.ResponseContext response_context = 1;
+
+  // The Bazel configuration for the requesting user and this buildbuddy instance.
+  repeated ConfigOption config_option = 2;
+
+  reserved 3;
+
+  // Credentials used to access the app, which may be needed to populate auth-related
+  // config options. These options are not included in the config_option field, but
+  // are instead rendered by the client, since the user may need to decide which
+  // credential they want to use in order to access BuildBuddy.
+  repeated Credentials credential = 4;
+}
+
+message Credentials {
+  // The API key used to access BuildBuddy.
+  api_key.ApiKey api_key = 1;
+
+  // The certificate corresponding to this API key.
+  // Will not be present if certificate generation is not requested or
+  // not configured.
+  Certificate certificate = 2;
+}
+
+message Certificate {
+  // String representation of certificate file.
+  string cert = 1;
+
+  // String representation of key file.
+  string key = 2;
+}

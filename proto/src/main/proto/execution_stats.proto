@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+import "google/rpc/status.proto";
+import "acl.proto";
+import "context.proto";
+import "remote_execution.proto";
+
+package execution_stats;
+
+message ExecutionStats {
+  // ru_utime: Amount of CPU time in seconds spent in userspace.
+  int64 user_cpu_time_usec = 1;
+
+  // ru_stime: Amount of CPU time in seconds spent in kernelspace.
+  int64 sys_cpu_time_usec = 2;
+
+  // ru_maxrss: Maximum amount of resident memory in bytes.
+  int64 max_resident_set_size_bytes = 3;
+
+  // ru_minflt: Page reclaims.
+  int64 page_reclaims = 4;
+
+  // ru_majflt: Page faults.
+  int64 page_faults = 5;
+
+  // ru_nswap: Number of swaps.
+  int64 swaps = 6;
+
+  // ru_inblock: Block input operations.
+  int64 block_input_operations = 7;
+
+  // ru_oublock: Block output operations.
+  int64 block_output_operations = 8;
+
+  // ru_msgsnd: Messages sent.
+  int64 messages_sent = 9;
+
+  // ru_msgrcv: Messages received.
+  int64 messages_received = 10;
+
+  // ru_nsignals: Signals received.
+  int64 signals_received = 11;
+
+  // ru_nvcsw: Voluntary context switches.
+  int64 voluntary_context_switches = 12;
+
+  // ru_nivcsw: Involuntary context switches.
+  int64 involuntary_context_switches = 13;
+}
+
+message IOStats {
+  // The number of files downloaded in this tree.
+  int64 file_download_count = 1;
+
+  // The total size of downloaded data.
+  int64 file_download_size_bytes = 2;
+
+  // The time taken to download the tree.
+  int64 file_download_duration_usec = 3;
+
+  // The number of files uploaded in this tree.
+  int64 file_upload_count = 4;
+
+  // The total size of uploaded data.
+  int64 file_upload_size_bytes = 5;
+
+  // The time taken to upload the tree.
+  int64 file_upload_duration_usec = 6;
+}
+
+// Next tag: 10
+message ExecutionSummary {
+  reserved 1, 3, 4, 5, 6, 7, 9;
+
+  // Any io_stats that were collected during this execution.
+  IOStats io_stats = 2;
+
+  // Execution stage timings.
+  build.bazel.remote.execution.v2.ExecutedActionMetadata
+      executed_action_metadata = 8;
+}
+
+message Execution {
+  // The digest of the [Action][build.bazel.remote.execution.v2.Action] to
+  // execute.
+  build.bazel.remote.execution.v2.Digest action_digest = 1;
+
+  // The stage this execution is currently in.
+  build.bazel.remote.execution.v2.ExecutionStage.Value stage = 2;
+
+  // The Status of this execution (if it has finished).
+  google.rpc.Status status = 3;
+
+  // Any IO stats that were collected during this execution.
+  IOStats io_stats = 4;
+
+  // Execution stage timings.
+  build.bazel.remote.execution.v2.ExecutedActionMetadata
+      executed_action_metadata = 5;
+
+  // Permissions for this execution.
+  acl.ACL acl = 6;
+
+  // A snippet of the command that ran as part of this execution.
+  // Ex. /usr/bin/gcc foo.cc -o foo
+  string command_snippet = 7;
+}
+
+message ExecutionLookup {
+  // The invocation_id: a fully qualified execution ID
+  string invocation_id = 1;
+}
+
+message GetExecutionRequest {
+  context.RequestContext request_context = 1;
+
+  ExecutionLookup execution_lookup = 2;
+}
+
+message GetExecutionResponse {
+  context.ResponseContext response_context = 1;
+
+  repeated Execution execution = 2;
+}

@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package scheduler;
+
+message NodeAddress {
+  // The node's hostname. Must be reachable from the scheduler.
+  string host = 1;
+
+  // The node's port.
+  int32 port = 2;
+}
+
+message RegisterNodeRequest {
+  NodeAddress node_address = 1;
+
+  // The node's assignable memory.
+  int64 assignable_memory_bytes = 2;
+
+  // The node's assignable CPU.
+  int64 assignable_milli_cpu = 3;
+
+  // Matching constraints.
+  repeated string constraints = 4;
+
+  // The node's operating system.
+  string os = 5;
+
+  // The node's cpu architecture.
+  string arch = 6;
+
+  // The node pool in which to register the node.
+  string pool = 7;
+}
+
+message RegisterNodeResponse {
+  // Intentionally left blank.
+}
+
+message LeaseTaskRequest {
+  // The task for which to request a lease. If successful, a LeaseTaskResponse
+  // will be returned containing the serialized task and duration of the lease.
+  string task_id = 1;
+
+  // A bit that indicates this is the last LeaseTaskRequest and this
+  // lease can now be closed.
+  bool finalize = 2;
+}
+
+message LeaseTaskResponse {
+  // The serialized task will be set in the *first* LeaseTaskResponse returned.
+  // from the server. Subsequent responses will *only* include a lease duration.
+  bytes serialized_task = 1;
+
+  // The remaining duration of this lease. To continue to hold the lease, the
+  // client *must* send another LeaseTaskRequest before time.Now() +
+  // lease_duration_seconds.
+  int64 lease_duration_seconds = 2;
+
+  // Whether or not the lease was closed cleanly.
+  bool closed_cleanly = 3;
+}
+
+message TaskSize {
+  // The node's assignable memory.
+  int64 estimated_memory_bytes = 1;
+
+  // The node's assignable CPU.
+  int64 estimated_milli_cpu = 2;
+}
+
+message ScheduleTaskRequest {
+  string task_id = 1;
+  TaskSize task_size = 2;
+  bytes serialized_task = 3;
+  string os = 4;
+  string arch = 5;
+  string pool = 6;
+}
+
+message ScheduleTaskResponse {
+  // Intentionally left blank.
+}
+
+message ReEnqueueTaskRequest { string task_id = 1; }
+
+message ReEnqueueTaskResponse {
+  // Intentionally left blank.
+}
+
+message EnqueueTaskReservationRequest {
+  string task_id = 1;
+
+  TaskSize task_size = 2;
+}
+
+message EnqueueTaskReservationResponse {
+  // Intentionally left blank.
+}
+
+service Scheduler {
+  rpc RegisterNode(stream RegisterNodeRequest) returns (RegisterNodeResponse) {}
+
+  rpc LeaseTask(stream LeaseTaskRequest) returns (stream LeaseTaskResponse) {}
+
+  rpc ScheduleTask(ScheduleTaskRequest) returns (ScheduleTaskResponse) {}
+
+  rpc ReEnqueueTask(ReEnqueueTaskRequest) returns (ReEnqueueTaskResponse) {}
+}
+
+service QueueExecutor {
+  rpc EnqueueTaskReservation(EnqueueTaskReservationRequest)
+      returns (EnqueueTaskReservationResponse) {}
+}
