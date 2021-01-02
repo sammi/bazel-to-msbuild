@@ -1,11 +1,11 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.tuware.msbuild.proto.helloworld";
-option java_outer_classname = "HelloWorldProto";
-package helloworld;
+option java_package = "com.tuware.msbuild.proto.msbuild";
+option java_outer_classname = "MsbuildProto";
+package msbuild;
 
-service Greeter {
+service Project {
   rpc SayHello (HelloRequest) returns (HelloReply) {}
 }
 

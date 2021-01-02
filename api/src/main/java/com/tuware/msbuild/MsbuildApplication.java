@@ -2,7 +2,7 @@ package com.tuware.msbuild;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.tuware.msbuild.api.GreeterApi;
+import com.tuware.msbuild.api.ProjectApi;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class MsbuildApplication implements CommandLineRunner {
     int waitShutdownTimeoutSeconds = 30;
 
     @Autowired
-    private GreeterApi greeterApi;
+    private ProjectApi projectApi;
 
     public static void main(String[] args) {
         SpringApplication.run(MsbuildApplication.class, args);
@@ -40,7 +40,7 @@ public class MsbuildApplication implements CommandLineRunner {
                 .parse(argv);
 
         Server server = ServerBuilder.forPort(port)
-                .addService(greeterApi)
+                .addService(projectApi)
                 .build();
 
         server.start();
