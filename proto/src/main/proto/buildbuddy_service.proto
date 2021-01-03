@@ -10,6 +10,10 @@ import "user.proto";
 
 package buildbuddy.service;
 
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_outer_classname = "BuildBuddyServiceProto";
+
 service BuildBuddyService {
   // Invocation API
   rpc GetInvocation(invocation.GetInvocationRequest)

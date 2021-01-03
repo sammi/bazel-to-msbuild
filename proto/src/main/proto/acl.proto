@@ -4,6 +4,10 @@ import "user_id.proto";
 
 package acl;
 
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_outer_classname = "ACLProto";
+
 // Access control list for BuildBuddy objects.
 message ACL {
   // ID of the user that owns the object.
