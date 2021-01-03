@@ -3,6 +3,9 @@ syntax = "proto3";
 import "google/rpc/status.proto";
 
 package telemetry;
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.proto";
 
 // Request containing telemetry data to log.
 message LogTelemetryRequest {

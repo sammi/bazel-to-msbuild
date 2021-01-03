@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-package api.v1;
+package api;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.api.proto";
 
-import "api/v1/file.proto";
+import "api/file.proto";
 
 // Request passed into GetAction
 message GetActionRequest {

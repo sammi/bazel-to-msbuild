@@ -1,8 +1,8 @@
 package com.tuware.msbuild.api;
 
-import com.tuware.msbuild.proto.msbuild.ProjectGrpc;
-import com.tuware.msbuild.proto.msbuild.HelloReply;
-import com.tuware.msbuild.proto.msbuild.HelloRequest;
+import com.tuware.msbuild.proto.HelloReply;
+import com.tuware.msbuild.proto.HelloRequest;
+import com.tuware.msbuild.proto.ProjectGrpc;
 import com.tuware.msbuild.service.ProjectService;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;

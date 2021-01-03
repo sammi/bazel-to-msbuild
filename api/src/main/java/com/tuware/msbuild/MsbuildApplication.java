@@ -6,7 +6,6 @@ import com.tuware.msbuild.api.ProjectApi;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,8 +23,11 @@ public class MsbuildApplication implements CommandLineRunner {
     @Parameter(names={"--timeout", "-t"}, description = "max wait seconds for shutting down server")
     int waitShutdownTimeoutSeconds = 30;
 
-    @Autowired
     private ProjectApi projectApi;
+
+    public MsbuildApplication(ProjectApi projectApi) {
+        this.projectApi = projectApi;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(MsbuildApplication.class, args);

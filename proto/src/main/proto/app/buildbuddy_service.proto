@@ -1,18 +1,19 @@
 syntax = "proto3";
 
-import "api_key.proto";
-import "bazel_config.proto";
-import "execution_stats.proto";
-import "grp.proto";
-import "invocation.proto";
-import "target.proto";
-import "user.proto";
+import "app/api_key.proto";
+import "app/bazel_config.proto";
+import "app/execution_stats.proto";
+import "app/grp.proto";
+import "app/invocation.proto";
+import "app/target.proto";
+import "app/user.proto";
 
 package buildbuddy.service;
 
 option cc_enable_arenas = true;
 option java_multiple_files = true;
 option java_outer_classname = "BuildBuddyServiceProto";
+option java_package = "com.tuware.msbuild.proto";
 
 service BuildBuddyService {
   // Invocation API

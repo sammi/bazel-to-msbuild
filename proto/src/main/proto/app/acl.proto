@@ -1,12 +1,13 @@
 syntax = "proto3";
 
-import "user_id.proto";
+import "app/user_id.proto";
 
 package acl;
 
 option cc_enable_arenas = true;
 option java_multiple_files = true;
 option java_outer_classname = "ACLProto";
+option java_package = "com.tuware.msbuild.proto";
 
 // Access control list for BuildBuddy objects.
 message ACL {

@@ -1,9 +1,12 @@
 syntax = "proto3";
 
 import "google/rpc/status.proto";
-import "acl.proto";
-import "context.proto";
-import "remote_execution.proto";
+import "app/acl.proto";
+import "app/context.proto";
+import "bazel/remote_execution.proto";
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.proto";
 
 package execution_stats;
 

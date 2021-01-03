@@ -16,8 +16,8 @@ syntax = "proto3";
 
 package build_event_stream;
 
-import "command_line.proto";
-import "invocation_policy.proto";
+import "bazel/command_line.proto";
+import "bazel/invocation_policy.proto";
 
 option java_package = "com.google.devtools.build.lib.buildeventstream";
 option java_outer_classname = "BuildEventStreamProtos";

@@ -16,7 +16,7 @@ syntax = "proto3";
 
 package build.bazel.remote.execution.v2;
 
-import "semver.proto";
+import "bazel/semver.proto";
 import "google/api/annotations.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/duration.proto";

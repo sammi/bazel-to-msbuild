@@ -1,11 +1,14 @@
 syntax = "proto3";
 
-import "acl.proto";
-import "build_event_stream.proto";
-import "cache.proto";
-import "command_line.proto";
-import "context.proto";
+import "app/acl.proto";
+import "bazel/build_event_stream.proto";
+import "bazel/command_line.proto";
+import "app/cache.proto";
+import "app/context.proto";
 import "google/protobuf/timestamp.proto";
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.proto";
 
 package invocation;
 

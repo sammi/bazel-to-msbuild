@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-package api.v1;
+package api;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.api.proto";
 
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";

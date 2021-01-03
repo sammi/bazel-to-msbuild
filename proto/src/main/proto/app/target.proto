@@ -1,9 +1,12 @@
 syntax = "proto3";
 
-import "context.proto";
-import "api/v1/common.proto";
+import "app/context.proto";
+import "api/common.proto";
 
 package target;
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.proto";
 
 // A single "Target" that is part of a build.
 message Target {
@@ -21,11 +24,11 @@ message Target {
 
   // The (enum) type of this target.
   // For example: APPLICATION, BINARY, TEST.
-  api.v1.TargetType target_type = 4;
+  api.TargetType target_type = 4;
 
   // The (enum) size of this target.
   // For example: SMALL, MEDIUM, ENORMOUS.
-  api.v1.TestSize test_size = 5;
+  api.TestSize test_size = 5;
 }
 
 message TargetStatus {
@@ -39,10 +42,10 @@ message TargetStatus {
   // The aggregate status of the target. Targets can be run multiple times by
   // bazel which computes an "aggregate" enum status, like PASSED, FAILED, or
   // FLAKY.
-  api.v1.Status status = 3;
+  api.Status status = 3;
 
   // When this target started and its duration.
-  api.v1.Timing timing = 4;
+  api.Timing timing = 4;
 }
 
 message TargetHistory {
@@ -85,7 +88,7 @@ message TargetQuery {
 
   // The type of target to return.
   // For example: TEST.
-  api.v1.TargetType target_type = 6;
+  api.TargetType target_type = 6;
 }
 
 message GetTargetRequest {

@@ -16,7 +16,7 @@ syntax = "proto3";
 
 package build.bazel.remote.asset.v1;
 
-import "remote_execution.proto";
+import "bazel/remote_execution.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";

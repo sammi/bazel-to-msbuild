@@ -1,8 +1,11 @@
 syntax = "proto3";
 
-import "user_id.proto";
+import "app/user_id.proto";
 
 package context;
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.proto";
 
 message RequestContext {
   user_id.UserId user_id = 1;

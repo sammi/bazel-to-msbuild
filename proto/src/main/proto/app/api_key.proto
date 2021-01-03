@@ -1,8 +1,12 @@
 syntax = "proto3";
 
-import "context.proto";
+import "app/context.proto";
 
 package api_key;
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_outer_classname = "ApiKeyProto";
+option java_package = "com.tuware.msbuild.proto";
 
 // An API key used to access BuildBuddy.
 message ApiKey {

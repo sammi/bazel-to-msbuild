@@ -1,9 +1,12 @@
 syntax = "proto3";
 
-import "context.proto";
-import "user_id.proto";
+import "app/context.proto";
+import "app/user_id.proto";
 
 package grp;
+option cc_enable_arenas = true;
+option java_multiple_files = true;
+option java_package = "com.tuware.msbuild.proto";
 
 message Group {
   // The unique ID of this group.
