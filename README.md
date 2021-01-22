@@ -1,7 +1,7 @@
-msbuild project file service
-----------------------------
+bazel-to-msbuild
+----------------
 
-Ingest bazel event payload and generate visual studio project file
+Generate msbuild project from bazel project
 
 ## Build and start server
 ```
@@ -25,5 +25,3 @@ Open Terminal as administrator
 choco install bloomrpc
 ```
 Windows Start find BloomRPC app, start it by importing proto file, it will generate sample request for you.
-
-

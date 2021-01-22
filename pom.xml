@@ -16,7 +16,7 @@
     <artifactId>base</artifactId>
     <packaging>pom</packaging>
     <version>0.1.0-SNAPSHOT</version>
-    <name>msbuild</name>
+    <name>bazel-to-msbuild</name>
 
     <properties>
         <java.version>1.8</java.version>

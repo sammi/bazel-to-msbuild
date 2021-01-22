@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @Slf4j
-public class MsbuildApplication implements CommandLineRunner {
+public class BazelToMsbuildApplication implements CommandLineRunner {
 
     @Parameter(names = { "--port", "-p" }, description = "server listening port")
     int port = 50051;
@@ -25,12 +25,12 @@ public class MsbuildApplication implements CommandLineRunner {
 
     private ProjectApi projectApi;
 
-    public MsbuildApplication(ProjectApi projectApi) {
+    public BazelToMsbuildApplication(ProjectApi projectApi) {
         this.projectApi = projectApi;
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(MsbuildApplication.class, args);
+        SpringApplication.run(BazelToMsbuildApplication.class, args);
     }
 
     @Override
