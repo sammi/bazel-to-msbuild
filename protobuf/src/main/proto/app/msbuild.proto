@@ -2,18 +2,16 @@ syntax = "proto3";
 
 package msbuild;
 
+import "bazel/build.proto";
+
 option java_multiple_files = true;
 option java_package = "com.tuware.msbuild.proto";
 option java_outer_classname = "MsbuildProto";
 
 service Project {
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc buildMsvcProject (blaze_query.QueryResult) returns (MsvcProjectReply) {}
 }
 
-message HelloRequest {
-  string name = 1;
-}
-
-message HelloReply {
+message MsvcProjectReply {
   string message = 1;
 }

@@ -1,7 +1,7 @@
 package com.tuware.msbuild.api;
 
-import com.tuware.msbuild.proto.HelloReply;
-import com.tuware.msbuild.proto.HelloRequest;
+import com.google.devtools.build.lib.query2.proto.proto2api.Build;
+import com.tuware.msbuild.proto.MsvcProjectReply;
 import com.tuware.msbuild.proto.ProjectGrpc;
 import com.tuware.msbuild.service.ProjectService;
 import io.grpc.stub.StreamObserver;
@@ -19,9 +19,9 @@ public class ProjectApi extends ProjectGrpc.ProjectImplBase {
     }
 
     @Override
-    public void sayHello(HelloRequest req, StreamObserver<HelloReply> responseObserver) {
+    public void buildMsvcProject(Build.QueryResult req, StreamObserver<MsvcProjectReply> responseObserver) {
         String project = projectService.createProjectXml();
-        HelloReply reply = HelloReply.newBuilder().setMessage(project).build();
+        MsvcProjectReply reply = MsvcProjectReply.newBuilder().setMessage(project).build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
     }
