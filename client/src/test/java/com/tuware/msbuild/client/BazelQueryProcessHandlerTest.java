@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-class BazelQueryApplicationTest {
+class BazelQueryProcessHandlerTest {
     @Test
     void bazel_output_as_xml() throws InterruptedException {
         NuProcessBuilder nuProcessBuilder = new NuProcessBuilder(Arrays.asList(
@@ -21,8 +21,8 @@ class BazelQueryApplicationTest {
                 "--output=xml"));
         Path bazelProjectRootPath = Paths.get("C:\\Users\\songy\\source\\repos\\tuware");
         nuProcessBuilder.setCwd(bazelProjectRootPath);
-        ProcessHandler processHandler = new ProcessHandler();
-        nuProcessBuilder.setProcessListener(processHandler);
+        BazelQueryProcessHandler bazelQueryProcessHandler = new BazelQueryProcessHandler();
+        nuProcessBuilder.setProcessListener(bazelQueryProcessHandler);
         NuProcess nuProcess = nuProcessBuilder.start();
         nuProcess.wantWrite();
         nuProcess.waitFor(0, TimeUnit.SECONDS);

@@ -4,7 +4,7 @@ import com.zaxxer.nuprocess.NuAbstractProcessHandler;
 
 import java.nio.ByteBuffer;
 
-public class ProcessHandler extends NuAbstractProcessHandler {
+public class BazelQueryProcessHandler extends NuAbstractProcessHandler {
 
     @Override
     public void onStdout(ByteBuffer buffer, boolean closed) {
