@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>com.tuware.msbuild</groupId>
-            <artifactId>proto</artifactId>
+            <artifactId>protobuf</artifactId>
             <version>${project.version}</version>
         </dependency>
 

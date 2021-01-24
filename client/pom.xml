@@ -13,6 +13,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.tuware.msbuild</groupId>
+            <artifactId>protobuf</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>nuprocess</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
