@@ -96,7 +96,6 @@
         <module>domain</module>
         <module>protobuf</module>
         <module>service</module>
-        <module>server</module>
         <module>client</module>
     </modules>
 
