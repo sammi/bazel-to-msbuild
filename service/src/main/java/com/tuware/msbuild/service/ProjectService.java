@@ -1,5 +1,6 @@
 package com.tuware.msbuild.service;
 
+import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.domain.midl.Midl;
 import com.tuware.msbuild.domain.project.*;
 import com.tuware.msbuild.domain.property.PlatformToolset;
@@ -16,8 +17,8 @@ import java.util.Collections;
 @Component
 public class ProjectService {
 
-    public String createProjectXml() {
-        Project project = createProject();
+    public String createProjectXml(Build.QueryResult queryResult) {
+        Project project = createProject(queryResult);
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Project.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
@@ -33,12 +34,12 @@ public class ProjectService {
         }
     }
 
-    private Project createProject() {
+    private Project createProject(Build.QueryResult queryResult) {
         return Project.builder()
                 .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
                 .defaultTargets("Build")
                 .initialTargets("Test")
-                .treatAsLocalProperty("MyProperty")
+                .treatAsLocalProperty("MyProperty" + queryResult.getTargetCount())
                 .sdk("DotNet.SDK.4.0")
                 .toolsVersion("16.0.0")
                 .itemGroupList(

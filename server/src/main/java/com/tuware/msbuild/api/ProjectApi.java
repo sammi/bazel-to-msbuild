@@ -20,7 +20,7 @@ public class ProjectApi extends ProjectGrpc.ProjectImplBase {
 
     @Override
     public void buildMsvcProject(Build.QueryResult req, StreamObserver<MsvcProjectReply> responseObserver) {
-        String project = projectService.createProjectXml();
+        String project = projectService.createProjectXml(req);
         MsvcProjectReply reply = MsvcProjectReply.newBuilder().setMessage(project).build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();

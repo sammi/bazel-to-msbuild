@@ -1,6 +1,10 @@
 package com.tuware.msbuild.client;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
+import com.tuware.msbuild.proto.MsvcProjectReply;
+import com.tuware.msbuild.proto.ProjectGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,5 +23,14 @@ class BazelProtoQueryClientTest {
         );
 
         assertEquals(38, queryResult.getTargetCount());
+
+        ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:50051").usePlaintext().build();
+
+        ProjectGrpc.ProjectBlockingStub blockingStub = ProjectGrpc.newBlockingStub(channel);
+
+        MsvcProjectReply svcProjectReply = blockingStub.buildMsvcProject(queryResult);
+
+        System.out.println(svcProjectReply.getMessage());
+
     }
 }
