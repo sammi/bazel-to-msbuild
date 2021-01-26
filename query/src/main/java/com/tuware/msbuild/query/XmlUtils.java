@@ -1,4 +1,4 @@
-package com.tuware.msbuild.client;
+package com.tuware.msbuild.query;
 
 import com.tuware.msbuild.domain.project.Project;
 import com.tuware.msbuild.service.exception.JAXBRuntimeException;

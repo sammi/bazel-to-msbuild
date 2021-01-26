@@ -96,7 +96,7 @@
         <module>domain</module>
         <module>protobuf</module>
         <module>service</module>
-        <module>client</module>
+        <module>ccBinary</module>
     </modules>
 
 </project>
