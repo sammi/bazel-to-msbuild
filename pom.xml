@@ -97,6 +97,7 @@
         <module>protobuf</module>
         <module>service</module>
         <module>query</module>
+        <module>msbuild</module>
     </modules>
 
 </project>

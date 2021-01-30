@@ -2,7 +2,6 @@ package com.tuware.msbuild.query;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
-import com.tuware.msbuild.service.ProjectService;
 
 import java.io.File;
 import java.io.IOException;
