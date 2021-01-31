@@ -1,5 +1,6 @@
 package com.tuware.msbuild.domain.project;
 
+import com.tuware.msbuild.domain.clcompile.ClCompile;
 import com.tuware.msbuild.domain.midl.Midl;
 import lombok.*;
 
@@ -32,4 +33,9 @@ public class ItemGroup {
     @XmlElement(name = "None")
     private List<None> noneList;
 
+    @XmlElement(name = "Filter")
+    private List<Filter> filterList;
+
+    @XmlElement(name = "ClCompile")
+    private List<ClCompile> clCompileList;
 }

@@ -19,4 +19,7 @@ public class Filter {
 
     @XmlElement(name = "UniqueIdentifier")
     private String uniqueIdentifier;
+
+    @XmlElement(name = "Extensions")
+    private String extensions;
 }

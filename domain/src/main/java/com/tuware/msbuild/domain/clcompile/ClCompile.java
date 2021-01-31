@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,6 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class ClCompile {
+
+    @XmlAttribute(name="Include")
+    private String include;
 
     @XmlElement(name = "Filter")
     private String filter;
