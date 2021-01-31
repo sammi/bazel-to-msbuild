@@ -2,7 +2,6 @@ package com.tuware.msbuild.service;
 
 import com.tuware.msbuild.domain.clcompile.ClCompile;
 import com.tuware.msbuild.domain.project.*;
-import com.tuware.msbuild.query.XmlUtils;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBException;
@@ -12,7 +11,7 @@ import java.util.Collections;
 @Component
 public class ProjectService {
 
-    public String createCppConsoleApplicationProject(
+    public String createCppConsoleApplicationProjectFilters(
         String sourceFilesFilterGuid,
         String headerFilesFilterGuid,
         String resourceFilesFilterGuid

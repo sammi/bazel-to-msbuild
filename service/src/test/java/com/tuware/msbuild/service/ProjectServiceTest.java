@@ -16,7 +16,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 class ProjectServiceTest {
 
     @Test
-    void createCppConsoleApplicationProject() throws JAXBException, URISyntaxException, IOException {
+    void createCppConsoleApplicationProjectFilters() throws JAXBException, URISyntaxException, IOException {
         ProjectService projectService = new ProjectService();
 
         UUID id1 = UUID.randomUUID();
@@ -26,7 +26,7 @@ class ProjectServiceTest {
         String headerFilesFilterGuid = String.format("{%s}", id2);
         String resourceFilesFilterGuid = String.format("{%s}", id3);
 
-        String xml = projectService.createCppConsoleApplicationProject(sourceFilesFilterGuid, headerFilesFilterGuid, resourceFilesFilterGuid);
+        String xml = projectService.createCppConsoleApplicationProjectFilters(sourceFilesFilterGuid, headerFilesFilterGuid, resourceFilesFilterGuid);
 
         Path expectFile = Paths.get(getClass().getResource("/App.vcxproj").toURI());
 

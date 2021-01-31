@@ -1,4 +1,4 @@
-package com.tuware.msbuild.query;
+package com.tuware.msbuild.service;
 
 import com.tuware.msbuild.domain.project.Project;
 
