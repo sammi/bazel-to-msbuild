@@ -23,7 +23,7 @@ class MSBuildTest {
         UUID projectGuid = UUID.randomUUID();
         UUID solutionGuid = UUID.randomUUID();
 
-        String message = msbuild.buildSolution(
+        String message = msbuild.buildCppConsoleAppSolution(
                 "TestCppWinRTConsoleApp",
                 "projectFolderPath",
                 Paths.get("TestCppWinRTConsoleAppSolution.sln"),

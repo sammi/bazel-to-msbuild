@@ -15,12 +15,12 @@ import java.util.UUID;
 
 public class MSBuild {
 
-    public String buildSolution(String name,
-                                String location,
-                                Path solutionPath,
-                                UUID projectGuid,
-                                UUID solutionGuid,
-                                MsBuildEnvironment msBuildEnvironment) throws URISyntaxException, IOException {
+    public String buildCppConsoleAppSolution(String name,
+                                             String location,
+                                             Path solutionPath,
+                                             UUID projectGuid,
+                                             UUID solutionGuid,
+                                             MsBuildEnvironment msBuildEnvironment) throws URISyntaxException, IOException {
         Handlebars handlebars = new Handlebars();
 
         Path path = Paths.get(getClass().getResource("/templates/solution.hbs").toURI());
