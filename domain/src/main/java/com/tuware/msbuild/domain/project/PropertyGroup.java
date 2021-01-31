@@ -87,7 +87,7 @@ public class PropertyGroup {
     private MSBuildAllProjects msBuildAllProjects;
 
     @XmlElement(name = "PreferredToolArchitecture")
-    private PreferredToolArchitecture PreferredToolArchitecture;
+    private PreferredToolArchitecture preferredToolArchitecture;
 
     @XmlElement(name = "CanReferenceWinRT")
     private CanReferenceWinRT canReferenceWinRT;
