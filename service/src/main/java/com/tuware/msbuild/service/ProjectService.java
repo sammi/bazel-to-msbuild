@@ -11,7 +11,7 @@ import java.util.Collections;
 @Component
 public class ProjectService {
 
-    public String createCppConsoleApplicationProjectFilters(
+    public String createProjectFilters(
         String sourceFilesFilterGuid,
         String headerFilesFilterGuid,
         String resourceFilesFilterGuid
@@ -51,6 +51,17 @@ public class ProjectService {
                                 ).build()
                         )
                 )
+                .build();
+
+        return XmlUtils.toXml(project);
+    }
+
+    public String createProjectUser() throws JAXBException {
+
+        Project project = Project.builder()
+                .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
+                .toolsVersion("Current")
+                .propertyGroupList(Collections.singletonList(new PropertyGroup()))
                 .build();
 
         return XmlUtils.toXml(project);
