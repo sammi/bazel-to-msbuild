@@ -36,7 +36,7 @@ class MSBuildTest {
                         .build()
         );
 
-        Path result = Paths.get(getClass().getResource("/solution.sln").toURI());
+        Path result = Paths.get(getClass().getResource("/App.sln").toURI());
         String expect = String.join("\n", Files.readAllLines(result))
                 .replaceAll("16809c39-239c-40a0-a257-1b846d94ca18", projectGuid.toString())
                 .replaceAll("a73d7e39-016f-4e07-834c-29cdf3baa343", solutionGuid.toString());
