@@ -18,13 +18,13 @@
     <Import Project="{{cppDefaultPropsImport}}"/>
     {{#each configurationPropertyGroupList}}
     <PropertyGroup Condition="{{{condition}}}" Label="Configuration">
-        <ConfigurationType>{{configurationType.value}}</ConfigurationType>
+        <ConfigurationType>{{configurationType}}</ConfigurationType>
         <UseDebugLibraries>{{useDebugLibraries.value}}</UseDebugLibraries>
         <PlatformToolset>{{platformToolset.value}}</PlatformToolset>
         {{#if wholeProgramOptimization}}
         <WholeProgramOptimization>{{wholeProgramOptimization.value}}</WholeProgramOptimization>
         {{/if}}
-        <CharacterSet>{{characterSet.value}}</CharacterSet>
+        <CharacterSet>{{characterSet}}</CharacterSet>
     </PropertyGroup>
     {{/each}}
     <Import Project="{{cppPropsImport}}"/>

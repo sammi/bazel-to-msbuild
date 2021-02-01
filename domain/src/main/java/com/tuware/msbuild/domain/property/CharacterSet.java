@@ -1,11 +1,5 @@
 package com.tuware.msbuild.domain.property;
 
-import lombok.*;
-
-@Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
-@Getter
-public class CharacterSet {
-    private String value;
+public enum CharacterSet {
+    Unicode
 }
