@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Component
@@ -19,13 +21,25 @@ public class MSBuild {
         this.projectService = projectService;
     }
 
-    public String buildCppConsoleAppSolution(
-        String name,
-        String location,
-        Path solutionPath,
-        UUID projectGuid,
-        UUID solutionGuid
-    ) throws URISyntaxException, IOException {
-        return solutionService.buildCppConsoleAppSolution(name, location, solutionPath, projectGuid, solutionGuid);
+    public void createCppConsoleApp(
+            String name,
+            String location,
+            Path solutionPath,
+            UUID projectGuid,
+            UUID solutionGuid,
+            String cppFileName,
+            String sourceFilesFilterGuid,
+            String headerFilesFilterGuid,
+            String resourceFilesFilterGuid
+    ) throws IOException, URISyntaxException {
+        String solution = solutionService.buildCppConsoleAppSolution(name, location, solutionPath, projectGuid, solutionGuid);
+        String vcxproj = projectService.createProject(cppFileName, projectGuid.toString());
+        String vcxprojFilters = projectService.createProjectFilters(sourceFilesFilterGuid, headerFilesFilterGuid, resourceFilesFilterGuid);
+        String vcxprojUser = projectService.createProjectUser();
+
+        Files.write(Paths.get(String.format("%s.sln", name)), solution.getBytes());
+        Files.write(Paths.get(String.format("%s.vcxproj", name)), vcxproj.getBytes());
+        Files.write(Paths.get(String.format("%s.vcxproj.user", name)), vcxprojUser.getBytes());
+        Files.write(Paths.get(String.format("%s.vcxproj.filters", name)), vcxprojFilters.getBytes());
     }
 }
