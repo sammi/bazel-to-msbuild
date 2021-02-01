@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup Label="ProjectConfigurations">
-        <ProjectConfiguration Include="Debug|Win32">
-            <Configuration>Debug</Configuration>
-            <Platform>Win32</Platform>
+<Project DefaultTargets="{{defaultTargets}}" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup Label="{{projectConfigurations.label}}">
+        {{#each projectConfigurations.projectConfigurationList}}
+        <ProjectConfiguration Include="{{include}}">
+            <Configuration>{{configuration}}</Configuration>
+            <Platform>{{platform}}</Platform>
         </ProjectConfiguration>
-        <ProjectConfiguration Include="Release|Win32">
-            <Configuration>Release</Configuration>
-            <Platform>Win32</Platform>
-        </ProjectConfiguration>
-        <ProjectConfiguration Include="Debug|x64">
-            <Configuration>Debug</Configuration>
-            <Platform>x64</Platform>
-        </ProjectConfiguration>
-        <ProjectConfiguration Include="Release|x64">
-            <Configuration>Release</Configuration>
-            <Platform>x64</Platform>
-        </ProjectConfiguration>
+        {{/each}}
     </ItemGroup>
-    <PropertyGroup Label="Globals">
-        <VCProjectVersion>16.0</VCProjectVersion>
-        <Keyword>Win32Proj</Keyword>
-        <ProjectGuid>{7299f8e2-6e4d-486a-927b-862f47b0d2a0}</ProjectGuid>
-        <RootNamespace>ConsoleApplication3</RootNamespace>
-        <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <PropertyGroup Label="{{globals.label}}">
+        <VCProjectVersion>{{globals.vcProjectVersion}}</VCProjectVersion>
+        <Keyword>{{globals.keyword}}</Keyword>
+        <ProjectGuid>{{{globals.projectGuid}}}</ProjectGuid>
+        <RootNamespace>{{globals.rootNamespace}}</RootNamespace>
+        <WindowsTargetPlatformVersion>{{globals.windowsTargetPlatformVersion.value}}</WindowsTargetPlatformVersion>
     </PropertyGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -1,26 +1,37 @@
 package com.tuware.msbuild.service;
 
+import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.domain.clcompile.ClCompile;
 import com.tuware.msbuild.domain.project.*;
+import com.tuware.msbuild.domain.property.WindowsTargetPlatformVersion;
 import org.springframework.stereotype.Component;
 
-import javax.xml.bind.JAXBException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class ProjectService {
+
+    private Handlebars handlebars;
+
+    public ProjectService(Handlebars handlebars) {
+        this.handlebars = handlebars;
+    }
 
     public String createProjectFilters(
         String sourceFilesFilterGuid,
         String headerFilesFilterGuid,
         String resourceFilesFilterGuid
-    ) throws JAXBException {
-
+    ) throws URISyntaxException, IOException {
         String sourceFilesFilterName = "Source Files";
-
         Project project = Project.builder()
-                .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
                 .toolsVersion("4.0")
                 .itemGroupList(
                         Arrays.asList(
@@ -52,18 +63,76 @@ public class ProjectService {
                         )
                 )
                 .build();
-
-        return XmlUtils.toXml(project);
+        Path path = Paths.get(getClass().getResource("/templates/vcxproj.filters.hbs").toURI());
+        String template = String.join("\n", Files.readAllLines(path));
+        return handlebars.prettyPrint(true).compileInline(template).apply(project);
     }
 
-    public String createProjectUser() throws JAXBException {
+    public String createProjectUser() throws URISyntaxException, IOException {
+        Project project = Project.builder().toolsVersion("Current").build();
+        Path path = Paths.get(getClass().getResource("/templates/vcxproj.user.hbs").toURI());
+        String template = String.join("\n", Files.readAllLines(path));
+        return handlebars.prettyPrint(true).compileInline(template).apply(project);
+    }
 
-        Project project = Project.builder()
-                .xmlns("http://schemas.microsoft.com/developer/msbuild/2003")
-                .toolsVersion("Current")
-                .propertyGroupList(Collections.singletonList(new PropertyGroup()))
+    public String createProject(String cppFileName, String projectGuild) throws URISyntaxException, IOException {
+
+        ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
+                .label("ProjectConfigurations")
+                .projectConfigurationList(Arrays.asList(
+                        ProjectConfiguration.builder().include("Debug|Win32")
+                                .configuration("Debug")
+                                .platform("Win32")
+                                .build(),
+                        ProjectConfiguration.builder().include("Release|Win32")
+                                .configuration("Release")
+                                .platform("Win32")
+                                .build(),
+                        ProjectConfiguration.builder().include("Debug|x64")
+                                .configuration("Debug")
+                                .platform("x64")
+                                .build(),
+                        ProjectConfiguration.builder().include("Release|x64")
+                                .configuration("Release")
+                                .platform("x64")
+                                .build()
+                        )
+                ).build();
+
+        PropertyGroup globals = PropertyGroup.builder()
+                .label("Globals")
+                .vcProjectVersion("16.0")
+                .keyword("Win32Proj")
+                .projectGuid(projectGuild)
+                .rootNamespace("ConsoleApplication3")
+                .windowsTargetPlatformVersion(
+                        WindowsTargetPlatformVersion.builder().value("10.0").build()
+                )
                 .build();
 
-        return XmlUtils.toXml(project);
+        Project project = Project.builder()
+                .defaultTargets("Build")
+                .itemGroupList(Arrays.asList(
+                        projectConfigurationsItemGroup,
+                        ItemGroup.builder()
+                            .clCompileList(Collections.singletonList(ClCompile.builder().include(cppFileName).build()))
+                        .build()
+                ))
+                .propertyGroupList(Collections.singletonList(globals))
+                .importList(Arrays.asList(
+                    Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.Default.props").build(),
+                    Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.props").build(),
+                    Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.targets").build()
+                )
+            ).build();
+
+        Path path = Paths.get(getClass().getResource("/templates/vcxproj.hbs").toURI());
+        String template = String.join("\n", Files.readAllLines(path));
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("defaultTargets", project.getDefaultTargets());
+        data.put("projectConfigurations", projectConfigurationsItemGroup);
+        data.put("globals", globals);
+        return handlebars.prettyPrint(true).compileInline(template).apply(data);
     }
 }

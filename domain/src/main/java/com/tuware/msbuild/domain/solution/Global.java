@@ -7,8 +7,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@Getter
 @EqualsAndHashCode
+@Getter
 public class Global {
     private List<GlobalSection> globalSectionList;
 }

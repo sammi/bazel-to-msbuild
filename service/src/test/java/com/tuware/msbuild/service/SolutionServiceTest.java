@@ -1,7 +1,8 @@
 package com.tuware.msbuild.service;
 
 import com.github.jknack.handlebars.Handlebars;
-import com.tuware.msbuild.domain.solution.*;
+import com.tuware.msbuild.domain.solution.MSBuildVersion;
+import com.tuware.msbuild.domain.solution.MsBuildEnvironment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
