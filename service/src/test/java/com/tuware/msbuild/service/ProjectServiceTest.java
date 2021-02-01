@@ -1,6 +1,5 @@
 package com.tuware.msbuild.service;
 
-import com.github.jknack.handlebars.Handlebars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +20,7 @@ class ProjectServiceTest {
 
     @BeforeEach
     void setup() {
-        Handlebars handlebars = new Handlebars();
-        projectService = new ProjectService(handlebars);
+        projectService = new ProjectService();
     }
 
     @Test

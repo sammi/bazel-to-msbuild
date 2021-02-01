@@ -1,6 +1,5 @@
 package com.tuware.msbuild.service;
 
-import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.domain.solution.MSBuildVersion;
 import com.tuware.msbuild.domain.solution.MsBuildEnvironment;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,6 @@ class SolutionServiceTest {
     @BeforeEach
     void setup() {
         solutionService = new SolutionService(
-                new Handlebars(),
                 MsBuildEnvironment.builder()
                     .formatVersion(MSBuildVersion.builder().major("12").minor("00").build())
                     .visualStudioVersion(MSBuildVersion.builder().major("16").minor("0").patch("30804").revision("86").build())
@@ -39,8 +37,7 @@ class SolutionServiceTest {
 
         String message = solutionService.buildCppConsoleAppSolution(
                 "TestCppWinRTConsoleApp",
-                "projectFolderPath",
-                Paths.get("TestCppWinRTConsoleAppSolution.sln"),
+                Paths.get("TestCppWinRTConsoleAppSolution.sln"), "projectFolderPath",
                 projectGuid,
                 solutionGuid);
 

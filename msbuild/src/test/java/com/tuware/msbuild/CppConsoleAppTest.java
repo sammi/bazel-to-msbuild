@@ -1,4 +1,4 @@
-package com.tuware.msbuild.cppconsole;
+package com.tuware.msbuild;
 
 import com.tuware.msbuild.service.ProjectService;
 import com.tuware.msbuild.service.SolutionService;
@@ -9,16 +9,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MSBuildTest {
+class CppConsoleAppTest {
     @Mock
     private ProjectService projectService;
 
@@ -26,10 +26,10 @@ class MSBuildTest {
     private SolutionService solutionService;
 
     @InjectMocks
-    private MSBuild msBuild;
+    private CppConsoleApp cppConsoleApp;
 
     @Test
-    void createCppConsoleApp() throws IOException, URISyntaxException {
+    void createCppConsoleApp() {
 
         String name = "test";
         String location = "source\\repos\\test";
@@ -52,13 +52,12 @@ class MSBuildTest {
 
         when(projectService.createMainCpp()).thenReturn("cpp");
 
-        msBuild.createCppConsoleApp(name, location, solutionPath);
+        cppConsoleApp.createDefaultProject(name, solutionPath, location);
 
         verify(solutionService, times(1)).buildCppConsoleAppSolution(
             eq(name),
-            eq(location),
-            eq(solutionPath),
-            any(),
+                eq(solutionPath), eq(location),
+                any(),
             any()
         );
 
@@ -77,10 +76,14 @@ class MSBuildTest {
 
         verify(projectService, times(1)).createMainCpp();
 
-        Files.delete(Paths.get(String.format("%s.sln", name)));
-        Files.delete(Paths.get(String.format("%s.vcxproj", name)));
-        Files.delete(Paths.get(String.format("%s.vcxproj.filters", name)));
-        Files.delete(Paths.get(String.format("%s.vcxproj.user", name)));
-        Files.delete(Paths.get(String.format("%s.cpp", name)));
+        try {
+            Files.delete(Paths.get(String.format("%s.sln", name)));
+            Files.delete(Paths.get(String.format("%s.vcxproj", name)));
+            Files.delete(Paths.get(String.format("%s.vcxproj.filters", name)));
+            Files.delete(Paths.get(String.format("%s.vcxproj.user", name)));
+            Files.delete(Paths.get(String.format("%s.cpp", name)));
+        } catch (IOException e) {
+            fail(String.format("Failed to delete test generated files, error: %s", e.getMessage()), e);
+        }
     }
 }

@@ -1,16 +1,10 @@
 package com.tuware.msbuild.service;
 
-import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.domain.clcompile.ClCompile;
 import com.tuware.msbuild.domain.project.*;
 import com.tuware.msbuild.domain.property.*;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,17 +12,11 @@ import java.util.stream.Stream;
 @Component
 public class ProjectService {
 
-    private Handlebars handlebars;
-
-    public ProjectService(Handlebars handlebars) {
-        this.handlebars = handlebars;
-    }
-
     public String createProjectFilters(
         String sourceFilesFilterGuid,
         String headerFilesFilterGuid,
         String resourceFilesFilterGuid
-    ) throws URISyntaxException, IOException {
+    ) {
         String sourceFilesFilterName = "Source Files";
         Project project = Project.builder()
                 .toolsVersion("4.0")
@@ -62,20 +50,17 @@ public class ProjectService {
                         )
                 )
                 .build();
-        Path path = Paths.get(getClass().getResource("/templates/vcxproj.filters.hbs").toURI());
-        String template = String.join("\n", Files.readAllLines(path));
-        return handlebars.prettyPrint(true).compileInline(template).apply(project);
+
+        return TemplateUtils.buildXml("/templates/vcxproj.filters.hbs", project);
     }
 
-    public String createProjectUser() throws URISyntaxException, IOException {
-        Project project = Project.builder().toolsVersion("Current").build();
-        Path path = Paths.get(getClass().getResource("/templates/vcxproj.user.hbs").toURI());
-        String template = String.join("\n", Files.readAllLines(path));
-        return handlebars.prettyPrint(true).compileInline(template).apply(project);
+    public String createProjectUser() {
+        return TemplateUtils.buildXml("/templates/vcxproj.user.hbs",
+                Project.builder().toolsVersion("Current").build()
+        );
     }
 
-    public String createProject(String cppFileName, String projectGuild) throws URISyntaxException, IOException {
-
+    public String createProject(String cppFileName, String projectGuild) {
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(
@@ -164,9 +149,6 @@ public class ProjectService {
                 )
             ).build();
 
-        Path path = Paths.get(getClass().getResource("/templates/vcxproj.hbs").toURI());
-        String template = String.join("\n", Files.readAllLines(path));
-
         Map<String, Object> data = new HashMap<>();
         data.put("defaultTargets", project.getDefaultTargets());
         data.put("projectConfigurations", projectConfigurationsItemGroup);
@@ -175,11 +157,11 @@ public class ProjectService {
         data.put("configurationPropertyGroupList", configurationPropertyGroupList);
         data.put("cppPropsImport", cppPropsImport);
         data.put("clCompileItemGroup", clCompileItemGroup);
-        return handlebars.prettyPrint(true).compileInline(template).apply(data);
+
+        return TemplateUtils.buildXml("/templates/vcxproj.hbs", data);
     }
 
-    public String createMainCpp() throws IOException, URISyntaxException {
-        Path path = Paths.get(getClass().getResource("/templates/App.hbs").toURI());
-        return String.join("\n", Files.readAllLines(path));
+    public String createMainCpp() {
+        return String.join("\n", TemplateUtils.buildXml("/templates/App.hbs", new Object()));
     }
 }

@@ -1,13 +1,9 @@
 package com.tuware.msbuild.service;
 
-import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.domain.solution.*;
 import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -17,30 +13,33 @@ import java.util.UUID;
 @Component
 public class SolutionService {
 
-    private Handlebars handlebars;
+    public static final String DEBUG_X_64 = "Debug|x64";
+    public static final String DEBUG_X_86 = "Debug|x86";
+    public static final String RELEASE_X_64 = "Release|x64";
+    public static final String RELEASE_X_86 = "Release|x86";
+    public static final String DEBUG_WIN_32 = "Debug|Win32";
+    public static final String RELEASE_WIN_32 = "Release|Win32";
+
     private MsBuildEnvironment msBuildEnvironment;
 
-    public SolutionService(Handlebars handlebars, MsBuildEnvironment msBuildEnvironment) {
-        this.handlebars = handlebars;
+    public SolutionService(MsBuildEnvironment msBuildEnvironment) {
         this.msBuildEnvironment = msBuildEnvironment;
     }
 
     public String buildCppConsoleAppSolution(
-            String name,
-            String location,
-            Path solutionPath,
+            String projectName,
+            Path location,
+            String solutionName,
             UUID projectGuid,
             UUID solutionGuid
-    ) throws URISyntaxException, IOException {
-        Path path = Paths.get(getClass().getResource("/templates/solution.hbs").toURI());
-        String template = String.join("\n", Files.readAllLines(path));
-
-        return handlebars.prettyPrint(true).compileInline(template).apply(buildConsoleApp(
-                name,
+    ) {
+        return TemplateUtils.buildXml("/templates/solution.hbs", buildConsoleApp(
+                projectName,
+                solutionName,
                 location,
-                solutionPath,
                 projectGuid,
-                solutionGuid));
+                solutionGuid
+        ));
     }
 
     private Solution buildConsoleApp(
@@ -68,24 +67,24 @@ public class SolutionService {
                                         .phase(Phase.PRE_SOLUTION)
                                         .vsPackage(VsPackage.SolutionConfigurationPlatforms)
                                         .configList(Arrays.asList(
-                                                new Pair<>("Debug|x64", "Debug|x64"),
-                                                new Pair<>("Debug|x86", "Debug|x86"),
-                                                new Pair<>("Release|x64", "Release|x64"),
-                                                new Pair<>("Release|x86", "Release|x86")
+                                                new Pair<>(DEBUG_X_64, DEBUG_X_64),
+                                                new Pair<>(DEBUG_X_86, DEBUG_X_86),
+                                                new Pair<>(RELEASE_X_64, RELEASE_X_64),
+                                                new Pair<>(RELEASE_X_86, RELEASE_X_86)
                                         ))
                                         .build(),
                                 GlobalSection.builder()
                                         .phase(Phase.POST_SOLUTION)
                                         .vsPackage(VsPackage.ProjectConfigurationPlatforms)
                                         .configList(Arrays.asList(
-                                                new Pair<>(String.format("{%s}.Debug|x64.ActiveCfg", projectGuid), "Debug|x64"),
-                                                new Pair<>(String.format("{%s}.Debug|x64.Build.0", projectGuid), "Debug|x64"),
-                                                new Pair<>(String.format("{%s}.Debug|x86.ActiveCfg", projectGuid), "Debug|Win32"),
-                                                new Pair<>(String.format("{%s}.Debug|x86.Build.0", projectGuid), "Debug|Win32"),
-                                                new Pair<>(String.format("{%s}.Release|x64.ActiveCfg", projectGuid), "Release|x64"),
-                                                new Pair<>(String.format("{%s}.Release|x64.Build.0", projectGuid), "Release|x64"),
-                                                new Pair<>(String.format("{%s}.Release|x86.ActiveCfg", projectGuid), "Release|Win32"),
-                                                new Pair<>(String.format("{%s}.Release|x86.Build.0", projectGuid), "Release|Win32")
+                                                new Pair<>(String.format("{%s}.Debug|x64.ActiveCfg", projectGuid), DEBUG_X_64),
+                                                new Pair<>(String.format("{%s}.Debug|x64.Build.0", projectGuid), DEBUG_X_64),
+                                                new Pair<>(String.format("{%s}.Debug|x86.ActiveCfg", projectGuid), DEBUG_WIN_32),
+                                                new Pair<>(String.format("{%s}.Debug|x86.Build.0", projectGuid), DEBUG_WIN_32),
+                                                new Pair<>(String.format("{%s}.Release|x64.ActiveCfg", projectGuid), RELEASE_X_64),
+                                                new Pair<>(String.format("{%s}.Release|x64.Build.0", projectGuid), RELEASE_X_64),
+                                                new Pair<>(String.format("{%s}.Release|x86.ActiveCfg", projectGuid), RELEASE_WIN_32),
+                                                new Pair<>(String.format("{%s}.Release|x86.Build.0", projectGuid), RELEASE_WIN_32)
                                         ))
                                         .build(),
                                 GlobalSection.builder()
