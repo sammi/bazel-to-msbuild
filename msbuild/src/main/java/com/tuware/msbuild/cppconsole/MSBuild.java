@@ -1,4 +1,4 @@
-package com.tuware.msbuild.cppwinrt;
+package com.tuware.msbuild.cppconsole;
 
 import com.tuware.msbuild.service.ProjectService;
 import com.tuware.msbuild.service.SolutionService;
@@ -24,22 +24,26 @@ public class MSBuild {
     public void createCppConsoleApp(
             String name,
             String location,
-            Path solutionPath,
-            UUID projectGuid,
-            UUID solutionGuid,
-            String cppFileName,
-            String sourceFilesFilterGuid,
-            String headerFilesFilterGuid,
-            String resourceFilesFilterGuid
+            Path solutionPath
     ) throws IOException, URISyntaxException {
+
+        UUID projectGuid = UUID.randomUUID();
+        UUID solutionGuid = UUID.randomUUID();
+        String cppFileName = String.format("%s.cpp", name);
+        String sourceFilesFilterGuid = UUID.randomUUID().toString();
+        String headerFilesFilterGuid = UUID.randomUUID().toString();
+        String resourceFilesFilterGuid = UUID.randomUUID().toString();
+
         String solution = solutionService.buildCppConsoleAppSolution(name, location, solutionPath, projectGuid, solutionGuid);
         String vcxproj = projectService.createProject(cppFileName, projectGuid.toString());
         String vcxprojFilters = projectService.createProjectFilters(sourceFilesFilterGuid, headerFilesFilterGuid, resourceFilesFilterGuid);
         String vcxprojUser = projectService.createProjectUser();
+        String cppFile = projectService.createMainCpp();
 
         Files.write(Paths.get(String.format("%s.sln", name)), solution.getBytes());
         Files.write(Paths.get(String.format("%s.vcxproj", name)), vcxproj.getBytes());
         Files.write(Paths.get(String.format("%s.vcxproj.user", name)), vcxprojUser.getBytes());
         Files.write(Paths.get(String.format("%s.vcxproj.filters", name)), vcxprojFilters.getBytes());
+        Files.write(Paths.get(String.format("%s.cpp", name)), cppFile.getBytes());
     }
 }

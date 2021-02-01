@@ -1,6 +1,5 @@
-package com.tuware.msbuild;
+package com.tuware.msbuild.cppconsole;
 
-import com.tuware.msbuild.cppwinrt.MSBuild;
 import com.tuware.msbuild.service.ProjectService;
 import com.tuware.msbuild.service.SolutionService;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -36,12 +34,7 @@ class MSBuildTest {
         String name = "test";
         String location = "source\\repos\\test";
         Path solutionPath = Paths.get("source\\repos\\test");
-        UUID projectGuid = UUID.randomUUID();
-        UUID solutionGuid = UUID.randomUUID();
         String cppFileName = "test.cpp";
-        String sourceFilesFilterGuid = UUID.randomUUID().toString();
-        String headerFilesFilterGuid = UUID.randomUUID().toString();
-        String resourceFilesFilterGuid = UUID.randomUUID().toString();
 
         when(solutionService.buildCppConsoleAppSolution(
                 any(), any(), any(), any(), any())
@@ -57,42 +50,37 @@ class MSBuildTest {
                 anyString(), anyString(), anyString())
         ).thenReturn("vcxproj.filters");
 
-        msBuild.createCppConsoleApp(
-                name,
-                location,
-                solutionPath,
-                projectGuid,
-                solutionGuid,
-                cppFileName,
-                sourceFilesFilterGuid,
-                headerFilesFilterGuid,
-                resourceFilesFilterGuid
-        );
+        when(projectService.createMainCpp()).thenReturn("cpp");
+
+        msBuild.createCppConsoleApp(name, location, solutionPath);
 
         verify(solutionService, times(1)).buildCppConsoleAppSolution(
             eq(name),
             eq(location),
             eq(solutionPath),
-            eq(projectGuid),
-            eq(solutionGuid)
+            any(),
+            any()
         );
 
         verify(projectService, times(1)).createProject(
                 eq(cppFileName),
-                eq(projectGuid.toString())
+                any()
         );
 
         verify(projectService, times(1)).createProjectFilters(
-                eq(sourceFilesFilterGuid),
-                eq(headerFilesFilterGuid),
-                eq(resourceFilesFilterGuid)
+                any(),
+                any(),
+                any()
         );
 
         verify(projectService, times(1)).createProjectUser();
+
+        verify(projectService, times(1)).createMainCpp();
 
         Files.delete(Paths.get(String.format("%s.sln", name)));
         Files.delete(Paths.get(String.format("%s.vcxproj", name)));
         Files.delete(Paths.get(String.format("%s.vcxproj.filters", name)));
         Files.delete(Paths.get(String.format("%s.vcxproj.user", name)));
+        Files.delete(Paths.get(String.format("%s.cpp", name)));
     }
 }

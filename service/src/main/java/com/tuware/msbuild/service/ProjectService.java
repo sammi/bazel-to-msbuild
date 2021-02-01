@@ -113,33 +113,33 @@ public class ProjectService {
         List<PropertyGroup> configurationPropertyGroupList = Arrays.asList(
                 PropertyGroup.builder()
                     .condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
-                    .configurationType(ConfigurationType.builder().value("Application").build())
+                    .configurationType(ConfigurationType.Application)
                     .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
                     .platformToolset(PlatformToolset.builder().value("v142").build())
-                    .characterSet(CharacterSet.builder().value("Unicode").build())
+                    .characterSet(CharacterSet.Unicode)
                 .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Release|Win32'")
-                        .configurationType(ConfigurationType.builder().value("Application").build())
+                        .configurationType(ConfigurationType.Application)
                         .useDebugLibraries(UseDebugLibraries.builder().value(false).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
                         .wholeProgramOptimization(WholeProgramOptimization.builder().value(true).build())
-                        .characterSet(CharacterSet.builder().value("Unicode").build())
+                        .characterSet(CharacterSet.Unicode)
                         .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Debug|x64'")
-                        .configurationType(ConfigurationType.builder().value("Application").build())
+                        .configurationType(ConfigurationType.Application)
                         .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
-                        .characterSet(CharacterSet.builder().value("Unicode").build())
+                        .characterSet(CharacterSet.Unicode)
                         .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Release|x64'")
-                        .configurationType(ConfigurationType.builder().value("Application").build())
+                        .configurationType(ConfigurationType.Application)
                         .useDebugLibraries(UseDebugLibraries.builder().value(false).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
                         .wholeProgramOptimization(WholeProgramOptimization.builder().value(true).build())
-                        .characterSet(CharacterSet.builder().value("Unicode").build())
+                        .characterSet(CharacterSet.Unicode)
                         .build()
         );
 
@@ -154,7 +154,7 @@ public class ProjectService {
                         clCompileItemGroup
                 ))
                 .propertyGroupList(Stream.concat(
-                        Collections.singletonList(globals).stream(),
+                        Stream.of(globals),
                         configurationPropertyGroupList.stream()
                 ).collect(Collectors.toList()))
                 .importList(Arrays.asList(
@@ -176,5 +176,10 @@ public class ProjectService {
         data.put("cppPropsImport", cppPropsImport);
         data.put("clCompileItemGroup", clCompileItemGroup);
         return handlebars.prettyPrint(true).compileInline(template).apply(data);
+    }
+
+    public String createMainCpp() throws IOException, URISyntaxException {
+        Path path = Paths.get(getClass().getResource("/templates/App.hbs").toURI());
+        return String.join("\n", Files.readAllLines(path));
     }
 }

@@ -59,6 +59,14 @@ class ProjectServiceTest {
         );
     }
 
+    @Test
+    void createMain() throws IOException, URISyntaxException {
+        assertEquals(
+                readTextFromFile("/App.cpp"),
+                projectService.createMainCpp()
+        );
+    }
+
     private String readTextFromFile(String resourceRelativePath) throws URISyntaxException, IOException {
         Path expectFile = Paths.get(getClass().getResource(resourceRelativePath).toURI());
         return String.join("\n", Files.readAllLines(expectFile));
