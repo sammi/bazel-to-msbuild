@@ -3,8 +3,6 @@ package com.tuware.msbuild.domain.project;
 import com.tuware.msbuild.domain.property.*;
 import lombok.*;
 
-import java.util.List;
-
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -13,7 +11,7 @@ public class PropertyGroup {
     private String condition;
     private String label;
     private ConfigurationType configurationType;
-    private List<PlatformToolset> platformToolsetList;
+    private PlatformToolset platformToolset;
     private CharacterSet characterSet;
     private CppWinRTOptimized cppWinRTOptimized;
     private UseDebugLibraries useDebugLibraries;

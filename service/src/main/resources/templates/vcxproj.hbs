@@ -15,51 +15,36 @@
         <RootNamespace>{{globals.rootNamespace}}</RootNamespace>
         <WindowsTargetPlatformVersion>{{globals.windowsTargetPlatformVersion.value}}</WindowsTargetPlatformVersion>
     </PropertyGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>true</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <CharacterSet>Unicode</CharacterSet>
+    <Import Project="{{cppDefaultPropsImport}}"/>
+    {{#each configurationPropertyGroupList}}
+    <PropertyGroup Condition="{{{condition}}}" Label="Configuration">
+        <ConfigurationType>{{configurationType.value}}</ConfigurationType>
+        <UseDebugLibraries>{{useDebugLibraries.value}}</UseDebugLibraries>
+        <PlatformToolset>{{platformToolset.value}}</PlatformToolset>
+        {{#if wholeProgramOptimization}}
+        <WholeProgramOptimization>{{wholeProgramOptimization.value}}</WholeProgramOptimization>
+        {{/if}}
+        <CharacterSet>{{characterSet.value}}</CharacterSet>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>false</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <WholeProgramOptimization>true</WholeProgramOptimization>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>true</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-        <ConfigurationType>Application</ConfigurationType>
-        <UseDebugLibraries>false</UseDebugLibraries>
-        <PlatformToolset>v142</PlatformToolset>
-        <WholeProgramOptimization>true</WholeProgramOptimization>
-        <CharacterSet>Unicode</CharacterSet>
-    </PropertyGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+    {{/each}}
+    <Import Project="{{cppPropsImport}}"/>
     <ImportGroup Label="ExtensionSettings">
     </ImportGroup>
     <ImportGroup Label="Shared">
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
-    <PropertyGroup Label="UserMacros" />
+    <PropertyGroup Label="UserMacros"/>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <LinkIncremental>true</LinkIncremental>
     </PropertyGroup>
@@ -129,9 +114,11 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClCompile Include="ConsoleApplication1.cpp" />
+        {{#each clCompileItemGroup.clCompileList}}
+        <ClCompile Include="{{include}}"/>
+        {{/each}}
     </ItemGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
     </ImportGroup>
 </Project>

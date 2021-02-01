@@ -3,7 +3,7 @@ package com.tuware.msbuild.service;
 import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.domain.clcompile.ClCompile;
 import com.tuware.msbuild.domain.project.*;
-import com.tuware.msbuild.domain.property.WindowsTargetPlatformVersion;
+import com.tuware.msbuild.domain.property.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,10 +11,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class ProjectService {
@@ -105,23 +104,62 @@ public class ProjectService {
                 .keyword("Win32Proj")
                 .projectGuid(projectGuild)
                 .rootNamespace("ConsoleApplication3")
-                .windowsTargetPlatformVersion(
-                        WindowsTargetPlatformVersion.builder().value("10.0").build()
-                )
+                .windowsTargetPlatformVersion(WindowsTargetPlatformVersion.builder().value("10.0").build())
+                .build();
+
+        String cppDefaultPropsImport = "$(VCTargetsPath)\\Microsoft.Cpp.Default.props";
+        String cppPropsImport = "$(VCTargetsPath)\\Microsoft.Cpp.props";
+
+        List<PropertyGroup> configurationPropertyGroupList = Arrays.asList(
+                PropertyGroup.builder()
+                    .condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
+                    .configurationType(ConfigurationType.builder().value("Application").build())
+                    .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
+                    .platformToolset(PlatformToolset.builder().value("v142").build())
+                    .characterSet(CharacterSet.builder().value("Unicode").build())
+                .build(),
+                PropertyGroup.builder()
+                        .condition("'$(Configuration)|$(Platform)'=='Release|Win32'")
+                        .configurationType(ConfigurationType.builder().value("Application").build())
+                        .useDebugLibraries(UseDebugLibraries.builder().value(false).build())
+                        .platformToolset(PlatformToolset.builder().value("v142").build())
+                        .wholeProgramOptimization(WholeProgramOptimization.builder().value(true).build())
+                        .characterSet(CharacterSet.builder().value("Unicode").build())
+                        .build(),
+                PropertyGroup.builder()
+                        .condition("'$(Configuration)|$(Platform)'=='Debug|x64'")
+                        .configurationType(ConfigurationType.builder().value("Application").build())
+                        .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
+                        .platformToolset(PlatformToolset.builder().value("v142").build())
+                        .characterSet(CharacterSet.builder().value("Unicode").build())
+                        .build(),
+                PropertyGroup.builder()
+                        .condition("'$(Configuration)|$(Platform)'=='Release|x64'")
+                        .configurationType(ConfigurationType.builder().value("Application").build())
+                        .useDebugLibraries(UseDebugLibraries.builder().value(false).build())
+                        .platformToolset(PlatformToolset.builder().value("v142").build())
+                        .wholeProgramOptimization(WholeProgramOptimization.builder().value(true).build())
+                        .characterSet(CharacterSet.builder().value("Unicode").build())
+                        .build()
+        );
+
+        ItemGroup clCompileItemGroup = ItemGroup.builder()
+                .clCompileList(Collections.singletonList(ClCompile.builder().include(cppFileName).build()))
                 .build();
 
         Project project = Project.builder()
                 .defaultTargets("Build")
                 .itemGroupList(Arrays.asList(
                         projectConfigurationsItemGroup,
-                        ItemGroup.builder()
-                            .clCompileList(Collections.singletonList(ClCompile.builder().include(cppFileName).build()))
-                        .build()
+                        clCompileItemGroup
                 ))
-                .propertyGroupList(Collections.singletonList(globals))
+                .propertyGroupList(Stream.concat(
+                        Collections.singletonList(globals).stream(),
+                        configurationPropertyGroupList.stream()
+                ).collect(Collectors.toList()))
                 .importList(Arrays.asList(
-                    Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.Default.props").build(),
-                    Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.props").build(),
+                    Import.builder().project(cppDefaultPropsImport).build(),
+                    Import.builder().project(cppPropsImport).build(),
                     Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.targets").build()
                 )
             ).build();
@@ -133,6 +171,10 @@ public class ProjectService {
         data.put("defaultTargets", project.getDefaultTargets());
         data.put("projectConfigurations", projectConfigurationsItemGroup);
         data.put("globals", globals);
+        data.put("cppDefaultPropsImport", cppDefaultPropsImport);
+        data.put("configurationPropertyGroupList", configurationPropertyGroupList);
+        data.put("cppPropsImport", cppPropsImport);
+        data.put("clCompileItemGroup", clCompileItemGroup);
         return handlebars.prettyPrint(true).compileInline(template).apply(data);
     }
 }

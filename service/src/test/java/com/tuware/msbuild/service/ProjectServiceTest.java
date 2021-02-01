@@ -4,7 +4,6 @@ import com.github.jknack.handlebars.Handlebars;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -52,7 +51,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void createProject() throws IOException, URISyntaxException, JAXBException {
+    void createProject() throws IOException, URISyntaxException {
         String projectGuild = "{7299f8e2-6e4d-486a-927b-862f47b0d2a0}";
         assertEquals(
             readTextFromFile("/App.vcxproj"),
