@@ -35,3 +35,7 @@ hs_err_pid*
 
 .idea/
 *.iml
+bazel-bin/
+bazel-out/
+bazel-stage1/
+bazel-testlogs/
