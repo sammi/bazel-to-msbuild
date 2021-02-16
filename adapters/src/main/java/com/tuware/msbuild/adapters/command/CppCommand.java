@@ -1,8 +1,8 @@
-package com.tuware.msbuild.command;
+package com.tuware.msbuild.adapters.command;
 
-import com.tuware.msbuild.generator.BuildXmlException;
-import com.tuware.msbuild.generator.ProjectGenerator;
-import com.tuware.msbuild.generator.SolutionGenerator;
+import com.tuware.msbuild.adapters.generator.BuildXmlException;
+import com.tuware.msbuild.adapters.generator.ProjectGenerator;
+import com.tuware.msbuild.adapters.generator.SolutionGenerator;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

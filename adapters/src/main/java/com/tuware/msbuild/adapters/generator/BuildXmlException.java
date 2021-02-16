@@ -1,4 +1,4 @@
-package com.tuware.msbuild.generator;
+package com.tuware.msbuild.adapters.generator;
 
 public class BuildXmlException extends RuntimeException {
 

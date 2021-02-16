@@ -1,4 +1,4 @@
-package com.tuware.msbuild.generator;
+package com.tuware.msbuild.adapters.generator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

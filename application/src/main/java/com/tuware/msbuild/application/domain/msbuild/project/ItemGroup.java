@@ -1,7 +1,7 @@
 package com.tuware.msbuild.application.domain.msbuild.project;
 
-import com.tuware.msbuild.application.domain.msbuild.midl.Midl;
 import com.tuware.msbuild.application.domain.msbuild.clcompile.ClCompile;
+import com.tuware.msbuild.application.domain.msbuild.midl.Midl;
 import lombok.*;
 
 import java.util.List;

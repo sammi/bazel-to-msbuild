@@ -1,4 +1,4 @@
-package com.tuware.msbuild.generator;
+package com.tuware.msbuild.adapters.generator;
 
 import com.tuware.msbuild.application.domain.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.application.domain.msbuild.project.*;

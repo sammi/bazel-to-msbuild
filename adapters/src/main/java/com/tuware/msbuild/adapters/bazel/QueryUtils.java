@@ -1,4 +1,4 @@
-package com.tuware.msbuild.bazel;
+package com.tuware.msbuild.adapters.bazel;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;

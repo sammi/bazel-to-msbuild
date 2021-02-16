@@ -1,4 +1,4 @@
-package com.tuware.msbuild.bazel;
+package com.tuware.msbuild.adapters.bazel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;

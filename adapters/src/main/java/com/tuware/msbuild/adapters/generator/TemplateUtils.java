@@ -1,4 +1,4 @@
-package com.tuware.msbuild.generator;
+package com.tuware.msbuild.adapters.generator;
 
 import com.github.jknack.handlebars.Handlebars;
 

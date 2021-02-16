@@ -1,7 +1,7 @@
-package com.tuware.msbuild.command;
+package com.tuware.msbuild.adapters.command;
 
-import com.tuware.msbuild.generator.ProjectGenerator;
-import com.tuware.msbuild.generator.SolutionGenerator;
+import com.tuware.msbuild.adapters.generator.ProjectGenerator;
+import com.tuware.msbuild.adapters.generator.SolutionGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

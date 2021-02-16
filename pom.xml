@@ -111,7 +111,7 @@
 
     <modules>
         <module>application</module>
-        <module>adapter</module>
+        <module>adapters</module>
     </modules>
 
 </project>
