@@ -30,18 +30,6 @@
             <artifactId>handlebars</artifactId>
             <version>4.2.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.tuware.msbuild</groupId>
-            <artifactId>domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tuware.msbuild</groupId>
-            <artifactId>protobuf</artifactId>
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

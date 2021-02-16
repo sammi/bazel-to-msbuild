@@ -3,6 +3,7 @@ package com.tuware.msbuild.query;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,7 +14,8 @@ class CcBinaryTest {
     @Test
     void query() throws IOException {
         CcBinary ccBinary = new CcBinary();
-        List<String> sourceFiles = ccBinary.query(new ClassPathResource("stage1").getFile().getAbsolutePath(), "...");
+        File file = new ClassPathResource("stage1").getFile();
+        List<String> sourceFiles = ccBinary.query(file.getAbsolutePath(), "...");
         sourceFiles.forEach(System.out::println);
         assertEquals(1, sourceFiles.size());
     }
