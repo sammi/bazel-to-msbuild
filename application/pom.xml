@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>domain</artifactId>
+    <artifactId>application</artifactId>
 
     <properties>
         <lombok.version>1.18.10</lombok.version>
@@ -26,7 +26,7 @@
     </dependencies>
 
     <build>
-        <finalName>domain</finalName>
+        <finalName>application</finalName>
         <plugins>
             <plugin>
                 <groupId>org.projectlombok</groupId>

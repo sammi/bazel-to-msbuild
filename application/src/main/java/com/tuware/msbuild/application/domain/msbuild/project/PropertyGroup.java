@@ -1,8 +1,6 @@
 package com.tuware.msbuild.application.domain.msbuild.project;
 
 import com.tuware.msbuild.application.domain.msbuild.property.*;
-import com.tuware.msbuild.application.domain.property.*;
-import com.tuware.msbuild.domain.property.*;
 import lombok.*;
 
 @Builder
