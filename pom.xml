@@ -63,7 +63,7 @@
     </dependencies>
 
     <build>
-        <finalName>bazel-to-msbuild</finalName>
+        <finalName>base</finalName>
         <extensions>
             <extension>
                 <groupId>kr.motd.maven</groupId>
