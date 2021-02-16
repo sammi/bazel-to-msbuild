@@ -112,6 +112,7 @@
     <modules>
         <module>application</module>
         <module>adapters</module>
+        <module>specs</module>
     </modules>
 
 </project>
