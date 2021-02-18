@@ -12,7 +12,6 @@
     <artifactId>application</artifactId>
 
     <properties>
-        <lombok.version>1.18.12</lombok.version>
         <delombok-maven-plugin.version>1.18.10.0</delombok-maven-plugin.version>
     </properties>
 
@@ -20,7 +19,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
