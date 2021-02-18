@@ -1,6 +1,6 @@
 package com.tuware.msbuild.application.domain.msbuild.solution;
 
-import javafx.util.Pair;
+import com.tuware.msbuild.application.domain.Pair;
 import lombok.*;
 
 import java.util.List;

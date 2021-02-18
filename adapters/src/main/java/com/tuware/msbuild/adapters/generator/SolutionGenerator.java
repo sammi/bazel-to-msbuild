@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapters.generator;
 
+import com.tuware.msbuild.application.domain.Pair;
 import com.tuware.msbuild.application.domain.msbuild.solution.*;
-import javafx.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
