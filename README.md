@@ -3,13 +3,10 @@ bazel-to-msbuild
 
 Generate msbuild project from bazel project
 
-* The project requires running on windows10 and bazel should be installed and be available in %PATH%.
-
-* Installing Bazel on Windows
+* Install Bazel on Windows, make sure it is available in your PATH
 https://docs.bazel.build/versions/master/install-windows.html
 
-* Setup jdk 11 toolchain file for maven
-Config toolchains.xml and save it under your %USER_HOME%/.m2 folder, change the JDK path to your local file absolute path.
+* Edit toolchains.xml and save it at %USER_HOME%/.m2.
 ```xml
 <?xml version="1.0" encoding="UTF8"?>
 <toolchains>
