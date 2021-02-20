@@ -1,8 +1,8 @@
-package com.tuware.msbuild.specs
+package com.tuware.msbuild.application
 
 import spock.lang.Specification
 
-class HelloSpockSpec extends Specification {
+class ConsoleAppServiceSpec extends Specification {
 
     def "length of Spock's and his friends' names"() {
         expect:
