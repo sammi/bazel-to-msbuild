@@ -1,4 +1,4 @@
-package com.tuware.msbuild.application.adapter;
+package com.tuware.msbuild.adapter;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.contract.adapter.AdapterException;

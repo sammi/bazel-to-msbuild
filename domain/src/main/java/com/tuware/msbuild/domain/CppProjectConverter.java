@@ -3,8 +3,7 @@ package com.tuware.msbuild.domain;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.ApplicationAdapter;
-import com.tuware.msbuild.contract.io.BazelQuery;
-import com.tuware.msbuild.contract.io.BazelQueryException;
+import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
 import com.tuware.msbuild.contract.template.CppProjectTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +12,11 @@ import java.util.UUID;
 @Component
 public class CppProjectConverter implements Converter{
 
-    private BazelQuery<Build.QueryResult> packageQuery;
+    private BazelQueryAdapter<Build.QueryResult> packageQuery;
     private TemplateFactory templateFactory;
     private ApplicationAdapter applicationAdapter;
 
-    public CppProjectConverter(BazelQuery<Build.QueryResult> packageQuery, TemplateFactory templateFactory, ApplicationAdapter applicationAdapter) {
+    public CppProjectConverter(BazelQueryAdapter<Build.QueryResult> packageQuery, TemplateFactory templateFactory, ApplicationAdapter applicationAdapter) {
         this.applicationAdapter = applicationAdapter;
         this.packageQuery = packageQuery;
         this.templateFactory = templateFactory;
@@ -29,14 +28,14 @@ public class CppProjectConverter implements Converter{
         Build.QueryResult queryResult;
         try {
             queryResult = packageQuery.query(bazelProjectRootPath, "...");
-        } catch (BazelQueryException e) {
+        } catch (AdapterException e) {
             throw new ConverterException(e);
         }
 
         String sourceFile;
         try {
             sourceFile = packageQuery.getSourceFile(queryResult);
-        } catch (BazelQueryException e) {
+        } catch (AdapterException e) {
             throw new ConverterException(e);
         }
 

@@ -2,7 +2,7 @@ package com.tuware.msbuild.domain
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import com.tuware.msbuild.contract.adapter.ApplicationAdapter
-import com.tuware.msbuild.contract.io.BazelQuery
+import com.tuware.msbuild.contract.adapter.BazelQueryAdapter
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
 
@@ -11,7 +11,7 @@ class CppProjectConverterSpec extends Specification{
     def "convert bazel cpp project to visual studio msbuild project and solution"() {
 
         given:
-        BazelQuery<Build.QueryResult> packageQuery = Mock()
+        BazelQueryAdapter<Build.QueryResult> packageQuery = Mock()
         TemplateFactory templateFactory = Mock()
         ApplicationAdapter applicationAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, templateFactory, applicationAdapter)

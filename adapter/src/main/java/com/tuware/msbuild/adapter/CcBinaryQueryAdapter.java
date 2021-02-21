@@ -1,28 +1,33 @@
-package com.tuware.msbuild.application.io;
+package com.tuware.msbuild.adapter;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
-import com.tuware.msbuild.contract.io.BazelQuery;
-import com.tuware.msbuild.contract.io.BazelQueryException;
+import com.tuware.msbuild.contract.adapter.AdapterException;
+import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CcBinaryQuery {
+public class CcBinaryQueryAdapter {
 
-    private BazelQuery<Build.QueryResult> packageQuery;
-    private BazelQuery<AnalysisProtosV2.CqueryResult> actionQuery;
+    private BazelQueryAdapter<Build.QueryResult> packageQuery;
+    private BazelQueryAdapter<AnalysisProtosV2.CqueryResult> actionQuery;
 
-    public CcBinaryQuery(BazelQuery<Build.QueryResult> packageQuery, BazelQuery<AnalysisProtosV2.CqueryResult> actionQuery) {
+    public CcBinaryQueryAdapter(BazelQueryAdapter<Build.QueryResult> packageQuery, BazelQueryAdapter<AnalysisProtosV2.CqueryResult> actionQuery) {
         this.packageQuery = packageQuery;
         this.actionQuery = actionQuery;
     }
 
-    List<String> query(String bazelProjectRootPath, String query) throws BazelQueryException {
+    List<String> query(String bazelProjectRootPath, String query) throws AdapterException {
 
-        Build.QueryResult queryResult = packageQuery.query(bazelProjectRootPath, query);
+        Build.QueryResult queryResult;
+        try {
+            queryResult = packageQuery.query(bazelProjectRootPath, query);
+        } catch (com.tuware.msbuild.contract.adapter.AdapterException e) {
+            throw new AdapterException(e);
+        }
 
         List<String> sourceFileList = new ArrayList<>();
 
@@ -39,9 +44,14 @@ public class CcBinaryQuery {
         return sourceFileList;
     }
 
-    List<String> cquery(String bazelProjectRootPath, String location) throws BazelQueryException {
+    List<String> cquery(String bazelProjectRootPath, String location) throws AdapterException {
 
-        AnalysisProtosV2.CqueryResult queryResult = actionQuery.query(bazelProjectRootPath, location);
+        AnalysisProtosV2.CqueryResult queryResult;
+        try {
+            queryResult = actionQuery.query(bazelProjectRootPath, location);
+        } catch (com.tuware.msbuild.contract.adapter.AdapterException e) {
+            throw new AdapterException(e);
+        }
 
         List<String> sourceFileList = new ArrayList<>();
 
@@ -57,6 +67,5 @@ public class CcBinaryQuery {
 
         return sourceFileList;
     }
-
 
 }
