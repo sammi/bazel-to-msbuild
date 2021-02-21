@@ -1,7 +1,6 @@
 package com.tuware.msbuild.contract.msbuild.project;
 
 import com.tuware.msbuild.contract.msbuild.property.*;
-import com.tuware.msbuild.contract.msbuild.property.*;
 import lombok.*;
 
 @Builder

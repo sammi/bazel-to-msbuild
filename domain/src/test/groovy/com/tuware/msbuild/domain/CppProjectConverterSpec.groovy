@@ -1,10 +1,13 @@
 package com.tuware.msbuild.domain
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
-import com.tuware.msbuild.contract.adapter.ApplicationAdapter
+import com.tuware.msbuild.contract.adapter.BazelQueryMapper
+import com.tuware.msbuild.contract.adapter.XmlFileGeneratorAdapter
 import com.tuware.msbuild.contract.adapter.BazelQueryAdapter
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
+
+import java.rmi.MarshalledObject
 
 class CppProjectConverterSpec extends Specification{
 
@@ -13,11 +16,12 @@ class CppProjectConverterSpec extends Specification{
         given:
         BazelQueryAdapter<Build.QueryResult> packageQuery = Mock()
         TemplateFactory templateFactory = Mock()
-        ApplicationAdapter applicationAdapter = Mock()
-        CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, templateFactory, applicationAdapter)
+        BazelQueryMapper bazelQueryMapper = Mock()
+        XmlFileGeneratorAdapter applicationAdapter = Mock()
+        CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, templateFactory, applicationAdapter, bazelQueryMapper)
         String bazelProjectRootPath = "project_absolute_file_path"
         Build.QueryResult queryResult = Build.QueryResult.newBuilder().build()
-        String sourceFile ="someFile.cpp"
+        def sourceFileList = ["someFile.cpp"]
         CppProjectTemplate cppProjectTemplate = CppProjectTemplate.builder().build()
 
         when: "call convert method"
@@ -25,9 +29,9 @@ class CppProjectConverterSpec extends Specification{
 
         then: "run bazel query, get source file from the query result, build msbuild project xml, and save msvc project and solution xml files"
         1 * packageQuery.query(bazelProjectRootPath, "...") >> queryResult
-        1 * packageQuery.getSourceFile(queryResult) >> sourceFile
-        1 * templateFactory.createCppProject(sourceFile, _) >> cppProjectTemplate
-        1 * applicationAdapter.saveMsbuildProjectXmlFile(cppProjectTemplate, _)
+        1 * bazelQueryMapper.getCcBinarySourceFromPackage(queryResult) >> sourceFileList
+        1 * templateFactory.createCppProject(sourceFileList.get(0), _) >> cppProjectTemplate
+        1 * applicationAdapter.generateXmlFiles(cppProjectTemplate, _)
     }
 
 }

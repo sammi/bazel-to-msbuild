@@ -10,24 +10,19 @@ import java.io.IOException;
 @Component
 public class PackageQueryAdapter implements BazelQueryAdapter<Build.QueryResult> {
 
-    private DefaultApplicationAdapter defaultApplicationAdapter;
+    private BazelProcessBuilder bazelProcessBuilder;
 
-    public PackageQueryAdapter(DefaultApplicationAdapter defaultApplicationAdapter) {
-        this.defaultApplicationAdapter = defaultApplicationAdapter;
+    public PackageQueryAdapter(BazelProcessBuilder bazelProcessBuilder) {
+        this.bazelProcessBuilder = bazelProcessBuilder;
     }
 
     @Override
     public Build.QueryResult query(String bazelProjectRootPath, String query) throws AdapterException {
         try {
-            Process process = defaultApplicationAdapter.startBazelQueryProcess(bazelProjectRootPath, "query", query);
+            Process process = bazelProcessBuilder.startBazelQueryProcess(bazelProjectRootPath, "query", query);
             return Build.QueryResult.parseFrom(process.getInputStream());
         } catch (AdapterException | IOException e) {
             throw new AdapterException(e);
         }
-    }
-
-    @Override
-    public String getSourceFile(Build.QueryResult queryResult) throws AdapterException {
-        throw new AdapterException("Not implemented yet");
     }
 }
