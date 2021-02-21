@@ -3,15 +3,14 @@ package com.tuware.msbuild.adapters.bazel;
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CcBinary {
 
-    List<String> query(String bazelProjectRootPath, String location) throws IOException {
+    List<String> query(String bazelProjectRootPath, String query) throws InterruptedException {
 
-        Build.QueryResult queryResult = QueryUtils.query(bazelProjectRootPath, location);
+        Build.QueryResult queryResult = QueryUtils.query(bazelProjectRootPath, query);
 
         List<String> sourceFileList = new ArrayList<>();
 
@@ -28,7 +27,7 @@ public class CcBinary {
         return sourceFileList;
     }
 
-    List<String> cquery(String bazelProjectRootPath, String location) throws IOException {
+    List<String> cquery(String bazelProjectRootPath, String location) throws InterruptedException {
 
         AnalysisProtosV2.CqueryResult queryResult = QueryUtils.cquery(bazelProjectRootPath, location);
 

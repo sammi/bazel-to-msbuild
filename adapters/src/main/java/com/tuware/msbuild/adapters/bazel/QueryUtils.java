@@ -3,43 +3,61 @@ package com.tuware.msbuild.adapters.bazel;
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.*;
 
 public class QueryUtils {
 
-    private QueryUtils() {
+    private QueryUtils() {}
+
+    public static Build.QueryResult query(String bazelProjectRootPath, String query) throws InterruptedException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        try {
+            Process process = startBazelBuildProcess(bazelProjectRootPath, "query", query);
+            Future<Build.QueryResult> future = executor.submit(
+                    () -> Build.QueryResult.parseFrom(process.getInputStream())
+            );
+            return future.get();
+        } catch (IOException | ExecutionException e) {
+            throw new BazelException(e);
+        } finally {
+            executor.shutdown();
+        }
     }
 
-    public static Build.QueryResult query(String bazelProjectRootPath, String location) throws IOException {
-        List<String> commands = Arrays.asList(
-                "cmd.exe",
-                "/c",
-                "bazel",
-                "query",
-                location,
-                "--output=proto");
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.directory(new File(bazelProjectRootPath));
-        processBuilder.command(commands);
-        Process process = processBuilder.start();
-        return Build.QueryResult.parseFrom(process.getInputStream());
+    public static AnalysisProtosV2.CqueryResult cquery(String bazelProjectRootPath, String query) throws InterruptedException {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        try {
+            Process process = startBazelBuildProcess(bazelProjectRootPath, "cquery", query);
+            Future<AnalysisProtosV2.CqueryResult> future = executor.submit(
+                    () -> AnalysisProtosV2.CqueryResult.parseFrom(process.getInputStream())
+            );
+            return future.get();
+        } catch (IOException | ExecutionException e) {
+            throw new BazelException(e);
+        } finally {
+            executor.shutdown();
+        }
     }
 
-    public static AnalysisProtosV2.CqueryResult cquery(String bazelProjectRootPath, String location) throws IOException {
-        List<String> commands = Arrays.asList(
-                "cmd.exe",
-                "/c",
-                "bazel",
-                "cquery",
-                location,
-                "--output=proto");
+    private static Process startBazelBuildProcess(String bazelProjectRootPath, String command, String query) throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.directory(new File(bazelProjectRootPath));
-        processBuilder.command(commands);
-        Process process = processBuilder.start();
-        return AnalysisProtosV2.CqueryResult.parseFrom(process.getInputStream());
+        Process whereProcess = Runtime.getRuntime().exec("where bazel.cmd");
+        String bazelAbsolutePath;
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(whereProcess.getInputStream()))) {
+            bazelAbsolutePath = new File(in.readLine()).getAbsolutePath();
+            //--batch is required, otherwise the files will be holding after tests are done, it will break mvn clean later.
+            List<String> commands = Arrays.asList(
+                    bazelAbsolutePath,
+                    "--batch",
+                    command,
+                    query,
+                    "--output=proto");
+            processBuilder.directory(new File(bazelProjectRootPath));
+            processBuilder.command(commands);
+            return processBuilder.start();
+        }
     }
 }

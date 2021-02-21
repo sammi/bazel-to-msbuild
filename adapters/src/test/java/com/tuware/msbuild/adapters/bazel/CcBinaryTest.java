@@ -1,6 +1,6 @@
 package com.tuware.msbuild.adapters.bazel;
 
-import org.junit.jupiter.api.Disabled;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 
@@ -10,25 +10,23 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-//when run bazel command, the process cannot be stop gracefully, it will generate flaky tests
-//When run mav clean, it complains that adapters target is being used and cannot be deleted.
-@Disabled
+@Slf4j
 class CcBinaryTest {
 
     @Test
-    void query() throws IOException {
+    void query() throws IOException, InterruptedException {
         CcBinary ccBinary = new CcBinary();
         File file = new ClassPathResource("stage1").getFile();
         List<String> sourceFiles = ccBinary.query(file.getAbsolutePath(), "...");
-        sourceFiles.forEach(System.out::println);
+        sourceFiles.forEach(log::info);
         assertEquals(1, sourceFiles.size());
     }
 
     @Test
-    void cquery() throws IOException {
+    void cquery() throws IOException, InterruptedException {
         CcBinary ccBinary = new CcBinary();
         List<String> sourceFiles = ccBinary.cquery(new ClassPathResource("stage3").getFile().getAbsolutePath(), "...");
-        sourceFiles.forEach(System.out::println);
+        sourceFiles.forEach(log::info);
         assertEquals(3, sourceFiles.size());
     }
 }
