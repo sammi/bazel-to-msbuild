@@ -1,4 +1,4 @@
-package com.tuware.msbuild.domain.port;
+package com.tuware.msbuild.port;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.domain.msbuild.project.Project;
