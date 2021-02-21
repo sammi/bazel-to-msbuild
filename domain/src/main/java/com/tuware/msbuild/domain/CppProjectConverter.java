@@ -17,9 +17,10 @@ public class CppProjectConverter implements Converter{
     private BazelQueryAdapter<Build.QueryResult> packageQuery;
     private TemplateFactory templateFactory;
     private XmlFileGeneratorAdapter xmlFileGeneratorAdapter;
-    private BazelQueryMapper bazelQueryMapper;
+    private BazelQueryMapper<Build.QueryResult> bazelQueryMapper;
 
-    public CppProjectConverter(BazelQueryAdapter<Build.QueryResult> packageQuery, TemplateFactory templateFactory, XmlFileGeneratorAdapter xmlFileGeneratorAdapter, BazelQueryMapper bazelQueryMapper) {
+    public CppProjectConverter(BazelQueryAdapter<Build.QueryResult> packageQuery, TemplateFactory templateFactory, XmlFileGeneratorAdapter xmlFileGeneratorAdapter,
+                               BazelQueryMapper<Build.QueryResult> bazelQueryMapper) {
         this.packageQuery = packageQuery;
         this.templateFactory = templateFactory;
         this.xmlFileGeneratorAdapter = xmlFileGeneratorAdapter;
@@ -36,7 +37,7 @@ public class CppProjectConverter implements Converter{
             throw new ConverterException(e);
         }
 
-        List<String> sourceFileList =  bazelQueryMapper.getCcBinarySourceFromPackage(queryResult);
+        List<String> sourceFileList =  bazelQueryMapper.getCppSourceFiles(queryResult);
 
         String projectUuid = UUID.randomUUID().toString();
         CppProjectTemplate cppProjectTemplate = templateFactory.createCppProject(sourceFileList.get(0), projectUuid);

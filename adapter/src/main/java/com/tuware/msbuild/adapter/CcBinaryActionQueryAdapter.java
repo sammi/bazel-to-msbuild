@@ -9,27 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CcBinaryQueryAdapter implements BazelQueryMapper {
+public class CcBinaryActionQueryAdapter  implements BazelQueryMapper<AnalysisProtosV2.CqueryResult> {
 
     @Override
-    public List<String> getCcBinarySourceFromPackage(Build.QueryResult queryResult) {
-        List<String> sourceFileList = new ArrayList<>();
-
-        queryResult.getTargetList().stream()
-                .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
-                .map(Build.Target::getRule)
-                .filter(rule -> rule.getRuleClass().equals("cc_binary"))
-                .forEach(
-                        rule -> rule.getRuleInputList().stream()
-                                .filter(ruleInput -> !ruleInput.contains("@"))
-                                .forEach(sourceFileList::add)
-                );
-
-        return sourceFileList;
-    }
-
-    @Override
-    public List<String> getCcBinarySourceFromAction(AnalysisProtosV2.CqueryResult cqueryResult){
+    public List<String> getCppSourceFiles(AnalysisProtosV2.CqueryResult cqueryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
         cqueryResult.getResultsList().stream()

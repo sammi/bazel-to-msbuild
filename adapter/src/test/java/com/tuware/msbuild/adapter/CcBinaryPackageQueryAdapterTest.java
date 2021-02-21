@@ -14,25 +14,28 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CcBinaryQueryAdapterTest {
+class CcBinaryPackageQueryAdapterTest {
 
     private BazelQueryAdapter<Build.QueryResult> packageQuery;
     private BazelQueryAdapter<AnalysisProtosV2.CqueryResult> actionQuery;
-    private CcBinaryQueryAdapter ccBinaryQueryAdapter;
+    private CcBinaryPackageQueryAdapter ccBinaryPackageQueryAdapter;
+    private CcBinaryActionQueryAdapter ccBinaryActionQueryAdapter;
 
     @BeforeEach
     void setup() {
         BazelProcessBuilder bazelProcessBuilder = new BazelProcessBuilder();
         this.packageQuery = new PackageQueryAdapter(bazelProcessBuilder);
         this.actionQuery = new ActionQueryAdapter(bazelProcessBuilder);
-        ccBinaryQueryAdapter = new CcBinaryQueryAdapter();
+        this.ccBinaryPackageQueryAdapter = new CcBinaryPackageQueryAdapter();
+        this.ccBinaryActionQueryAdapter = new CcBinaryActionQueryAdapter();
+
     }
 
     @Test
     void query() throws IOException, AdapterException {
         File file = new ClassPathResource("stage1").getFile();
         Build.QueryResult queryResult = packageQuery.query(file.getAbsolutePath(), "...");
-        List<String> sourceFiles = ccBinaryQueryAdapter.getCcBinarySourceFromPackage(queryResult);
+        List<String> sourceFiles = ccBinaryPackageQueryAdapter.getCppSourceFiles(queryResult);
         assertEquals(1, sourceFiles.size());
     }
 
@@ -40,7 +43,7 @@ class CcBinaryQueryAdapterTest {
     void cquery() throws IOException, AdapterException {
         File file = new ClassPathResource("stage3").getFile();
         AnalysisProtosV2.CqueryResult cqueryResult = actionQuery.query(file.getAbsolutePath(), "...");
-        List<String> sourceFiles = ccBinaryQueryAdapter.getCcBinarySourceFromAction(cqueryResult);
+        List<String> sourceFiles = ccBinaryActionQueryAdapter.getCppSourceFiles(cqueryResult);
         assertEquals(3, sourceFiles.size());
     }
 }

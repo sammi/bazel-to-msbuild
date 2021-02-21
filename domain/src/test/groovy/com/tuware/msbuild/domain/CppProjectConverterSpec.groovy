@@ -27,7 +27,7 @@ class CppProjectConverterSpec extends Specification{
 
         then: "run bazel query, get source file from the query result, build msbuild project xml, and save msvc project and solution xml files"
         1 * packageQuery.query(bazelProjectRootPath, "...") >> queryResult
-        1 * bazelQueryMapper.getCcBinarySourceFromPackage(queryResult) >> sourceFileList
+        1 * bazelQueryMapper.getCppSourceFiles(queryResult) >> sourceFileList
         1 * templateFactory.createCppProject(sourceFileList.get(0), _) >> cppProjectTemplate
         1 * applicationAdapter.generateXmlFiles(cppProjectTemplate, _)
     }
