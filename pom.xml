@@ -18,11 +18,6 @@
     <version>0.1.0-SNAPSHOT</version>
     <name>bazel-to-msbuild</name>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,7 +41,6 @@
     </dependencies>
 
     <build>
-        <finalName>base</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -71,8 +65,8 @@
     </build>
 
     <modules>
+        <module>domain</module>
         <module>application</module>
-        <module>adapters</module>
     </modules>
 
 </project>
