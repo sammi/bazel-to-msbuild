@@ -1,4 +1,4 @@
-package com.tuware.msbuild.application.bazel;
+package com.tuware.msbuild.application.query;
 
 import java.io.File;
 import java.io.IOException;

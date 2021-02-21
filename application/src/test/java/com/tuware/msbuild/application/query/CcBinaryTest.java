@@ -1,4 +1,4 @@
-package com.tuware.msbuild.application.bazel;
+package com.tuware.msbuild.application.query;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
