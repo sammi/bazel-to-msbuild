@@ -12,8 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class SolutionGeneratorTest {
 
@@ -46,7 +45,7 @@ class SolutionGeneratorTest {
                 .replaceAll("16809c39-239c-40a0-a257-1b846d94ca18", projectGuid.toString())
                 .replaceAll("a73d7e39-016f-4e07-834c-29cdf3baa343", solutionGuid.toString());
 
-        assertThat(message.trim(), equalTo(expect.trim()));
+        assertThat(message.trim()).isEqualTo(expect.trim());
     }
 
 }

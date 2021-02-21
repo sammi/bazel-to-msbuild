@@ -10,8 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ProjectGeneratorTest {
@@ -34,18 +33,18 @@ class ProjectGeneratorTest {
 
         String xml = projectGenerator.createProjectFilters(sourceFilesFilterGuid, headerFilesFilterGuid, resourceFilesFilterGuid);
 
-        assertThat(xml, equalTo(
+        assertThat(xml).isEqualTo(
                 readTextFromFile("/App.vcxproj.filters")
                 .replaceAll("4FC737F1-C7A5-4376-A066-2A32D752A2FF", id1.toString())
                 .replaceAll("93995380-89BD-4b04-88EB-625FBE52EBFB", id2.toString())
                 .replaceAll("67DA6AB6-F800-4c08-8B7A-83BB121AAD01", id3.toString())
-        ));
+        );
     }
 
 
     @Test
     void createProjectUser() throws URISyntaxException, IOException {
-        assertThat(projectGenerator.createProjectUser(), equalTo(readTextFromFile("/App.vcxproj.user")));
+        assertThat(projectGenerator.createProjectUser()).isEqualTo(readTextFromFile("/App.vcxproj.user"));
     }
 
     @Test
