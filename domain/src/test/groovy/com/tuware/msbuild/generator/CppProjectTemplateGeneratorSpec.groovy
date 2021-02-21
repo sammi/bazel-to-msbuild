@@ -14,12 +14,12 @@ class CppProjectTemplateGeneratorSpec extends Specification {
         CppProjectGenerator cppProjectGenerator = new CppProjectGenerator()
 
         when:
-        CppProjectTemplate cppProject = cppProjectGenerator.createProject(sourceFile, projectUuid)
+        CppProjectTemplate cppProjectTemplate = cppProjectGenerator.createProject(sourceFile, projectUuid)
 
         then:
-        cppProject.getGlobals().getProjectGuid() == projectUuid
-        cppProject.getDefaultTargets() == "Build"
-        cppProject.getClCompileItemGroup().getClCompileList().get(0).getInclude() == sourceFile
+        cppProjectTemplate.getGlobals().getProjectGuid() == projectUuid
+        cppProjectTemplate.getDefaultTargets() == "Build"
+        cppProjectTemplate.getClCompileItemGroup().getClCompileList().get(0).getInclude() == sourceFile
     }
 
     def "create default c++ project user template"() {
