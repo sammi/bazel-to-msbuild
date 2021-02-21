@@ -1,7 +1,8 @@
-package com.tuware.msbuild.usecase
+package com.tuware.msbuild.usecase.generator
 
 import com.tuware.msbuild.contract.msbuild.project.Project
 import com.tuware.msbuild.contract.template.CppProjectTemplate
+import com.tuware.msbuild.usecase.generator.CppProjectGenerator
 import spock.lang.Specification
 
 class CppProjectTemplateGeneratorSpec extends Specification {

@@ -1,4 +1,4 @@
-package com.tuware.msbuild.usecase;
+package com.tuware.msbuild.usecase.generator;
 
 import com.tuware.msbuild.contract.msbuild.Pair;
 import com.tuware.msbuild.contract.msbuild.solution.*;
@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Component
-class SolutionGenerator {
+public class SolutionGenerator {
 
     static final String DEBUG_X_64 = "Debug|x64";
     static final String DEBUG_X_86 = "Debug|x86";
@@ -22,11 +22,11 @@ class SolutionGenerator {
 
     private MsBuildEnvironment msBuildEnvironment;
 
-    SolutionGenerator(MsBuildEnvironment msBuildEnvironment) {
+    public SolutionGenerator(MsBuildEnvironment msBuildEnvironment) {
         this.msBuildEnvironment = msBuildEnvironment;
     }
 
-    Solution buildConsoleApp(
+    public Solution buildConsoleApp(
             String name,
             String location,
             Path solutionPath,

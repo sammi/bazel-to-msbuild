@@ -1,4 +1,4 @@
-package com.tuware.msbuild.usecase;
+package com.tuware.msbuild.usecase.generator;
 
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.*;
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-class CppProjectGenerator {
+public class CppProjectGenerator {
 
-    CppProjectTemplate createProject(String cppFileName, String projectGuild) {
+    public CppProjectTemplate createProject(String cppFileName, String projectGuild) {
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(
@@ -115,11 +115,11 @@ class CppProjectGenerator {
                 .build();
     }
 
-    Project createProjectUser() {
+    public Project createProjectUser() {
         return  Project.builder().toolsVersion("Current").build();
     }
 
-    Project createProjectFilter(String sourceFilesFilterGuid, String headerFilesFilterGuid, String resourceFilesFilterGuid) {
+    public Project createProjectFilter(String sourceFilesFilterGuid, String headerFilesFilterGuid, String resourceFilesFilterGuid) {
 
         String sourceFilesFilterName = "Source Files";
 

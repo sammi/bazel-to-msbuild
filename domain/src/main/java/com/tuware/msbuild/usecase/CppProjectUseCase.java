@@ -6,6 +6,7 @@ import com.tuware.msbuild.contract.adapter.ApplicationAdapter;
 import com.tuware.msbuild.contract.io.BazelQuery;
 import com.tuware.msbuild.contract.io.BazelQueryException;
 import com.tuware.msbuild.contract.template.CppProjectTemplate;
+import com.tuware.msbuild.usecase.generator.CppProjectGenerator;
 import org.springframework.stereotype.Component;
 
 @Component

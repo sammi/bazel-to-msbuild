@@ -1,8 +1,9 @@
-package com.tuware.msbuild.usecase
+package com.tuware.msbuild.usecase.generator
 
 import com.tuware.msbuild.contract.msbuild.solution.MSBuildVersion
 import com.tuware.msbuild.contract.msbuild.solution.MsBuildEnvironment
 import com.tuware.msbuild.contract.msbuild.solution.Solution
+import com.tuware.msbuild.usecase.generator.SolutionGenerator
 import spock.lang.Specification
 
 import java.nio.file.Paths
