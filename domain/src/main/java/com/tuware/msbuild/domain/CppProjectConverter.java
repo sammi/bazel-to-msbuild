@@ -2,9 +2,9 @@ package com.tuware.msbuild.domain;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.AdapterException;
+import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
 import com.tuware.msbuild.contract.adapter.BazelQueryMapper;
 import com.tuware.msbuild.contract.adapter.XmlFileGeneratorAdapter;
-import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
 import com.tuware.msbuild.contract.template.CppProjectTemplate;
 import org.springframework.stereotype.Component;
 

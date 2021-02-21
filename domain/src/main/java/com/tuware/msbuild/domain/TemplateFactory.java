@@ -2,8 +2,8 @@ package com.tuware.msbuild.domain;
 
 import com.tuware.msbuild.contract.msbuild.Pair;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
-import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.project.Project;
+import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
 import com.tuware.msbuild.contract.msbuild.solution.*;
 import com.tuware.msbuild.contract.template.CppProjectTemplate;
