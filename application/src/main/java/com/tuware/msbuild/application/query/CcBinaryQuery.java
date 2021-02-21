@@ -2,18 +2,19 @@ package com.tuware.msbuild.application.query;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
+import com.tuware.msbuild.io.BazelQuery;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CcBinary {
+public class CcBinaryQuery {
 
     private BazelQuery<Build.QueryResult> packageQuery;
     private BazelQuery<AnalysisProtosV2.CqueryResult> actionQuery;
 
-    public CcBinary(BazelQuery<Build.QueryResult> packageQuery, BazelQuery<AnalysisProtosV2.CqueryResult> actionQuery) {
+    public CcBinaryQuery(BazelQuery<Build.QueryResult> packageQuery, BazelQuery<AnalysisProtosV2.CqueryResult> actionQuery) {
         this.packageQuery = packageQuery;
         this.actionQuery = actionQuery;
     }

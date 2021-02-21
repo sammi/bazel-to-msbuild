@@ -1,4 +1,4 @@
-package com.tuware.msbuild.application.xml;
+package com.tuware.msbuild.application.exception;
 
 public class BuildXmlException extends RuntimeException {
 

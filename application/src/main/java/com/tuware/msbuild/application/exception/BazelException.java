@@ -1,4 +1,4 @@
-package com.tuware.msbuild.application.query;
+package com.tuware.msbuild.application.exception;
 
 public class BazelException extends RuntimeException {
 
