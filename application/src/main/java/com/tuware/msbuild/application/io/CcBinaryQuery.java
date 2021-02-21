@@ -1,8 +1,9 @@
-package com.tuware.msbuild.application.query;
+package com.tuware.msbuild.application.io;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
-import com.tuware.msbuild.io.BazelQuery;
+import com.tuware.msbuild.contract.io.BazelQuery;
+import com.tuware.msbuild.contract.io.BazelQueryException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class CcBinaryQuery {
         this.actionQuery = actionQuery;
     }
 
-    List<String> query(String bazelProjectRootPath, String query) throws InterruptedException {
+    List<String> query(String bazelProjectRootPath, String query) throws BazelQueryException {
 
         Build.QueryResult queryResult = packageQuery.query(bazelProjectRootPath, query);
 
@@ -38,7 +39,7 @@ public class CcBinaryQuery {
         return sourceFileList;
     }
 
-    List<String> cquery(String bazelProjectRootPath, String location) throws InterruptedException {
+    List<String> cquery(String bazelProjectRootPath, String location) throws BazelQueryException {
 
         AnalysisProtosV2.CqueryResult queryResult = actionQuery.query(bazelProjectRootPath, location);
 

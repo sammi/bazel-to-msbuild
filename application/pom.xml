@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.tuware.msbuild</groupId>
-            <artifactId>domain</artifactId>
+            <artifactId>contract</artifactId>
             <version>${project.version}</version>
         </dependency>
 
