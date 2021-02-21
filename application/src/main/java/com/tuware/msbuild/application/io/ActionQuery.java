@@ -28,4 +28,9 @@ public class ActionQuery implements BazelQuery<AnalysisProtosV2.CqueryResult> {
         }
     }
 
+    @Override
+    public String getSourceFile(AnalysisProtosV2.CqueryResult queryResult) throws BazelQueryException {
+        throw new BazelQueryException("Not Implemented yet");
+    }
+
 }

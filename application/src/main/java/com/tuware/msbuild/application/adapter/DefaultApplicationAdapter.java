@@ -3,6 +3,7 @@ package com.tuware.msbuild.application.adapter;
 import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.ApplicationAdapter;
+import com.tuware.msbuild.contract.template.CppProjectTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -18,20 +19,9 @@ import java.util.List;
 public class DefaultApplicationAdapter implements ApplicationAdapter {
 
     private Handlebars handlebars;
+
     public DefaultApplicationAdapter(Handlebars handlebars) {
         this.handlebars = handlebars;
-    }
-
-    @Override
-    public String buildXml(String resourcePath, Object data) throws AdapterException {
-        Path path;
-        try {
-            path = Paths.get(DefaultApplicationAdapter.class.getResource(resourcePath).toURI());
-            String template = String.join("\n", Files.readAllLines(path));
-            return handlebars.prettyPrint(true).compileInline(template).apply(data);
-        } catch (URISyntaxException | IOException e) {
-            throw new AdapterException(String.format("Failed to build xml file from template: %s", resourcePath), e);
-        }
     }
 
     @Override
@@ -52,6 +42,28 @@ public class DefaultApplicationAdapter implements ApplicationAdapter {
             return processBuilder.start();
         } catch (IOException e) {
             throw new AdapterException(e);
+        }
+    }
+
+    @Override
+    public void saveMsbuildProjectXmlFile(CppProjectTemplate cppProjectTemplate, String projectName) throws AdapterException {
+        String xml = buildXml("/templates/vcxproj.hbs", cppProjectTemplate);
+        try {
+            Files.write(Paths.get(String.format("%s.sln", projectName)), xml.getBytes());
+        } catch (IOException e) {
+            throw new AdapterException("Failed to write context to file system.", e);
+        }
+
+    }
+
+    private String buildXml(String xmlTemplateFilePath, Object data) throws AdapterException {
+        Path path;
+        try {
+            path = Paths.get(DefaultApplicationAdapter.class.getResource(xmlTemplateFilePath).toURI());
+            String template = String.join("\n", Files.readAllLines(path));
+            return handlebars.prettyPrint(true).compileInline(template).apply(data);
+        } catch (URISyntaxException | IOException e) {
+            throw new AdapterException(String.format("Failed to build xml file from template: %s", xmlTemplateFilePath), e);
         }
     }
 

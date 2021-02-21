@@ -27,4 +27,9 @@ public class PackageQuery implements BazelQuery<Build.QueryResult> {
             throw new BazelQueryException(e);
         }
     }
+
+    @Override
+    public String getSourceFile(Build.QueryResult queryResult)  throws BazelQueryException {
+        throw new BazelQueryException("Not implemented yet");
+    }
 }

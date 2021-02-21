@@ -12,7 +12,6 @@
     <artifactId>domain</artifactId>
 
     <properties>
-        <delombok-maven-plugin.version>1.18.10.0</delombok-maven-plugin.version>
         <groovy.version>3.0.7</groovy.version>
         <spock.version>2.0-M4-groovy-3.0</spock.version>
     </properties>
@@ -37,11 +36,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
             <scope>test</scope>
@@ -55,29 +49,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>${delombok-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>delombok</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-                            <outputDirectory>${project.build.directory}/delombok</outputDirectory>
-                            <addOutputDirectory>false</addOutputDirectory>
-                            <formatPreferences>
-                                <javaLangAsFQN>skip</javaLangAsFQN>
-                            </formatPreferences>
-                            <verbose>false</verbose>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
