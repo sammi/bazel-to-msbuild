@@ -11,10 +11,10 @@ import java.util.List;
 public class ExtractPackageMapper implements ExtractMapper<Build.QueryResult, List<String>> {
 
     @Override
-    public List<String> extract(Build.QueryResult queryResult) {
+    public List<String> extract(Build.QueryResult bazelQueryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
-        queryResult.getTargetList().stream()
+        bazelQueryResult.getTargetList().stream()
                 .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
                 .map(Build.Target::getRule)
                 .filter(rule -> rule.getRuleClass().equals("cc_binary"))

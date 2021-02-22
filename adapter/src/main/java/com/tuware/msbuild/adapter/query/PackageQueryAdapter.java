@@ -17,9 +17,9 @@ public class PackageQueryAdapter implements QueryAdapter<Build.QueryResult> {
     }
 
     @Override
-    public Build.QueryResult query(String bazelProjectRootPath, String query) throws AdapterException {
+    public Build.QueryResult query(String bazelProjectRootAbsolutePath, String queryExpression) throws AdapterException {
         try {
-            Process process = bazelWindowsProcessBuilder.startBazelQueryProcess(bazelProjectRootPath, "query", query);
+            Process process = bazelWindowsProcessBuilder.startBazelQueryProcess(bazelProjectRootAbsolutePath, "query", queryExpression);
             return Build.QueryResult.parseFrom(process.getInputStream());
         } catch (AdapterException | IOException e) {
             throw new AdapterException(e);

@@ -6,7 +6,7 @@ import com.tuware.msbuild.contract.msbuild.project.Project;
 public class ProjectUserComposer implements ComposerAdapter<Project, Object> {
 
     @Override
-    public Project compose(Object object) {
+    public Project compose(Object templateData) {
         return  Project.builder().toolsVersion("Current").build();
     }
 
