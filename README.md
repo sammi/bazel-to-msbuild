@@ -17,10 +17,10 @@ The project modules are organized by [hexagonal architecture](https://en.wikiped
 
 # Set up development environment
   
-## Install Bazel on Windows, make sure it is available in your PATH
+* Install Bazel on Windows, make sure it is available in your PATH
 
    https://docs.bazel.build/versions/master/install-windows.html
 
-## Install lombok plugin in intellij to support lombok annotations.
+* Install lombok plugin in intellij to support lombok annotations.
 
   https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project 
