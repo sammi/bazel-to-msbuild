@@ -1,9 +1,9 @@
 package com.tuware.msbuild.adapter.composer;
 
-import com.tuware.msbuild.contract.adapter.DataComposerAdapter;
+import com.tuware.msbuild.contract.adapter.ComposerAdapter;
 import com.tuware.msbuild.contract.msbuild.project.Project;
 
-public class ProjectUserComposer implements DataComposerAdapter<Project> {
+public class ProjectUserComposer implements ComposerAdapter<Project> {
 
     @Override
     public Project compose(String cppFileName, String projectGuild) {

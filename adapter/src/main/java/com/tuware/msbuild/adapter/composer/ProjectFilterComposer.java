@@ -1,6 +1,6 @@
 package com.tuware.msbuild.adapter.composer;
 
-import com.tuware.msbuild.contract.adapter.DataComposerAdapter;
+import com.tuware.msbuild.contract.adapter.ComposerAdapter;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.Filter;
 import com.tuware.msbuild.contract.msbuild.project.ItemGroup;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
-public class ProjectFilterComposer implements DataComposerAdapter<Project> {
+public class ProjectFilterComposer implements ComposerAdapter<Project> {
 
     @Override
     public Project compose(String cppFileName, String projectGuild) {

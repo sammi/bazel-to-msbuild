@@ -1,10 +1,10 @@
 package com.tuware.msbuild.domain
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
-import com.tuware.msbuild.contract.adapter.BazelQueryAdapter
-import com.tuware.msbuild.contract.adapter.CppProjectMapper
-import com.tuware.msbuild.contract.adapter.DataComposerAdapter
-import com.tuware.msbuild.contract.adapter.ProjectGeneratorAdapter
+import com.tuware.msbuild.contract.adapter.QueryAdapter
+import com.tuware.msbuild.contract.adapter.ExtractMapper
+import com.tuware.msbuild.contract.adapter.ComposerAdapter
+import com.tuware.msbuild.contract.adapter.GeneratorAdapter
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
 
@@ -13,10 +13,10 @@ class CppProjectConverterSpec extends Specification{
     def "convert bazel cpp project to visual studio msbuild project and solution"() {
 
         given:
-        BazelQueryAdapter<Build.QueryResult> packageQuery = Mock()
-        DataComposerAdapter<CppProjectTemplate> cppProjectComposer = Mock()
-        CppProjectMapper bazelQueryMapper = Mock()
-        ProjectGeneratorAdapter projectGeneratorAdapter = Mock()
+        QueryAdapter<Build.QueryResult> packageQuery = Mock()
+        ComposerAdapter<CppProjectTemplate> cppProjectComposer = Mock()
+        ExtractMapper bazelQueryMapper = Mock()
+        GeneratorAdapter projectGeneratorAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, cppProjectComposer, projectGeneratorAdapter, bazelQueryMapper)
         String bazelProjectRootPath = "project_absolute_file_path"
         Build.QueryResult queryResult = Build.QueryResult.newBuilder().build()

@@ -1,4 +1,4 @@
-package com.tuware.msbuild.adapter.template
+package com.tuware.msbuild.adapter.generator
 
 import com.github.jknack.handlebars.Handlebars
 import com.tuware.msbuild.contract.template.CppProjectTemplate
@@ -9,11 +9,11 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class CppProjectGeneratorSpec extends Specification {
+class GeneratorSpec extends Specification {
 
     def "Generate default template xml project file when data object is emtpy"(){
         given:
-        CppProjectGenerator cppProjectGenerator = new CppProjectGenerator(new TemplateBuilder(new Handlebars()))
+        CppGenerator cppProjectGenerator = new CppGenerator(new TemplateBuilder(new Handlebars()))
         CppProjectTemplate cppProjectTemplate = new CppProjectTemplate()
         String projectName = "test"
         String outputFolder = new ClassPathResource("/").getFile().getAbsoluteFile()

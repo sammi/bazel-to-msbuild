@@ -11,17 +11,16 @@ import java.util.UUID;
 @Component
 public class CppProjectConverter implements Converter{
 
-    private BazelQueryAdapter<Build.QueryResult> packageQuery;
-    private DataComposerAdapter<CppProjectTemplate> cppProjectComposer;
-    private ProjectGeneratorAdapter projectGeneratorAdapter;
-    private CppProjectMapper<Build.QueryResult> cppProjectMapper;
+    private QueryAdapter<Build.QueryResult> packageQuery;
+    private ComposerAdapter<CppProjectTemplate> cppProjectComposer;
+    private GeneratorAdapter generatorAdapter;
+    private ExtractMapper<Build.QueryResult> extractMapper;
 
-    public CppProjectConverter(BazelQueryAdapter<Build.QueryResult> packageQuery, DataComposerAdapter<CppProjectTemplate> cppProjectComposer, ProjectGeneratorAdapter projectGeneratorAdapter,
-                               CppProjectMapper<Build.QueryResult> cppProjectMapper) {
+    public CppProjectConverter(QueryAdapter<Build.QueryResult> packageQuery, ComposerAdapter<CppProjectTemplate> cppProjectComposer, GeneratorAdapter generatorAdapter, ExtractMapper<Build.QueryResult> extractMapper) {
         this.packageQuery = packageQuery;
         this.cppProjectComposer = cppProjectComposer;
-        this.projectGeneratorAdapter = projectGeneratorAdapter;
-        this.cppProjectMapper = cppProjectMapper;
+        this.generatorAdapter = generatorAdapter;
+        this.extractMapper = extractMapper;
     }
 
     @Override
@@ -34,14 +33,14 @@ public class CppProjectConverter implements Converter{
             throw new ConverterException(e);
         }
 
-        List<String> sourceFileList =  cppProjectMapper.getSourceFileList(queryResult);
+        List<String> sourceFileList =  extractMapper.getSourceFileList(queryResult);
 
         String projectUuid = UUID.randomUUID().toString();
         CppProjectTemplate cppProjectTemplate = cppProjectComposer.compose(sourceFileList.get(0), projectUuid);
         String projectName = "SomeName";
         String outputPath = ".";
         try {
-            projectGeneratorAdapter.generateProject(cppProjectTemplate, projectName, outputPath);
+            generatorAdapter.generateProject(cppProjectTemplate, projectName, outputPath);
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }

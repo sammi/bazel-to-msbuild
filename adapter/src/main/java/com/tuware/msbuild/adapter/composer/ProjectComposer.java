@@ -1,6 +1,6 @@
 package com.tuware.msbuild.adapter.composer;
 
-import com.tuware.msbuild.contract.adapter.DataComposerAdapter;
+import com.tuware.msbuild.contract.adapter.ComposerAdapter;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public class ProjectComposer implements DataComposerAdapter<CppProjectTemplate> {
+public class ProjectComposer implements ComposerAdapter<CppProjectTemplate> {
 
     static final String DEBUG_X_64 = "Debug|x64";
     static final String RELEASE_X_64 = "Release|x64";

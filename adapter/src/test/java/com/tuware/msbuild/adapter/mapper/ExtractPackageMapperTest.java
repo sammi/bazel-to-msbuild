@@ -4,7 +4,7 @@ import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.adapter.query.BazelWindowsProcessBuilder;
 import com.tuware.msbuild.adapter.query.PackageQueryAdapter;
 import com.tuware.msbuild.contract.adapter.AdapterException;
-import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
+import com.tuware.msbuild.contract.adapter.QueryAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -15,16 +15,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CppProjectPackageMapperTest {
+class ExtractPackageMapperTest {
 
-    private BazelQueryAdapter<Build.QueryResult> packageQuery;
-    private CppProjectPackageMapper ccBinaryPackageQueryAdapter;
+    private QueryAdapter<Build.QueryResult> packageQuery;
+    private ExtractPackageMapper ccBinaryPackageQueryAdapter;
 
     @BeforeEach
     void setup() {
         BazelWindowsProcessBuilder bazelWindowsProcessBuilder = new BazelWindowsProcessBuilder();
         this.packageQuery = new PackageQueryAdapter(bazelWindowsProcessBuilder);
-        this.ccBinaryPackageQueryAdapter = new CppProjectPackageMapper();
+        this.ccBinaryPackageQueryAdapter = new ExtractPackageMapper();
     }
 
     @Test

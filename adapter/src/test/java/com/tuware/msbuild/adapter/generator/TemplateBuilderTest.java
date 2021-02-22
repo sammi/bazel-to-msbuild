@@ -1,4 +1,4 @@
-package com.tuware.msbuild.adapter.template;
+package com.tuware.msbuild.adapter.generator;
 
 import com.github.jknack.handlebars.Handlebars;
 import org.junit.jupiter.api.Test;

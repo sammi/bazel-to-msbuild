@@ -2,13 +2,13 @@ package com.tuware.msbuild.adapter.query;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.AdapterException;
-import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
+import com.tuware.msbuild.contract.adapter.QueryAdapter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class PackageQueryAdapter implements BazelQueryAdapter<Build.QueryResult> {
+public class PackageQueryAdapter implements QueryAdapter<Build.QueryResult> {
 
     private BazelWindowsProcessBuilder bazelWindowsProcessBuilder;
 

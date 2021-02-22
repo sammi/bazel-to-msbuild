@@ -1,4 +1,4 @@
-package com.tuware.msbuild.adapter.template;
+package com.tuware.msbuild.adapter.generator;
 
 import com.github.jknack.handlebars.Handlebars;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ class TemplateBuilder {
     }
 
     String compileFromTemplateFile(String xmlTemplateFilePath, Object data) throws IOException, URISyntaxException {
-        Path path = Paths.get(CppProjectGenerator.class.getResource(xmlTemplateFilePath).toURI());
+        Path path = Paths.get(CppGenerator.class.getResource(xmlTemplateFilePath).toURI());
         String template = String.join("\n", Files.readAllLines(path));
         return handlebars.prettyPrint(true).compileInline(template).apply(data);
     }

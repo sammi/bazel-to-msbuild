@@ -4,7 +4,7 @@ import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
-class PackageQueryAdapterSpec extends Specification {
+class QueryAdapterSpec extends Specification {
 
     PackageQueryAdapter packageQueryAdapter = new PackageQueryAdapter(new BazelWindowsProcessBuilder())
 
