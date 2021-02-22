@@ -6,8 +6,7 @@ Generate msbuild project from bazel project
 # Project modules are organized by hexagonal architecture style:
 ## base
   root folder, setting up spring boot depdencies, and also groovy and spock framework
-## Install lombok plugin in intellij to support lombok annotations.
- contract
+## contract
     common interfaces and also shared msbuild model data, bazel protobuf, and related gRPC dependencies
 ## feature
     Defines the high level feature, it only depends on contract model in compile time;
