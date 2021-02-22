@@ -20,7 +20,7 @@ class GeneratorSpec extends Specification {
         Path targetFilePath = Paths.get(outputFolder + "/" + projectName + ".vcxproj")
 
         when:
-        cppProjectGenerator.generateProject(cppProjectTemplate, projectName, outputFolder)
+        cppProjectGenerator.generate(cppProjectTemplate, projectName, outputFolder)
 
         then:
         Files.exists(targetFilePath)

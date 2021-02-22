@@ -14,13 +14,13 @@ public class CppProjectConverter implements Converter {
 
     private QueryAdapter<Build.QueryResult> packageQuery;
     private ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer;
-    private GeneratorAdapter generatorAdapter;
+    private GeneratorAdapter<CppProjectTemplate> generatorAdapter;
     private ExtractMapper<Build.QueryResult, List<String>> extractMapper;
 
     public CppProjectConverter(
             QueryAdapter<Build.QueryResult> packageQuery,
             ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer,
-            GeneratorAdapter generatorAdapter,
+            GeneratorAdapter<CppProjectTemplate> generatorAdapter,
             ExtractMapper<Build.QueryResult, List<String>> extractMapper
     ) {
         this.packageQuery = packageQuery;
@@ -47,7 +47,7 @@ public class CppProjectConverter implements Converter {
                 .projectGuild(projectUuid).build();
         CppProjectTemplate cppProjectTemplate = cppProjectComposer.compose(projectInput);
         try {
-            generatorAdapter.generateProject(cppProjectTemplate, msbuildProjectName, msbuildProjectPath);
+            generatorAdapter.generate(cppProjectTemplate, msbuildProjectName, msbuildProjectPath);
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }

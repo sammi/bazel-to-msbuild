@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Component
-public class CppGenerator implements GeneratorAdapter {
+public class CppGenerator implements GeneratorAdapter<CppProjectTemplate> {
 
     private TemplateBuilder templateBuilder;
 
@@ -20,10 +20,10 @@ public class CppGenerator implements GeneratorAdapter {
     }
 
     @Override
-    public void generateProject(CppProjectTemplate cppProjectTemplate, String projectName, String outputFolder) throws AdapterException {
+    public void generate(CppProjectTemplate templateData, String projectNameWithoutExtension, String outputFolderAbsolutePath) throws AdapterException {
         try {
-            String xml = templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", cppProjectTemplate);
-            Files.write(Paths.get(String.format("%s/%s.vcxproj", outputFolder, projectName)), xml.getBytes());
+            String xml = templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", templateData);
+            Files.write(Paths.get(String.format("%s/%s.vcxproj", outputFolderAbsolutePath, projectNameWithoutExtension)), xml.getBytes());
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to write context to file system.", e);
         }

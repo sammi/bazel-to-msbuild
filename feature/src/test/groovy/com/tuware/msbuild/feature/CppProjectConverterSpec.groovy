@@ -34,7 +34,7 @@ class CppProjectConverterSpec extends Specification{
         1 * packageQuery.query(sourcePath, "...") >> queryResult
         1 * bazelQueryMapper.extract(queryResult) >> sourceFileList
         1 * cppProjectComposer.compose(_) >> cppProjectTemplate
-        1 * projectGeneratorAdapter.generateProject(cppProjectTemplate, _, _)
+        1 * projectGeneratorAdapter.generate(cppProjectTemplate, _, _)
     }
 
 }

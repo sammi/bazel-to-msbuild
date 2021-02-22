@@ -1,9 +1,7 @@
 package com.tuware.msbuild.contract.adapter;
 
-import com.tuware.msbuild.contract.template.CppProjectTemplate;
+public interface GeneratorAdapter<T> {
 
-public interface GeneratorAdapter {
-
-    void generateProject(CppProjectTemplate cppProjectTemplate, String projectName, String outputFolder)  throws AdapterException;
+    void generate(T templateData, String projectNameWithoutExtension, String outputFolderAbsolutePath)  throws AdapterException;
 
 }
