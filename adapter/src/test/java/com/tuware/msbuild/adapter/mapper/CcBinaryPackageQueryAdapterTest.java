@@ -21,23 +21,23 @@ class CcBinaryPackageQueryAdapterTest {
 
     private BazelQueryAdapter<Build.QueryResult> packageQuery;
     private BazelQueryAdapter<AnalysisProtosV2.CqueryResult> actionQuery;
-    private CcBinaryPackageMapper ccBinaryPackageQueryAdapter;
-    private CcBinaryActionMapper ccBinaryActionQueryMapper;
+    private CppProjectPackageMapper ccBinaryPackageQueryAdapter;
+    private CppProjectActionMapper ccBinaryActionQueryMapper;
 
     @BeforeEach
     void setup() {
         BazelWindowsProcessBuilder bazelWindowsProcessBuilder = new BazelWindowsProcessBuilder();
         this.packageQuery = new PackageQueryAdapter(bazelWindowsProcessBuilder);
         this.actionQuery = new ActionQueryAdapter(bazelWindowsProcessBuilder);
-        this.ccBinaryPackageQueryAdapter = new CcBinaryPackageMapper();
-        this.ccBinaryActionQueryMapper = new CcBinaryActionMapper();
+        this.ccBinaryPackageQueryAdapter = new CppProjectPackageMapper();
+        this.ccBinaryActionQueryMapper = new CppProjectActionMapper();
     }
 
     @Test
     void query() throws IOException, AdapterException {
         File file = new ClassPathResource("stage1").getFile();
         Build.QueryResult queryResult = packageQuery.query(file.getAbsolutePath(), "...");
-        List<String> sourceFiles = ccBinaryPackageQueryAdapter.getCppSourceFiles(queryResult);
+        List<String> sourceFiles = ccBinaryPackageQueryAdapter.getSourceFileList(queryResult);
         assertEquals(1, sourceFiles.size());
     }
 
@@ -45,7 +45,7 @@ class CcBinaryPackageQueryAdapterTest {
     void cquery() throws IOException, AdapterException {
         File file = new ClassPathResource("stage3").getFile();
         AnalysisProtosV2.CqueryResult cqueryResult = actionQuery.query(file.getAbsolutePath(), "...");
-        List<String> sourceFiles = ccBinaryActionQueryMapper.getCppSourceFiles(cqueryResult);
+        List<String> sourceFiles = ccBinaryActionQueryMapper.getSourceFileList(cqueryResult);
         assertEquals(3, sourceFiles.size());
     }
 }

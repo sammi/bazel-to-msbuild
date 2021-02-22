@@ -1,17 +1,17 @@
 package com.tuware.msbuild.adapter.mapper;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
-import com.tuware.msbuild.contract.adapter.QueryResultMapper;
+import com.tuware.msbuild.contract.adapter.CppProjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CcBinaryPackageMapper implements QueryResultMapper<Build.QueryResult> {
+public class CppProjectPackageMapper implements CppProjectMapper<Build.QueryResult> {
 
     @Override
-    public List<String> getCppSourceFiles(Build.QueryResult queryResult) {
+    public List<String> getSourceFileList(Build.QueryResult queryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
         queryResult.getTargetList().stream()

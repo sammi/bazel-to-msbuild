@@ -2,7 +2,7 @@ package com.tuware.msbuild.domain
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import com.tuware.msbuild.contract.adapter.BazelQueryAdapter
-import com.tuware.msbuild.contract.adapter.QueryResultMapper
+import com.tuware.msbuild.contract.adapter.CppProjectMapper
 import com.tuware.msbuild.contract.adapter.XmlFileGeneratorAdapter
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
@@ -14,7 +14,7 @@ class CppProjectConverterSpec extends Specification{
         given:
         BazelQueryAdapter<Build.QueryResult> packageQuery = Mock()
         TemplateFactory templateFactory = Mock()
-        QueryResultMapper bazelQueryMapper = Mock()
+        CppProjectMapper bazelQueryMapper = Mock()
         XmlFileGeneratorAdapter applicationAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, templateFactory, applicationAdapter, bazelQueryMapper)
         String bazelProjectRootPath = "project_absolute_file_path"
@@ -27,7 +27,7 @@ class CppProjectConverterSpec extends Specification{
 
         then: "run bazel query, get source file from the query result, build msbuild project xml, and save msvc project and solution xml files"
         1 * packageQuery.query(bazelProjectRootPath, "...") >> queryResult
-        1 * bazelQueryMapper.getCppSourceFiles(queryResult) >> sourceFileList
+        1 * bazelQueryMapper.getSourceFileList(queryResult) >> sourceFileList
         1 * templateFactory.createCppProject(sourceFileList.get(0), _) >> cppProjectTemplate
         1 * applicationAdapter.generateXmlFiles(cppProjectTemplate, _)
     }
