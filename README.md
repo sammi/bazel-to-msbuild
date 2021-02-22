@@ -4,7 +4,7 @@ bazel-to-msbuild
 Generate msbuild project from bazel project
 
 # Project Layout
-The project modules are organized by [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software) style.
+The project modules are organized by [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) style.
 ## base
   root folder, setting up spring boot depdencies, and also groovy and spock framework
 ## contract
