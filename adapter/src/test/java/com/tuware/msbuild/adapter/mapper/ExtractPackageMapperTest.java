@@ -31,7 +31,7 @@ class ExtractPackageMapperTest {
     void query() throws IOException, AdapterException {
         File file = new ClassPathResource("stage1").getFile();
         Build.QueryResult queryResult = packageQuery.query(file.getAbsolutePath(), "...");
-        List<String> sourceFiles = ccBinaryPackageQueryAdapter.getSourceFileList(queryResult);
+        List<String> sourceFiles = ccBinaryPackageQueryAdapter.extract(queryResult);
         assertEquals(1, sourceFiles.size());
     }
 
