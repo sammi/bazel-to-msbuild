@@ -1,10 +1,11 @@
 package com.tuware.msbuild.feature
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
-import com.tuware.msbuild.contract.adapter.QueryAdapter
-import com.tuware.msbuild.contract.adapter.ExtractMapper
 import com.tuware.msbuild.contract.adapter.ComposerAdapter
+import com.tuware.msbuild.contract.adapter.ExtractMapper
 import com.tuware.msbuild.contract.adapter.GeneratorAdapter
+import com.tuware.msbuild.contract.adapter.QueryAdapter
+import com.tuware.msbuild.contract.input.ProjectInput
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
 
@@ -14,7 +15,7 @@ class CppProjectConverterSpec extends Specification{
 
         given:
         QueryAdapter<Build.QueryResult> packageQuery = Mock()
-        ComposerAdapter<CppProjectTemplate> cppProjectComposer = Mock()
+        ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer = Mock()
         ExtractMapper bazelQueryMapper = Mock()
         GeneratorAdapter projectGeneratorAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, cppProjectComposer, projectGeneratorAdapter, bazelQueryMapper)
@@ -29,7 +30,7 @@ class CppProjectConverterSpec extends Specification{
         then:
         1 * packageQuery.query(bazelProjectRootPath, "...") >> queryResult
         1 * bazelQueryMapper.getSourceFileList(queryResult) >> sourceFileList
-        1 * cppProjectComposer.compose(sourceFileList.get(0), _) >> cppProjectTemplate
+        1 * cppProjectComposer.compose(_) >> cppProjectTemplate
         1 * projectGeneratorAdapter.generateProject(cppProjectTemplate, _, _)
     }
 

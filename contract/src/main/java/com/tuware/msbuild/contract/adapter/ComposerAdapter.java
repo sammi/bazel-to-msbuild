@@ -1,7 +1,7 @@
 package com.tuware.msbuild.contract.adapter;
 
-public interface ComposerAdapter<T> {
+public interface ComposerAdapter<T, I> {
 
-    T compose(String cppFileName, String projectGuild);
+    T compose(I inputData);
 
 }

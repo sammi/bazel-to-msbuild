@@ -1,6 +1,7 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.ComposerAdapter;
+import com.tuware.msbuild.contract.input.ProjectFilerInput;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.Filter;
 import com.tuware.msbuild.contract.msbuild.project.ItemGroup;
@@ -8,16 +9,15 @@ import com.tuware.msbuild.contract.msbuild.project.Project;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.UUID;
 
-public class ProjectFilterComposer implements ComposerAdapter<Project> {
+public class ProjectFilterComposer implements ComposerAdapter<Project, ProjectFilerInput> {
 
     @Override
-    public Project compose(String cppFileName, String projectGuild) {
+    public Project compose(ProjectFilerInput projectFilerInput) {
 
-        String sourceFilesFilterGuid = UUID.randomUUID().toString();
-        String headerFilesFilterGuid = UUID.randomUUID().toString();
-        String resourceFilesFilterGuid = UUID.randomUUID().toString();
+        String sourceFilesFilterGuid = projectFilerInput.getSourceFilesFilterGuid();
+        String headerFilesFilterGuid = projectFilerInput.getHeaderFilesFilterGuid();
+        String resourceFilesFilterGuid = projectFilerInput.getResourceFilesFilterGuid();
 
         String sourceFilesFilterName = "Source Files";
 

@@ -1,6 +1,7 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.ComposerAdapter;
+import com.tuware.msbuild.contract.input.SolutionInput;
 import com.tuware.msbuild.contract.msbuild.Pair;
 import com.tuware.msbuild.contract.msbuild.solution.*;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Component
-public class SolutionComposer implements ComposerAdapter<Solution> {
+public class SolutionComposer implements ComposerAdapter<Solution, SolutionInput> {
 
     private static final String DEBUG_X_64 = "Debug|x64";
     private static final String DEBUG_X_86 = "Debug|x86";
@@ -28,13 +29,13 @@ public class SolutionComposer implements ComposerAdapter<Solution> {
     }
 
     @Override
-    public Solution compose(String cppFileName, String projectGuild) {
+    public Solution compose(SolutionInput solutionInput) {
 
-        Path solutionPath = Paths.get("TODO");
-        String name = "TODO";
-        String location = "TODO";
-        UUID projectGuid = UUID.randomUUID();
-        UUID solutionGuid = UUID.randomUUID();
+        Path solutionPath = solutionInput.getSolutionPath();
+        String name = solutionInput.getName();
+        String location = solutionInput.getLocation();
+        UUID projectGuid = solutionInput.getProjectGuid();
+        UUID solutionGuid = solutionInput.getSolutionGuid();
 
         return Solution.builder()
                 .fileName(solutionPath)

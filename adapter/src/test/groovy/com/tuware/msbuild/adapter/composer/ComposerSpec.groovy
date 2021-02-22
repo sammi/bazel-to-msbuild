@@ -1,5 +1,8 @@
 package com.tuware.msbuild.adapter.composer
 
+import com.tuware.msbuild.contract.input.ProjectFilerInput
+import com.tuware.msbuild.contract.input.ProjectInput
+import com.tuware.msbuild.contract.input.SolutionInput
 import com.tuware.msbuild.contract.msbuild.project.Project
 import com.tuware.msbuild.contract.msbuild.solution.MSBuildVersion
 import com.tuware.msbuild.contract.msbuild.solution.MsBuildEnvironment
@@ -14,10 +17,11 @@ class ComposerSpec extends Specification {
         given:
         String sourceFile = "a.cpp"
         String projectUuid = UUID.randomUUID().toString()
+        ProjectInput projectInput = ProjectInput.builder().cppFileName(sourceFile).projectGuild(projectUuid).build()
         ProjectComposer templateFactory = new ProjectComposer()
 
         when:
-        CppProjectTemplate cppProjectTemplate = templateFactory.compose(sourceFile, projectUuid)
+        CppProjectTemplate cppProjectTemplate = templateFactory.compose(projectInput)
 
         then:
         cppProjectTemplate.getGlobals().getProjectGuid() == projectUuid
@@ -30,7 +34,7 @@ class ComposerSpec extends Specification {
         ProjectUserComposer cppProjectUserComposer = new ProjectUserComposer()
 
         when:
-        Project projectUser = cppProjectUserComposer.compose("", "")
+        Project projectUser = cppProjectUserComposer.compose(new Object())
 
         then:
         projectUser.getToolsVersion() == "Current"
@@ -41,7 +45,7 @@ class ComposerSpec extends Specification {
         ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
 
         when:
-        Project projectUserFilter = projectFilterComposer.compose("", "")
+        Project projectUserFilter = projectFilterComposer.compose(ProjectFilerInput.builder().build())
 
         then:
         projectUserFilter != null
@@ -57,7 +61,7 @@ class ComposerSpec extends Specification {
         SolutionComposer solutionComposer = new SolutionComposer(msBuildEnvironment)
 
         when:
-        Solution solution = solutionComposer.compose("", "")
+        Solution solution = solutionComposer.compose(SolutionInput.builder().location("fakeLocation").build())
 
         then:
         solution != null
