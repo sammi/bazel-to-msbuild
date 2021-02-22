@@ -14,16 +14,9 @@ It defines features to be used for end user, it depends on contract model at com
 ## adapter
 It implements interfaces defined in contract model, it only depends on conract model, not on feature module.
 
-# Set up development environment
-  
-1. Install Bazel on Windows, make sure it is available in your PATH
-
-   https://docs.bazel.build/versions/master/install-windows.html
-
-1. Install lombok plugin in intellij to support lombok annotations.
-
-  https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project 
-  
+# Set up development environment 
+1. [Install Bazel on Windows](https://docs.bazel.build/versions/master/install-windows.html), make sure it is available in your PATH
+1. [Install lombok plugin](https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project ) in intellij to support lombok annotations.
 1. Then start up the tests and enjoy coding!
 ```
 cd bazel-to-msbuild
