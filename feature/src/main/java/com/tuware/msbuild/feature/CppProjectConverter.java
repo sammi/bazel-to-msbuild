@@ -15,13 +15,13 @@ public class CppProjectConverter implements Converter {
     private QueryAdapter<Build.QueryResult> packageQuery;
     private ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer;
     private GeneratorAdapter generatorAdapter;
-    private ExtractMapper<Build.QueryResult> extractMapper;
+    private ExtractMapper<Build.QueryResult, List<String>> extractMapper;
 
     public CppProjectConverter(
             QueryAdapter<Build.QueryResult> packageQuery,
             ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer,
             GeneratorAdapter generatorAdapter,
-            ExtractMapper<Build.QueryResult> extractMapper
+            ExtractMapper<Build.QueryResult, List<String>> extractMapper
     ) {
         this.packageQuery = packageQuery;
         this.cppProjectComposer = cppProjectComposer;
@@ -39,7 +39,7 @@ public class CppProjectConverter implements Converter {
             throw new ConverterException(e);
         }
 
-        List<String> sourceFileList = extractMapper.getSourceFileList(queryResult);
+        List<String> sourceFileList = extractMapper.extract(queryResult);
 
         String projectUuid = UUID.randomUUID().toString();
         ProjectInput projectInput = ProjectInput.builder()

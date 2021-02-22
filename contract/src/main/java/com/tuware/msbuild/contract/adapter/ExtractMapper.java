@@ -1,9 +1,8 @@
 package com.tuware.msbuild.contract.adapter;
 
-import java.util.List;
 
-public interface ExtractMapper<T> {
+public interface ExtractMapper<R, O> {
 
-    List<String> getSourceFileList(T queryResult);
+    O extract(R queryResult);
 
 }

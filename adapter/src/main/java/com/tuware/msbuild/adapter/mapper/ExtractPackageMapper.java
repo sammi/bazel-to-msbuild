@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ExtractPackageMapper implements ExtractMapper<Build.QueryResult> {
+public class ExtractPackageMapper implements ExtractMapper<Build.QueryResult, List<String>> {
 
     @Override
-    public List<String> getSourceFileList(Build.QueryResult queryResult) {
+    public List<String> extract(Build.QueryResult queryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
         queryResult.getTargetList().stream()
