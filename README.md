@@ -8,4 +8,5 @@ Generate msbuild project from bazel project
   https://docs.bazel.build/versions/master/install-windows.html
 
 * Install lombok plugin in intellij to support lombok annotations.
+
   https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project 
