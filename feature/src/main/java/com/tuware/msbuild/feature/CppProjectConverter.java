@@ -30,11 +30,11 @@ public class CppProjectConverter implements Converter {
     }
 
     @Override
-    public void convert(String bazelProjectRootPath) throws ConverterException {
+    public void convert(String projectName, String sourcePath, String targetPath) throws ConverterException {
 
         Build.QueryResult queryResult;
         try {
-            queryResult = packageQuery.query(bazelProjectRootPath, "...");
+            queryResult = packageQuery.query(sourcePath, "...");
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }
@@ -46,10 +46,8 @@ public class CppProjectConverter implements Converter {
                 .cppFileName(sourceFileList.get(0))
                 .projectGuild(projectUuid).build();
         CppProjectTemplate cppProjectTemplate = cppProjectComposer.compose(projectInput);
-        String projectName = "SomeName";
-        String outputPath = ".";
         try {
-            generatorAdapter.generateProject(cppProjectTemplate, projectName, outputPath);
+            generatorAdapter.generateProject(cppProjectTemplate, projectName, targetPath);
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }

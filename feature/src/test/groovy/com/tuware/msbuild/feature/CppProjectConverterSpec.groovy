@@ -19,16 +19,19 @@ class CppProjectConverterSpec extends Specification{
         ExtractMapper bazelQueryMapper = Mock()
         GeneratorAdapter projectGeneratorAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, cppProjectComposer, projectGeneratorAdapter, bazelQueryMapper)
-        String bazelProjectRootPath = "project_absolute_file_path"
         Build.QueryResult queryResult = Build.QueryResult.newBuilder().build()
         def sourceFileList = ["someFile.cpp"]
         CppProjectTemplate cppProjectTemplate = CppProjectTemplate.builder().build()
 
+        String projectName = "test"
+        String sourcePath = "project_absolute_file_path"
+        String targetPath = "outputFolder"
+
         when:
-        cppProjectConverter.convert(bazelProjectRootPath)
+        cppProjectConverter.convert(projectName, sourcePath, targetPath)
 
         then:
-        1 * packageQuery.query(bazelProjectRootPath, "...") >> queryResult
+        1 * packageQuery.query(sourcePath, "...") >> queryResult
         1 * bazelQueryMapper.getSourceFileList(queryResult) >> sourceFileList
         1 * cppProjectComposer.compose(_) >> cppProjectTemplate
         1 * projectGeneratorAdapter.generateProject(cppProjectTemplate, _, _)
