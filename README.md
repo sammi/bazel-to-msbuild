@@ -13,7 +13,7 @@ It defines project shared dependencies, which includes springboot depdencies, sp
 ## feature
 It defines features to be used for end user, it depends on contract model at compile time, and it calls adapter implementations at run time.
 ## adapter
-It implements interfaces defined in contract model, it only depends on conract model, not on feature module.
+It implements interfaces defined in contract model, it only depends on conract model, not feature module.
 
 # Set up development environment 
 1. [Install Bazel on Windows](https://docs.bazel.build/versions/master/install-windows.html), make sure it is available in your PATH
