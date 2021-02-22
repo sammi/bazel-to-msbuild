@@ -23,10 +23,10 @@ class CppProjectConverterSpec extends Specification{
         def sourceFileList = ["someFile.cpp"]
         CppProjectTemplate cppProjectTemplate = CppProjectTemplate.builder().build()
 
-        when: "call convert method"
+        when:
         cppProjectConverter.convert(bazelProjectRootPath)
 
-        then: "run bazel query, get source file from the query result, build msbuild project xml, and save msvc project and solution xml files"
+        then:
         1 * packageQuery.query(bazelProjectRootPath, "...") >> queryResult
         1 * bazelQueryMapper.getSourceFileList(queryResult) >> sourceFileList
         1 * cppProjectComposer.compose(sourceFileList.get(0), _) >> cppProjectTemplate
