@@ -23,3 +23,9 @@ It implements interfaces defined in contract model, it only depends on conract m
 * Install lombok plugin in intellij to support lombok annotations.
 
   https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project 
+  
+* Then start up the tests and enjoy coding!
+```
+cd bazel-to-msbuild
+mvn clean test
+```
