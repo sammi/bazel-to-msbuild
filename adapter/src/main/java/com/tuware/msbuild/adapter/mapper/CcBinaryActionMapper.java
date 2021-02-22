@@ -1,15 +1,15 @@
-package com.tuware.msbuild.adapter;
+package com.tuware.msbuild.adapter.mapper;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
-import com.tuware.msbuild.contract.adapter.BazelQueryMapper;
+import com.tuware.msbuild.contract.adapter.QueryResultMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CcBinaryActionQueryAdapter  implements BazelQueryMapper<AnalysisProtosV2.CqueryResult> {
+public class CcBinaryActionMapper implements QueryResultMapper<AnalysisProtosV2.CqueryResult> {
 
     @Override
     public List<String> getCppSourceFiles(AnalysisProtosV2.CqueryResult cqueryResult) {

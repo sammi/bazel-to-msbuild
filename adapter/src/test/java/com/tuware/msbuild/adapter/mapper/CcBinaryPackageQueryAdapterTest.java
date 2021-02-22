@@ -1,7 +1,10 @@
-package com.tuware.msbuild.adapter;
+package com.tuware.msbuild.adapter.mapper;
 
 import com.google.devtools.build.lib.analysis.AnalysisProtosV2;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
+import com.tuware.msbuild.adapter.query.ActionQueryAdapter;
+import com.tuware.msbuild.adapter.query.BazelWindowsProcessBuilder;
+import com.tuware.msbuild.adapter.query.PackageQueryAdapter;
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,17 +21,16 @@ class CcBinaryPackageQueryAdapterTest {
 
     private BazelQueryAdapter<Build.QueryResult> packageQuery;
     private BazelQueryAdapter<AnalysisProtosV2.CqueryResult> actionQuery;
-    private CcBinaryPackageQueryAdapter ccBinaryPackageQueryAdapter;
-    private CcBinaryActionQueryAdapter ccBinaryActionQueryAdapter;
+    private CcBinaryPackageMapper ccBinaryPackageQueryAdapter;
+    private CcBinaryActionMapper ccBinaryActionQueryMapper;
 
     @BeforeEach
     void setup() {
-        BazelProcessBuilder bazelProcessBuilder = new BazelProcessBuilder();
-        this.packageQuery = new PackageQueryAdapter(bazelProcessBuilder);
-        this.actionQuery = new ActionQueryAdapter(bazelProcessBuilder);
-        this.ccBinaryPackageQueryAdapter = new CcBinaryPackageQueryAdapter();
-        this.ccBinaryActionQueryAdapter = new CcBinaryActionQueryAdapter();
-
+        BazelWindowsProcessBuilder bazelWindowsProcessBuilder = new BazelWindowsProcessBuilder();
+        this.packageQuery = new PackageQueryAdapter(bazelWindowsProcessBuilder);
+        this.actionQuery = new ActionQueryAdapter(bazelWindowsProcessBuilder);
+        this.ccBinaryPackageQueryAdapter = new CcBinaryPackageMapper();
+        this.ccBinaryActionQueryMapper = new CcBinaryActionMapper();
     }
 
     @Test
@@ -43,7 +45,7 @@ class CcBinaryPackageQueryAdapterTest {
     void cquery() throws IOException, AdapterException {
         File file = new ClassPathResource("stage3").getFile();
         AnalysisProtosV2.CqueryResult cqueryResult = actionQuery.query(file.getAbsolutePath(), "...");
-        List<String> sourceFiles = ccBinaryActionQueryAdapter.getCppSourceFiles(cqueryResult);
+        List<String> sourceFiles = ccBinaryActionQueryMapper.getCppSourceFiles(cqueryResult);
         assertEquals(3, sourceFiles.size());
     }
 }

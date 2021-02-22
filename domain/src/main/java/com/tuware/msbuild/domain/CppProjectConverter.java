@@ -3,7 +3,7 @@ package com.tuware.msbuild.domain;
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.BazelQueryAdapter;
-import com.tuware.msbuild.contract.adapter.BazelQueryMapper;
+import com.tuware.msbuild.contract.adapter.QueryResultMapper;
 import com.tuware.msbuild.contract.adapter.XmlFileGeneratorAdapter;
 import com.tuware.msbuild.contract.template.CppProjectTemplate;
 import org.springframework.stereotype.Component;
@@ -17,14 +17,14 @@ public class CppProjectConverter implements Converter{
     private BazelQueryAdapter<Build.QueryResult> packageQuery;
     private TemplateFactory templateFactory;
     private XmlFileGeneratorAdapter xmlFileGeneratorAdapter;
-    private BazelQueryMapper<Build.QueryResult> bazelQueryMapper;
+    private QueryResultMapper<Build.QueryResult> queryResultMapper;
 
     public CppProjectConverter(BazelQueryAdapter<Build.QueryResult> packageQuery, TemplateFactory templateFactory, XmlFileGeneratorAdapter xmlFileGeneratorAdapter,
-                               BazelQueryMapper<Build.QueryResult> bazelQueryMapper) {
+                               QueryResultMapper<Build.QueryResult> queryResultMapper) {
         this.packageQuery = packageQuery;
         this.templateFactory = templateFactory;
         this.xmlFileGeneratorAdapter = xmlFileGeneratorAdapter;
-        this.bazelQueryMapper = bazelQueryMapper;
+        this.queryResultMapper = queryResultMapper;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CppProjectConverter implements Converter{
             throw new ConverterException(e);
         }
 
-        List<String> sourceFileList =  bazelQueryMapper.getCppSourceFiles(queryResult);
+        List<String> sourceFileList =  queryResultMapper.getCppSourceFiles(queryResult);
 
         String projectUuid = UUID.randomUUID().toString();
         CppProjectTemplate cppProjectTemplate = templateFactory.createCppProject(sourceFileList.get(0), projectUuid);

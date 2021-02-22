@@ -2,7 +2,7 @@ package com.tuware.msbuild.domain
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import com.tuware.msbuild.contract.adapter.BazelQueryAdapter
-import com.tuware.msbuild.contract.adapter.BazelQueryMapper
+import com.tuware.msbuild.contract.adapter.QueryResultMapper
 import com.tuware.msbuild.contract.adapter.XmlFileGeneratorAdapter
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
@@ -14,7 +14,7 @@ class CppProjectConverterSpec extends Specification{
         given:
         BazelQueryAdapter<Build.QueryResult> packageQuery = Mock()
         TemplateFactory templateFactory = Mock()
-        BazelQueryMapper bazelQueryMapper = Mock()
+        QueryResultMapper bazelQueryMapper = Mock()
         XmlFileGeneratorAdapter applicationAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, templateFactory, applicationAdapter, bazelQueryMapper)
         String bazelProjectRootPath = "project_absolute_file_path"
