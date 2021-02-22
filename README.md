@@ -16,15 +16,15 @@ It implements interfaces defined in contract model, it only depends on conract m
 
 # Set up development environment
   
-* Install Bazel on Windows, make sure it is available in your PATH
+1. Install Bazel on Windows, make sure it is available in your PATH
 
    https://docs.bazel.build/versions/master/install-windows.html
 
-* Install lombok plugin in intellij to support lombok annotations.
+1. Install lombok plugin in intellij to support lombok annotations.
 
   https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project 
   
-* Then start up the tests and enjoy coding!
+1. Then start up the tests and enjoy coding!
 ```
 cd bazel-to-msbuild
 mvn clean test
