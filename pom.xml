@@ -98,7 +98,7 @@
 
     <modules>
         <module>contract</module>
-        <module>domain</module>
+        <module>feature</module>
         <module>adapter</module>
     </modules>
 

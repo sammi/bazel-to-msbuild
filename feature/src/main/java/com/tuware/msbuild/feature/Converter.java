@@ -1,4 +1,4 @@
-package com.tuware.msbuild.domain;
+package com.tuware.msbuild.feature;
 
 @FunctionalInterface
 public interface Converter {
