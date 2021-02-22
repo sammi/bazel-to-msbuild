@@ -9,7 +9,7 @@ The project modules are organized by [hexagonal architecture](https://en.wikiped
 It defines project shared dependencies, which includes springboot depdencies, spock test framework, and groovy plugin.
 ## contract
 * It defines interfaces required by feature, implemented by adapter;
-* It defines shared msbuild model classes, bazel protobuf meta data, and related gRPC dependencies, which are being used by both feature and adapter;
+* It defines shared msbuild model classes, bazel protobuf meta data, and related gRPC dependencies, which are being used by feature and adapter;
 ## feature
 It defines features to be used for end user, it depends on contract model at compile time, and it calls adapter implementations at run time.
 ## adapter
