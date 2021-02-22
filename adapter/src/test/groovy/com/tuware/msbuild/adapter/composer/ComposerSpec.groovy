@@ -1,4 +1,4 @@
-package com.tuware.msbuild.domain
+package com.tuware.msbuild.adapter.composer
 
 import com.tuware.msbuild.contract.msbuild.project.Project
 import com.tuware.msbuild.contract.msbuild.solution.MSBuildVersion
@@ -7,19 +7,17 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution
 import com.tuware.msbuild.contract.template.CppProjectTemplate
 import spock.lang.Specification
 
-import java.nio.file.Paths
-
-class TemplateFactorySpec extends Specification {
+class ComposerSpec extends Specification {
 
     def "build default c++ project for single cpp source file"() {
 
         given:
         String sourceFile = "a.cpp"
         String projectUuid = UUID.randomUUID().toString()
-        TemplateFactory cppProjectGenerator = new TemplateFactory()
+        ProjectComposer templateFactory = new ProjectComposer()
 
         when:
-        CppProjectTemplate cppProjectTemplate = cppProjectGenerator.createCppProject(sourceFile, projectUuid)
+        CppProjectTemplate cppProjectTemplate = templateFactory.compose(sourceFile, projectUuid)
 
         then:
         cppProjectTemplate.getGlobals().getProjectGuid() == projectUuid
@@ -29,10 +27,10 @@ class TemplateFactorySpec extends Specification {
 
     def "build default c++ project user template"() {
         given:
-        TemplateFactory cppProjectGenerator = new TemplateFactory()
+        ProjectUserComposer cppProjectUserComposer = new ProjectUserComposer()
 
         when:
-        Project projectUser = cppProjectGenerator.createProjectUser()
+        Project projectUser = cppProjectUserComposer.compose("", "")
 
         then:
         projectUser.getToolsVersion() == "Current"
@@ -40,17 +38,10 @@ class TemplateFactorySpec extends Specification {
 
     def "build default c++ project filter template"() {
         given:
-        TemplateFactory cppProjectGenerator = new TemplateFactory()
+        ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
 
         when:
-        UUID id1 = UUID.randomUUID()
-        UUID id2 = UUID.randomUUID()
-        UUID id3 = UUID.randomUUID()
-        String sourceFilesFilterGuid = String.format("{%s}", id1)
-        String headerFilesFilterGuid = String.format("{%s}", id2)
-        String resourceFilesFilterGuid = String.format("{%s}", id3)
-        Project projectUserFilter = cppProjectGenerator.createProjectFilter(
-                sourceFilesFilterGuid, headerFilesFilterGuid, resourceFilesFilterGuid)
+        Project projectUserFilter = projectFilterComposer.compose("", "")
 
         then:
         projectUserFilter != null
@@ -63,18 +54,10 @@ class TemplateFactorySpec extends Specification {
                 .visualStudioVersion(MSBuildVersion.builder().major("16").minor("0").patch("30804").revision("86").build())
                 .minimumVisualStudioVersion(MSBuildVersion.builder().major("10").minor("0").patch("40219").revision("1").build())
                 .build()
-        TemplateFactory templateFactory = new TemplateFactory(msBuildEnvironment)
+        SolutionComposer solutionComposer = new SolutionComposer(msBuildEnvironment)
 
         when:
-        UUID projectGuid = UUID.randomUUID()
-        UUID solutionGuid = UUID.randomUUID()
-        Solution solution = templateFactory.buildConsoleApp(
-                "projectName",
-                "projectLocation",
-                Paths.get("TestCppWinRTConsoleAppSolution.sln"),
-                projectGuid,
-                solutionGuid
-        )
+        Solution solution = solutionComposer.compose("", "")
 
         then:
         solution != null
