@@ -15,16 +15,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ExtractPackageMapperTest {
+class CCBinaryMapperTest {
 
     private QueryAdapter<Build.QueryResult> packageQuery;
-    private ExtractPackageMapper ccBinaryPackageQueryAdapter;
+    private CCBinaryMapper ccBinaryPackageQueryAdapter;
 
     @BeforeEach
     void setup() {
         BazelWindowsProcessBuilder bazelWindowsProcessBuilder = new BazelWindowsProcessBuilder();
         this.packageQuery = new PackageQueryAdapter(bazelWindowsProcessBuilder);
-        this.ccBinaryPackageQueryAdapter = new ExtractPackageMapper();
+        this.ccBinaryPackageQueryAdapter = new CCBinaryMapper();
     }
 
     @Test

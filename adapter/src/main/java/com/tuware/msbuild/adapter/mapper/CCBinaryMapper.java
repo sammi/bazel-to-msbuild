@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ExtractPackageMapper implements ExtractMapper<Build.QueryResult, List<String>> {
+public class CCBinaryMapper implements ExtractMapper<Build.QueryResult, List<String>> {
 
     @Override
     public List<String> extract(Build.QueryResult bazelQueryResult) {
