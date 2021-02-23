@@ -6,12 +6,12 @@ Generate msbuild project from bazel project
 # Project Layout
 The project modules are organized by [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) style.
 ## base
-It defines project shared dependencies, which includes springboot depdencies, spock test framework, and groovy plugin.
+It defines project shared dependencies, which includes springboot dependencies, spock test framework, and groovy plugin.
 ## contract
 * It defines interfaces which are required by feature, being implemented by adapter;
 * It defines shared msbuild model classes, bazel protobuf meta data, and related gRPC dependencies, which are being used by feature and adapter;
 ## feature
-It defines features to be used for end user, it depends on contract model at compile time, and it calls adapter implementations at run time.
+It defines features to be used by end user, it depends on contract model at compile time, calls adapter model implementations at run time.
 ## adapter
 It implements interfaces defined in contract model, it only depends on conract model, not feature module.
 
