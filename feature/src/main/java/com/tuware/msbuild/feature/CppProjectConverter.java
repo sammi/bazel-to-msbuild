@@ -12,20 +12,15 @@ import java.util.List;
 public class CppProjectConverter implements Converter {
 
     private Query<Build.QueryResult> packageQuery;
+    private Extractor<Build.QueryResult, ProjectInput> extractor;
     private Composer<CppProjectTemplate, ProjectInput> cppProjectComposer;
     private Generator<CppProjectTemplate> generator;
-    private Extractor<Build.QueryResult, ProjectInput> extractor;
 
-    public CppProjectConverter(
-            Query<Build.QueryResult> packageQuery,
-            Composer<CppProjectTemplate, ProjectInput> cppProjectComposer,
-            Generator<CppProjectTemplate> generator,
-            Extractor<Build.QueryResult, ProjectInput> extractor
-    ) {
+    public CppProjectConverter(Query<Build.QueryResult> packageQuery, Extractor<Build.QueryResult, ProjectInput> extractor, Composer<CppProjectTemplate, ProjectInput> cppProjectComposer, Generator<CppProjectTemplate> generator) {
         this.packageQuery = packageQuery;
+        this.extractor = extractor;
         this.cppProjectComposer = cppProjectComposer;
         this.generator = generator;
-        this.extractor = extractor;
     }
 
     @Override

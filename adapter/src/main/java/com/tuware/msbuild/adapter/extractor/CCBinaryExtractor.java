@@ -1,4 +1,4 @@
-package com.tuware.msbuild.adapter.mapper;
+package com.tuware.msbuild.adapter.extractor;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.Extractor;

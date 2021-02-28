@@ -15,27 +15,33 @@ class CppProjectConverterSpec extends Specification{
 
         given:
         Query<Build.QueryResult> packageQuery = Mock()
+        Extractor<Build.QueryResult, ProjectInput> cppBinaryExtractor = Mock()
         Composer<CppProjectTemplate, ProjectInput> cppProjectComposer = Mock()
-        Extractor<Build.QueryResult, ProjectInput> bazelQueryMapper = Mock()
-        Generator projectGeneratorAdapter = Mock()
-        CppProjectTemplate cppProjectTemplate = Mock()
-        ProjectInput projectInput = Mock()
-        List<String> commands = Mock()
-        //Using GroovyMock to mock final classes
-        Build.QueryResult queryResult = GroovyMock()
-        String bazelWorkspaceAbsolutePath = GroovyMock()
-        String targetProjectFileAbsolutePath = GroovyMock()
+        Generator<CppProjectTemplate> cppProjectGenerator = Mock()
 
-        CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, cppProjectComposer, projectGeneratorAdapter, bazelQueryMapper)
+        CppProjectConverter cppProjectConverter = new CppProjectConverter(
+                packageQuery,
+                cppBinaryExtractor,
+                cppProjectComposer,
+                cppProjectGenerator
+        )
+
+        String bazelWorkspaceAbsolutePath = GroovyMock()
+        String msbuildProjectAbsolutePath = GroovyMock()
+        List<String> commands = Mock()
+
+        Build.QueryResult queryResult = GroovyMock()
+        ProjectInput projectInput = Mock()
+        CppProjectTemplate cppProjectTemplate = Mock()
 
         when:
-        cppProjectConverter.convert(bazelWorkspaceAbsolutePath, targetProjectFileAbsolutePath, commands)
+        cppProjectConverter.convert(bazelWorkspaceAbsolutePath, msbuildProjectAbsolutePath, commands)
 
         then:
         1 * packageQuery.query(bazelWorkspaceAbsolutePath, commands) >> queryResult
-        1 * bazelQueryMapper.extract(queryResult) >> projectInput
+        1 * cppBinaryExtractor.extract(queryResult) >> projectInput
         1 * cppProjectComposer.compose(projectInput) >> cppProjectTemplate
-        1 * projectGeneratorAdapter.generate(cppProjectTemplate, targetProjectFileAbsolutePath)
+        1 * cppProjectGenerator.generate(cppProjectTemplate, msbuildProjectAbsolutePath)
     }
 
 }
