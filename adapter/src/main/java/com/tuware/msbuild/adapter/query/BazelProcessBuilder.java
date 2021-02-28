@@ -10,9 +10,9 @@ import java.util.List;
 @Component
 public class BazelProcessBuilder {
 
-    public Process startBazelQueryProcess(String bazelProjectRootPath, List<String> commands) throws AdapterException {
+    public Process startBazelQueryProcess(String commandWorkingDirectory, List<String> commands) throws AdapterException {
         ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.directory(new File(bazelProjectRootPath));
+        processBuilder.directory(new File(commandWorkingDirectory));
         processBuilder.command(commands);
         try {
             return processBuilder.start();

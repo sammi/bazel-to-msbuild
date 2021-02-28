@@ -8,6 +8,7 @@ class CCBinaryExtractorSpec extends Specification {
 
     def "Extract c++ source code from bazel cc_binary package"() {
         given:
+
         CCBinaryExtractor ccBinaryMapper = new CCBinaryExtractor()
         Build.QueryResult queryResult = Build.QueryResult.newBuilder().build()
 

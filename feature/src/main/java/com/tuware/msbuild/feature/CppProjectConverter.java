@@ -11,33 +11,38 @@ import java.util.List;
 @Component
 public class CppProjectConverter implements Converter {
 
-    private Query<Build.QueryResult> packageQuery;
+    private Query<Build.QueryResult> query;
     private Extractor<Build.QueryResult, ProjectInput> extractor;
-    private Composer<CppProjectTemplate, ProjectInput> cppProjectComposer;
+    private Composer<CppProjectTemplate, ProjectInput> composer;
     private Generator<CppProjectTemplate> generator;
 
-    public CppProjectConverter(Query<Build.QueryResult> packageQuery, Extractor<Build.QueryResult, ProjectInput> extractor, Composer<CppProjectTemplate, ProjectInput> cppProjectComposer, Generator<CppProjectTemplate> generator) {
-        this.packageQuery = packageQuery;
+    public CppProjectConverter(
+            Query<Build.QueryResult> query,
+            Extractor<Build.QueryResult, ProjectInput> extractor,
+            Composer<CppProjectTemplate, ProjectInput> composer,
+            Generator<CppProjectTemplate> generator
+    ) {
+        this.query = query;
         this.extractor = extractor;
-        this.cppProjectComposer = cppProjectComposer;
+        this.composer = composer;
         this.generator = generator;
     }
 
     @Override
-    public void convert(String bazelWorkspaceAbsolutePath, String msbuildProjectAbsolutePath, List<String> commands) throws ConverterException {
+    public void convert(String bazelWorkspaceAbsolutePath, String msbuildSolutionAbsolutePath, List<String> bazelCommands) throws ConverterException {
 
         Build.QueryResult queryResult;
         try {
-            queryResult = packageQuery.query(bazelWorkspaceAbsolutePath, commands);
+            queryResult = query.query(bazelWorkspaceAbsolutePath, bazelCommands);
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }
 
         ProjectInput projectInput = extractor.extract(queryResult);
 
-        CppProjectTemplate cppProjectTemplate = cppProjectComposer.compose(projectInput);
+        CppProjectTemplate cppProjectTemplate = composer.compose(projectInput);
         try {
-            generator.generate(cppProjectTemplate, msbuildProjectAbsolutePath);
+            generator.generate(cppProjectTemplate, msbuildSolutionAbsolutePath);
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }

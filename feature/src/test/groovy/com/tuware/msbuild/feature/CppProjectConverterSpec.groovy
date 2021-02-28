@@ -27,21 +27,21 @@ class CppProjectConverterSpec extends Specification{
         )
 
         String bazelWorkspaceAbsolutePath = GroovyMock()
-        String msbuildProjectAbsolutePath = GroovyMock()
-        List<String> commands = Mock()
+        String msbuildSolutionAbsolutePath = GroovyMock()
+        List<String> bazelCommands = Mock()
 
         Build.QueryResult queryResult = GroovyMock()
         ProjectInput projectInput = Mock()
         CppProjectTemplate cppProjectTemplate = Mock()
 
         when:
-        cppProjectConverter.convert(bazelWorkspaceAbsolutePath, msbuildProjectAbsolutePath, commands)
+        cppProjectConverter.convert(bazelWorkspaceAbsolutePath, msbuildSolutionAbsolutePath, bazelCommands)
 
         then:
-        1 * packageQuery.query(bazelWorkspaceAbsolutePath, commands) >> queryResult
+        1 * packageQuery.query(bazelWorkspaceAbsolutePath, bazelCommands) >> queryResult
         1 * cppBinaryExtractor.extract(queryResult) >> projectInput
         1 * cppProjectComposer.compose(projectInput) >> cppProjectTemplate
-        1 * cppProjectGenerator.generate(cppProjectTemplate, msbuildProjectAbsolutePath)
+        1 * cppProjectGenerator.generate(cppProjectTemplate, msbuildSolutionAbsolutePath)
     }
 
 }
