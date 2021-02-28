@@ -20,21 +20,29 @@ class CppProjectConverterSpec extends Specification{
         GeneratorAdapter projectGeneratorAdapter = Mock()
         CppProjectConverter cppProjectConverter = new CppProjectConverter(packageQuery, cppProjectComposer, projectGeneratorAdapter, bazelQueryMapper)
         Build.QueryResult queryResult = Build.QueryResult.newBuilder().build()
-        def sourceFileList = ["someFile.cpp"]
-        CppProjectTemplate cppProjectTemplate = CppProjectTemplate.builder().build()
 
-        String projectName = "test"
         String sourcePath = "project_absolute_file_path"
         String targetPath = "outputFolder"
 
+        CppProjectTemplate cppProjectTemplate = CppProjectTemplate.builder().build()
+
+        List<String> commands = Arrays.asList(
+                "cmd",
+                "/c",
+                "bazel",
+                "--batch",
+                "query",
+                "...",
+                "--output=proto")
+
         when:
-        cppProjectConverter.convert(projectName, sourcePath, targetPath)
+        cppProjectConverter.convert(sourcePath, targetPath, commands)
 
         then:
-        1 * packageQuery.query(sourcePath, "...") >> queryResult
-        1 * bazelQueryMapper.extract(queryResult) >> sourceFileList
+        1 * packageQuery.query(sourcePath, commands) >> queryResult
+        1 * bazelQueryMapper.extract(queryResult) >> ["someFile.cpp"]
         1 * cppProjectComposer.compose(_) >> cppProjectTemplate
-        1 * projectGeneratorAdapter.generate(cppProjectTemplate, _, _)
+        1 * projectGeneratorAdapter.generate(cppProjectTemplate, _)
     }
 
 }

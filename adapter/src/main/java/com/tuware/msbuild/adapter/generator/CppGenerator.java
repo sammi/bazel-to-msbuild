@@ -20,10 +20,10 @@ public class CppGenerator implements GeneratorAdapter<CppProjectTemplate> {
     }
 
     @Override
-    public void generate(CppProjectTemplate templateData, String projectNameWithoutExtension, String outputFolderAbsolutePath) throws AdapterException {
+    public void generate(CppProjectTemplate projectTemplateData, String generateProjectFileAbsolutePath) throws AdapterException {
         try {
-            String xml = templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", templateData);
-            Files.write(Paths.get(String.format("%s/%s.vcxproj", outputFolderAbsolutePath, projectNameWithoutExtension)), xml.getBytes());
+            String xml = templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", projectTemplateData);
+            Files.write(Paths.get(generateProjectFileAbsolutePath), xml.getBytes());
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to write context to file system.", e);
         }

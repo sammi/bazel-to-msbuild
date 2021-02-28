@@ -9,18 +9,21 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class GeneratorSpec extends Specification {
+class CppGeneratorSpec extends Specification {
 
     def "Generate default template xml project file when data object is emtpy"(){
         given:
         CppGenerator cppProjectGenerator = new CppGenerator(new TemplateBuilder(new Handlebars()))
         CppProjectTemplate cppProjectTemplate = new CppProjectTemplate()
-        String projectName = "test"
-        String outputFolder = new ClassPathResource("/").getFile().getAbsoluteFile()
-        Path targetFilePath = Paths.get(outputFolder + "/" + projectName + ".vcxproj")
+
+        String generateProjectAbsolutePath = String.format("%s\\test.vcxproj",
+                new ClassPathResource("/").getFile().getAbsoluteFile()
+        )
+
+        Path targetFilePath = Paths.get(generateProjectAbsolutePath)
 
         when:
-        cppProjectGenerator.generate(cppProjectTemplate, projectName, outputFolder)
+        cppProjectGenerator.generate(cppProjectTemplate, generateProjectAbsolutePath)
 
         then:
         Files.exists(targetFilePath)

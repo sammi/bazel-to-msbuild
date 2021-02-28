@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class QueryAdapterSpec extends Specification {
 
-    PackageQueryAdapter packageQueryAdapter = new PackageQueryAdapter(new BazelWindowsProcessBuilder())
+    PackageQueryAdapter packageQueryAdapter = new PackageQueryAdapter(new BazelProcessBuilder())
 
     def "run bazel query ... for hello world c++ project, and output as protobuf, parse the output"() {
 
@@ -22,7 +22,15 @@ class QueryAdapterSpec extends Specification {
         def expectTarget = new Build.Target.Builder()
                 .setType(Build.Target.Discriminator.RULE)
                 .setRule(expectRule)
-        Build.QueryResult actualResult = packageQueryAdapter.query(bazelProjectRootPath, "...")
+        List<String> commands = Arrays.asList(
+                "cmd",
+                "/c",
+                "bazel",
+                "--batch",
+                "query",
+                "...",
+                "--output=proto")
+        Build.QueryResult actualResult = packageQueryAdapter.query(bazelProjectRootPath, commands)
 
         then:
         Build.Target actualTarget = actualResult.getTarget(0)

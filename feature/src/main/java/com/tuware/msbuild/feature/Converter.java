@@ -1,5 +1,7 @@
 package com.tuware.msbuild.feature;
 
+import java.util.List;
+
 public interface Converter {
-    void convert(String msbuildProjectName, String bazelProjectPath, String msbuildProjectPath) throws ConverterException;
+    void convert(String bazelProjectPath, String msbuildProjectPath, List<String> commands) throws ConverterException;
 }
