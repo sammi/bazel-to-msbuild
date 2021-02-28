@@ -6,7 +6,7 @@ import com.tuware.msbuild.contract.adapter.Extractor
 import com.tuware.msbuild.contract.adapter.Generator
 import com.tuware.msbuild.contract.adapter.Query
 import com.tuware.msbuild.contract.input.ProjectInput
-import com.tuware.msbuild.contract.template.CppProjectTemplate
+import com.tuware.msbuild.contract.template.CppProjectTemplateData
 import spock.lang.Specification
 
 class CppProjectConverterSpec extends Specification{
@@ -16,8 +16,8 @@ class CppProjectConverterSpec extends Specification{
         given:
         Query<Build.QueryResult> packageQuery = Mock()
         Extractor<Build.QueryResult, ProjectInput> cppBinaryExtractor = Mock()
-        Composer<CppProjectTemplate, ProjectInput> cppProjectComposer = Mock()
-        Generator<CppProjectTemplate> cppProjectGenerator = Mock()
+        Composer<CppProjectTemplateData, ProjectInput> cppProjectComposer = Mock()
+        Generator<CppProjectTemplateData> cppProjectGenerator = Mock()
 
         CppProjectConverter cppProjectConverter = new CppProjectConverter(
                 packageQuery,
@@ -32,7 +32,7 @@ class CppProjectConverterSpec extends Specification{
 
         Build.QueryResult queryResult = GroovyMock()
         ProjectInput projectInput = Mock()
-        CppProjectTemplate cppProjectTemplate = Mock()
+        CppProjectTemplateData cppProjectTemplate = Mock()
 
         when:
         cppProjectConverter.convert(bazelWorkspaceAbsolutePath, msbuildSolutionAbsolutePath, bazelCommands)

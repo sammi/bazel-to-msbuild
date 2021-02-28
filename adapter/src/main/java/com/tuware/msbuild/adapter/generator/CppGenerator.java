@@ -2,7 +2,7 @@ package com.tuware.msbuild.adapter.generator;
 
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.Generator;
-import com.tuware.msbuild.contract.template.CppProjectTemplate;
+import com.tuware.msbuild.contract.template.CppProjectTemplateData;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Component
-public class CppGenerator implements Generator<CppProjectTemplate> {
+public class CppGenerator implements Generator<CppProjectTemplateData> {
 
     private TemplateBuilder templateBuilder;
 
@@ -20,7 +20,7 @@ public class CppGenerator implements Generator<CppProjectTemplate> {
     }
 
     @Override
-    public void generate(CppProjectTemplate projectTemplateData, String generateProjectFileAbsolutePath) throws AdapterException {
+    public void generate(CppProjectTemplateData projectTemplateData, String generateProjectFileAbsolutePath) throws AdapterException {
         try {
             String xml = templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", projectTemplateData);
             Files.write(Paths.get(generateProjectFileAbsolutePath), xml.getBytes());

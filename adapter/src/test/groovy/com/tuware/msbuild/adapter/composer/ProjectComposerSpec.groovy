@@ -2,7 +2,7 @@ package com.tuware.msbuild.adapter.composer
 
 
 import com.tuware.msbuild.contract.input.ProjectInput
-import com.tuware.msbuild.contract.template.CppProjectTemplate
+import com.tuware.msbuild.contract.template.CppProjectTemplateData
 import spock.lang.Specification
 
 class ProjectComposerSpec extends Specification {
@@ -16,7 +16,7 @@ class ProjectComposerSpec extends Specification {
         ProjectComposer templateFactory = new ProjectComposer()
 
         when:
-        CppProjectTemplate cppProjectTemplate = templateFactory.compose(projectInput)
+        CppProjectTemplateData cppProjectTemplate = templateFactory.compose(projectInput)
 
         then:
         cppProjectTemplate.getGlobals().getProjectGuid() == projectUuid

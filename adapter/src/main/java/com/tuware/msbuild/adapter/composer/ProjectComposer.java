@@ -5,7 +5,7 @@ import com.tuware.msbuild.contract.input.ProjectInput;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
-import com.tuware.msbuild.contract.template.CppProjectTemplate;
+import com.tuware.msbuild.contract.template.CppProjectTemplateData;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public class ProjectComposer implements Composer<CppProjectTemplate, ProjectInput> {
+public class ProjectComposer implements Composer<CppProjectTemplateData, ProjectInput> {
 
     static final String DEBUG_X_64 = "Debug|x64";
     static final String RELEASE_X_64 = "Release|x64";
@@ -23,7 +23,7 @@ public class ProjectComposer implements Composer<CppProjectTemplate, ProjectInpu
     static final String RELEASE_WIN_32 = "Release|Win32";
 
     @Override
-    public CppProjectTemplate compose(ProjectInput data) {
+    public CppProjectTemplateData compose(ProjectInput data) {
         String cppFileName = data.getCppFileName();
         String projectGuild = data.getProjectGuild();
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
@@ -114,7 +114,7 @@ public class ProjectComposer implements Composer<CppProjectTemplate, ProjectInpu
                 )
             ).build();
 
-        return CppProjectTemplate.builder()
+        return CppProjectTemplateData.builder()
                 .defaultTargets(project.getDefaultTargets())
                 .projectConfigurations(projectConfigurationsItemGroup)
                 .globals(globals)

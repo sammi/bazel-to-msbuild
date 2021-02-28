@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.generator
 
 import com.github.jknack.handlebars.Handlebars
-import com.tuware.msbuild.contract.template.CppProjectTemplate
+import com.tuware.msbuild.contract.template.CppProjectTemplateData
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
@@ -14,16 +14,16 @@ class CppGeneratorSpec extends Specification {
     def "Generate default template xml project file when data object is emtpy"(){
         given:
         CppGenerator cppProjectGenerator = new CppGenerator(new TemplateBuilder(new Handlebars()))
-        CppProjectTemplate cppProjectTemplate = new CppProjectTemplate()
+        CppProjectTemplateData cppProjectTemplateData = new CppProjectTemplateData()
 
-        String generateProjectAbsolutePath = String.format("%s\\test.vcxproj",
+        String generateSolutionAbsolutePath = String.format("%s\\test.vcxproj",
                 new ClassPathResource("/").getFile().getAbsoluteFile()
         )
 
-        Path targetFilePath = Paths.get(generateProjectAbsolutePath)
+        Path targetFilePath = Paths.get(generateSolutionAbsolutePath)
 
         when:
-        cppProjectGenerator.generate(cppProjectTemplate, generateProjectAbsolutePath)
+        cppProjectGenerator.generate(cppProjectTemplateData, generateSolutionAbsolutePath)
 
         then:
         Files.exists(targetFilePath)
