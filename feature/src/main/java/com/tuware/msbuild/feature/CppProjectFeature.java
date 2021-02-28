@@ -9,19 +9,22 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CppProjectConverter implements Converter {
+public class CppProjectFeature implements Feature {
 
+    private Provider provider;
     private Query<Build.QueryResult> query;
     private Extractor<Build.QueryResult, ProjectInput> extractor;
     private Composer<CppProjectTemplateData, ProjectInput> composer;
     private Generator<CppProjectTemplateData> generator;
 
-    public CppProjectConverter(
+    public CppProjectFeature(
+            Provider provider,
             Query<Build.QueryResult> query,
             Extractor<Build.QueryResult, ProjectInput> extractor,
             Composer<CppProjectTemplateData, ProjectInput> composer,
             Generator<CppProjectTemplateData> generator
     ) {
+        this.provider = provider;
         this.query = query;
         this.extractor = extractor;
         this.composer = composer;
@@ -29,13 +32,15 @@ public class CppProjectConverter implements Converter {
     }
 
     @Override
-    public void convert(String bazelWorkspaceAbsolutePath, String msbuildSolutionAbsolutePath, List<String> bazelCommands) throws ConverterException {
+    public void buildMsbuildSolutionFromBazelWorkspace(String bazelWorkspaceAbsolutePath, String msbuildSolutionAbsolutePath) throws FeatureException {
+
+        List<String> bazelCommands = provider.provide();
 
         Build.QueryResult queryResult;
         try {
             queryResult = query.query(bazelWorkspaceAbsolutePath, bazelCommands);
         } catch (AdapterException e) {
-            throw new ConverterException(e);
+            throw new FeatureException(e);
         }
 
         ProjectInput projectInput = extractor.extract(queryResult);
@@ -44,7 +49,7 @@ public class CppProjectConverter implements Converter {
         try {
             generator.generate(cppProjectTemplateData, msbuildSolutionAbsolutePath);
         } catch (AdapterException e) {
-            throw new ConverterException(e);
+            throw new FeatureException(e);
         }
     }
 
