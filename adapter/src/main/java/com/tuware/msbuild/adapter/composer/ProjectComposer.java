@@ -23,9 +23,9 @@ public class ProjectComposer implements ComposerAdapter<CppProjectTemplate, Proj
     static final String RELEASE_WIN_32 = "Release|Win32";
 
     @Override
-    public CppProjectTemplate compose(ProjectInput templateData) {
-        String cppFileName = templateData.getCppFileName();
-        String projectGuild = templateData.getProjectGuild();
+    public CppProjectTemplate compose(ProjectInput data) {
+        String cppFileName = data.getCppFileName();
+        String projectGuild = data.getProjectGuild();
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(

@@ -13,11 +13,11 @@ import java.util.Collections;
 public class ProjectFilterComposer implements ComposerAdapter<Project, ProjectFilerInput> {
 
     @Override
-    public Project compose(ProjectFilerInput templateData) {
+    public Project compose(ProjectFilerInput data) {
 
-        String sourceFilesFilterGuid = templateData.getSourceFilesFilterGuid();
-        String headerFilesFilterGuid = templateData.getHeaderFilesFilterGuid();
-        String resourceFilesFilterGuid = templateData.getResourceFilesFilterGuid();
+        String sourceFilesFilterGuid = data.getSourceFilesFilterGuid();
+        String headerFilesFilterGuid = data.getHeaderFilesFilterGuid();
+        String resourceFilesFilterGuid = data.getResourceFilesFilterGuid();
 
         String sourceFilesFilterName = "Source Files";
 

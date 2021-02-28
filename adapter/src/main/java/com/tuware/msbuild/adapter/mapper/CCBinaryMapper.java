@@ -2,16 +2,18 @@ package com.tuware.msbuild.adapter.mapper;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.ExtractMapper;
+import com.tuware.msbuild.contract.input.ProjectInput;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
-public class CCBinaryMapper implements ExtractMapper<Build.QueryResult, List<String>> {
+public class CCBinaryMapper implements ExtractMapper<Build.QueryResult, ProjectInput> {
 
     @Override
-    public List<String> extract(Build.QueryResult bazelQueryResult) {
+    public ProjectInput extract(Build.QueryResult bazelQueryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
         bazelQueryResult.getTargetList().stream()
@@ -24,7 +26,11 @@ public class CCBinaryMapper implements ExtractMapper<Build.QueryResult, List<Str
                                 .forEach(sourceFileList::add)
                 );
 
-        return sourceFileList;
+        String projectUuid = UUID.randomUUID().toString();
+
+        return ProjectInput.builder()
+                .cppFileName(sourceFileList.stream().findFirst().orElse(null))
+                .projectGuild(projectUuid).build();
     }
 
 }

@@ -7,7 +7,6 @@ import com.tuware.msbuild.contract.template.CppProjectTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class CppProjectConverter implements Converter {
@@ -15,13 +14,13 @@ public class CppProjectConverter implements Converter {
     private QueryAdapter<Build.QueryResult> packageQuery;
     private ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer;
     private GeneratorAdapter<CppProjectTemplate> generatorAdapter;
-    private ExtractMapper<Build.QueryResult, List<String>> extractMapper;
+    private ExtractMapper<Build.QueryResult, ProjectInput> extractMapper;
 
     public CppProjectConverter(
             QueryAdapter<Build.QueryResult> packageQuery,
             ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer,
             GeneratorAdapter<CppProjectTemplate> generatorAdapter,
-            ExtractMapper<Build.QueryResult, List<String>> extractMapper
+            ExtractMapper<Build.QueryResult, ProjectInput> extractMapper
     ) {
         this.packageQuery = packageQuery;
         this.cppProjectComposer = cppProjectComposer;
@@ -39,12 +38,8 @@ public class CppProjectConverter implements Converter {
             throw new ConverterException(e);
         }
 
-        List<String> sourceFileList = extractMapper.extract(queryResult);
+        ProjectInput projectInput = extractMapper.extract(queryResult);
 
-        String projectUuid = UUID.randomUUID().toString();
-        ProjectInput projectInput = ProjectInput.builder()
-                .cppFileName(sourceFileList.get(0))
-                .projectGuild(projectUuid).build();
         CppProjectTemplate cppProjectTemplate = cppProjectComposer.compose(projectInput);
         try {
             generatorAdapter.generate(cppProjectTemplate, msbuildProjectAbsolutePath);

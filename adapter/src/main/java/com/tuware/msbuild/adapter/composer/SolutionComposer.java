@@ -29,13 +29,13 @@ public class SolutionComposer implements ComposerAdapter<Solution, SolutionInput
     }
 
     @Override
-    public Solution compose(SolutionInput templateData) {
+    public Solution compose(SolutionInput data) {
 
-        Path solutionPath = templateData.getSolutionPath();
-        String name = templateData.getName();
-        String location = templateData.getLocation();
-        UUID projectGuid = templateData.getProjectGuid();
-        UUID solutionGuid = templateData.getSolutionGuid();
+        Path solutionPath = data.getSolutionPath();
+        String name = data.getName();
+        String location = data.getLocation();
+        UUID projectGuid = data.getProjectGuid();
+        UUID solutionGuid = data.getSolutionGuid();
 
         return Solution.builder()
                 .fileName(solutionPath)

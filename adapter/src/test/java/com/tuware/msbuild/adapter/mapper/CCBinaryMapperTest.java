@@ -5,6 +5,7 @@ import com.tuware.msbuild.adapter.query.BazelProcessBuilder;
 import com.tuware.msbuild.adapter.query.PackageQueryAdapter;
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.QueryAdapter;
+import com.tuware.msbuild.contract.input.ProjectInput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CCBinaryMapperTest {
 
@@ -40,8 +41,8 @@ class CCBinaryMapperTest {
                 "...",
                 "--output=proto");
         Build.QueryResult queryResult = packageQuery.query(file.getAbsolutePath(), commands);
-        List<String> sourceFiles = ccBinaryPackageQueryAdapter.extract(queryResult);
-        assertEquals(1, sourceFiles.size());
+        ProjectInput projectInput = ccBinaryPackageQueryAdapter.extract(queryResult);
+        assertNotNull(projectInput.getProjectGuild());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.tuware.msbuild.adapter.mapper
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
+import com.tuware.msbuild.contract.input.ProjectInput
 import spock.lang.Specification
 
 class CCBinaryMapperSpec extends Specification {
@@ -11,9 +12,9 @@ class CCBinaryMapperSpec extends Specification {
         Build.QueryResult queryResult = Build.QueryResult.newBuilder().build()
 
         when:
-        List<String> sourceFileList = ccBinaryMapper.extract(queryResult)
+        ProjectInput projectInput = ccBinaryMapper.extract(queryResult)
 
         then:
-        sourceFileList.size() == 0
+        projectInput.getProjectGuild() != null
     }
 }
