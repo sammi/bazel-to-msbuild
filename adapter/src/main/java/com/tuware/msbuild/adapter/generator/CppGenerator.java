@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.generator;
 
 import com.tuware.msbuild.contract.adapter.AdapterException;
-import com.tuware.msbuild.contract.adapter.GeneratorAdapter;
+import com.tuware.msbuild.contract.adapter.Generator;
 import com.tuware.msbuild.contract.template.CppProjectTemplate;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @Component
-public class CppGenerator implements GeneratorAdapter<CppProjectTemplate> {
+public class CppGenerator implements Generator<CppProjectTemplate> {
 
     private TemplateBuilder templateBuilder;
 

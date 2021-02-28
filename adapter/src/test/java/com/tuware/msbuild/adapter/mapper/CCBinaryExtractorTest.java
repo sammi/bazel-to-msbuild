@@ -2,9 +2,9 @@ package com.tuware.msbuild.adapter.mapper;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.adapter.query.BazelProcessBuilder;
-import com.tuware.msbuild.adapter.query.PackageQueryAdapter;
+import com.tuware.msbuild.adapter.query.PackageQuery;
 import com.tuware.msbuild.contract.adapter.AdapterException;
-import com.tuware.msbuild.contract.adapter.QueryAdapter;
+import com.tuware.msbuild.contract.adapter.Query;
 import com.tuware.msbuild.contract.input.ProjectInput;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,16 +17,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class CCBinaryMapperTest {
+class CCBinaryExtractorTest {
 
-    private QueryAdapter<Build.QueryResult> packageQuery;
-    private CCBinaryMapper ccBinaryPackageQueryAdapter;
+    private Query<Build.QueryResult> packageQuery;
+    private CCBinaryExtractor ccBinaryPackageQueryAdapter;
 
     @BeforeEach
     void setup() {
         BazelProcessBuilder bazelProcessBuilder = new BazelProcessBuilder();
-        this.packageQuery = new PackageQueryAdapter(bazelProcessBuilder);
-        this.ccBinaryPackageQueryAdapter = new CCBinaryMapper();
+        this.packageQuery = new PackageQuery(bazelProcessBuilder);
+        this.ccBinaryPackageQueryAdapter = new CCBinaryExtractor();
     }
 
     @Test

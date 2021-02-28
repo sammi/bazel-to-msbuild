@@ -11,21 +11,21 @@ import java.util.List;
 @Component
 public class CppProjectConverter implements Converter {
 
-    private QueryAdapter<Build.QueryResult> packageQuery;
-    private ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer;
-    private GeneratorAdapter<CppProjectTemplate> generatorAdapter;
-    private ExtractMapper<Build.QueryResult, ProjectInput> extractMapper;
+    private Query<Build.QueryResult> packageQuery;
+    private Composer<CppProjectTemplate, ProjectInput> cppProjectComposer;
+    private Generator<CppProjectTemplate> generator;
+    private Extractor<Build.QueryResult, ProjectInput> extractor;
 
     public CppProjectConverter(
-            QueryAdapter<Build.QueryResult> packageQuery,
-            ComposerAdapter<CppProjectTemplate, ProjectInput> cppProjectComposer,
-            GeneratorAdapter<CppProjectTemplate> generatorAdapter,
-            ExtractMapper<Build.QueryResult, ProjectInput> extractMapper
+            Query<Build.QueryResult> packageQuery,
+            Composer<CppProjectTemplate, ProjectInput> cppProjectComposer,
+            Generator<CppProjectTemplate> generator,
+            Extractor<Build.QueryResult, ProjectInput> extractor
     ) {
         this.packageQuery = packageQuery;
         this.cppProjectComposer = cppProjectComposer;
-        this.generatorAdapter = generatorAdapter;
-        this.extractMapper = extractMapper;
+        this.generator = generator;
+        this.extractor = extractor;
     }
 
     @Override
@@ -38,11 +38,11 @@ public class CppProjectConverter implements Converter {
             throw new ConverterException(e);
         }
 
-        ProjectInput projectInput = extractMapper.extract(queryResult);
+        ProjectInput projectInput = extractor.extract(queryResult);
 
         CppProjectTemplate cppProjectTemplate = cppProjectComposer.compose(projectInput);
         try {
-            generatorAdapter.generate(cppProjectTemplate, msbuildProjectAbsolutePath);
+            generator.generate(cppProjectTemplate, msbuildProjectAbsolutePath);
         } catch (AdapterException e) {
             throw new ConverterException(e);
         }

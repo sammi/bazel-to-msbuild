@@ -1,6 +1,6 @@
 package com.tuware.msbuild.adapter.composer;
 
-import com.tuware.msbuild.contract.adapter.ComposerAdapter;
+import com.tuware.msbuild.contract.adapter.Composer;
 import com.tuware.msbuild.contract.input.SolutionInput;
 import com.tuware.msbuild.contract.msbuild.Pair;
 import com.tuware.msbuild.contract.msbuild.solution.*;
@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Component
-public class SolutionComposer implements ComposerAdapter<Solution, SolutionInput> {
+public class SolutionComposer implements Composer<Solution, SolutionInput> {
 
     private static final String DEBUG_X_64 = "Debug|x64";
     private static final String DEBUG_X_86 = "Debug|x86";

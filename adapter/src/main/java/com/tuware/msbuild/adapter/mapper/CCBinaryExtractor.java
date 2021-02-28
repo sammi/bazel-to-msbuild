@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.mapper;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
-import com.tuware.msbuild.contract.adapter.ExtractMapper;
+import com.tuware.msbuild.contract.adapter.Extractor;
 import com.tuware.msbuild.contract.input.ProjectInput;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class CCBinaryMapper implements ExtractMapper<Build.QueryResult, ProjectInput> {
+public class CCBinaryExtractor implements Extractor<Build.QueryResult, ProjectInput> {
 
     @Override
     public ProjectInput extract(Build.QueryResult bazelQueryResult) {

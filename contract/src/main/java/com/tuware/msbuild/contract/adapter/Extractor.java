@@ -1,7 +1,7 @@
 package com.tuware.msbuild.contract.adapter;
 
 
-public interface ExtractMapper<R, O> {
+public interface Extractor<R, O> {
 
     O extract(R bazelQueryResult);
 

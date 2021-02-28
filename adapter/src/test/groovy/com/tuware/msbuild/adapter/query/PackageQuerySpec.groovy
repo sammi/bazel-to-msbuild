@@ -4,9 +4,9 @@ import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
-class QueryAdapterSpec extends Specification {
+class PackageQuerySpec extends Specification {
 
-    PackageQueryAdapter packageQueryAdapter = new PackageQueryAdapter(new BazelProcessBuilder())
+    PackageQuery packageQueryAdapter = new PackageQuery(new BazelProcessBuilder())
 
     def "run bazel query ... for hello world c++ project, and output as protobuf, parse the output"() {
 

@@ -1,6 +1,6 @@
 package com.tuware.msbuild.contract.adapter;
 
-public interface ComposerAdapter<T, I> {
+public interface Composer<T, I> {
 
     T compose(I data);
 

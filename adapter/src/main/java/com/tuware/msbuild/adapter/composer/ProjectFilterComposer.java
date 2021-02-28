@@ -1,6 +1,6 @@
 package com.tuware.msbuild.adapter.composer;
 
-import com.tuware.msbuild.contract.adapter.ComposerAdapter;
+import com.tuware.msbuild.contract.adapter.Composer;
 import com.tuware.msbuild.contract.input.ProjectFilerInput;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.Filter;
@@ -10,7 +10,7 @@ import com.tuware.msbuild.contract.msbuild.project.Project;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class ProjectFilterComposer implements ComposerAdapter<Project, ProjectFilerInput> {
+public class ProjectFilterComposer implements Composer<Project, ProjectFilerInput> {
 
     @Override
     public Project compose(ProjectFilerInput data) {
