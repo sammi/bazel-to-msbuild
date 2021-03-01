@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Component
-class TemplateBuilder {
+public class TemplateBuilder {
 
     private Handlebars handlebars;
 

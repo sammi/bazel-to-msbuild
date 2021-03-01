@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.Composer;
-import com.tuware.msbuild.contract.input.ProjectInput;
+import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-public class ProjectComposer implements Composer<CppProjectTemplateData, ProjectInput> {
+public class ProjectComposer implements Composer<CppProjectTemplateData, ProjectSeed> {
 
     static final String DEBUG_X_64 = "Debug|x64";
     static final String RELEASE_X_64 = "Release|x64";
@@ -23,9 +23,9 @@ public class ProjectComposer implements Composer<CppProjectTemplateData, Project
     static final String RELEASE_WIN_32 = "Release|Win32";
 
     @Override
-    public CppProjectTemplateData compose(ProjectInput data) {
-        String cppFileName = data.getCppFileName();
-        String projectGuild = data.getProjectGuild();
+    public CppProjectTemplateData compose(ProjectSeed seed) {
+        String cppFileName = seed.getCppFileName();
+        String projectGuild = seed.getProjectGuild();
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(

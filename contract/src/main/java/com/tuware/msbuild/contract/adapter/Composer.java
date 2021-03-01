@@ -1,7 +1,12 @@
 package com.tuware.msbuild.contract.adapter;
 
-public interface Composer<T, I> {
+/**
+ *
+ * @param <T> Template Data class
+ * @param <S> Seed Data being used compose Template Data
+ */
+public interface Composer<T, S> {
 
-    T compose(I data);
+    T compose(S seed);
 
 }

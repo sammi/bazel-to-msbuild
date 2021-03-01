@@ -1,9 +1,14 @@
 package com.tuware.msbuild.contract.adapter;
 
+import java.nio.file.Path;
 import java.util.List;
 
-public interface Query<T> {
+/**
+ *
+ * @param <Q> - Query result class
+ */
+public interface Query<Q> {
 
-    T query(String bazelProjectRootAbsolutePath, List<String> commands) throws AdapterException;
+    Q query(Path bazelProjectRootAbsolutePath, List<String> commands) throws AdapterException;
 
 }

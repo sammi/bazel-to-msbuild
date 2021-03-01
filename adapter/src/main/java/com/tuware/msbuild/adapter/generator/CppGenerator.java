@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Component
 public class CppGenerator implements Generator<CppProjectTemplateData> {
@@ -20,10 +18,9 @@ public class CppGenerator implements Generator<CppProjectTemplateData> {
     }
 
     @Override
-    public void generate(CppProjectTemplateData projectTemplateData, String generateProjectFileAbsolutePath) throws AdapterException {
+    public String generate(CppProjectTemplateData cppProjectTemplateData) throws AdapterException {
         try {
-            String xml = templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", projectTemplateData);
-            Files.write(Paths.get(generateProjectFileAbsolutePath), xml.getBytes());
+            return templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", cppProjectTemplateData);
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to write context to file system.", e);
         }

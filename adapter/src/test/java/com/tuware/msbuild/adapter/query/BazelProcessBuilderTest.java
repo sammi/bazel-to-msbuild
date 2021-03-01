@@ -17,7 +17,7 @@ class BazelProcessBuilderTest {
     void startBazelQueryProcess() throws AdapterException {
         List<String> commands = Arrays.asList("java", "-version");
         Process process = bazelProcessBuilder.startBazelQueryProcess(
-            Paths.get("").toAbsolutePath().toString(),
+            Paths.get(".").toFile(),
             commands
         );
         assertTrue(process.isAlive());

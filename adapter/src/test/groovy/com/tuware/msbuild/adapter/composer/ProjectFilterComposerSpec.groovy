@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.composer
 
-import com.tuware.msbuild.contract.input.ProjectFilerInput
 import com.tuware.msbuild.contract.msbuild.project.Project
+import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import spock.lang.Specification
 
 class ProjectFilterComposerSpec extends Specification{
@@ -11,7 +11,7 @@ class ProjectFilterComposerSpec extends Specification{
         ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
 
         when:
-        Project projectUserFilter = projectFilterComposer.compose(ProjectFilerInput.builder().build())
+        Project projectUserFilter = projectFilterComposer.compose(ProjectFilerSeed.builder().build())
 
         then:
         projectUserFilter != null

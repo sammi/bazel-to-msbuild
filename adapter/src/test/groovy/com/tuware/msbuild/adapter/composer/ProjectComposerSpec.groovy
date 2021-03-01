@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.composer
 
 
-import com.tuware.msbuild.contract.input.ProjectInput
+import com.tuware.msbuild.contract.seed.ProjectSeed
 import com.tuware.msbuild.contract.template.CppProjectTemplateData
 import spock.lang.Specification
 
@@ -12,11 +12,11 @@ class ProjectComposerSpec extends Specification {
         given:
         String sourceFile = "a.cpp"
         String projectUuid = UUID.randomUUID().toString()
-        ProjectInput projectInput = ProjectInput.builder().cppFileName(sourceFile).projectGuild(projectUuid).build()
+        ProjectSeed projectSeed = ProjectSeed.builder().cppFileName(sourceFile).projectGuild(projectUuid).build()
         ProjectComposer templateFactory = new ProjectComposer()
 
         when:
-        CppProjectTemplateData cppProjectTemplate = templateFactory.compose(projectInput)
+        CppProjectTemplateData cppProjectTemplate = templateFactory.compose(projectSeed)
 
         then:
         cppProjectTemplate.getGlobals().getProjectGuid() == projectUuid

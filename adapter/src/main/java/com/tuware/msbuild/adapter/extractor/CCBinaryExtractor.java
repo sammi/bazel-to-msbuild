@@ -2,7 +2,7 @@ package com.tuware.msbuild.adapter.extractor;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.Extractor;
-import com.tuware.msbuild.contract.input.ProjectInput;
+import com.tuware.msbuild.contract.seed.ProjectSeed;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class CCBinaryExtractor implements Extractor<Build.QueryResult, ProjectInput> {
+public class CCBinaryExtractor implements Extractor<Build.QueryResult, ProjectSeed> {
 
     @Override
-    public ProjectInput extract(Build.QueryResult bazelQueryResult) {
+    public ProjectSeed extract(Build.QueryResult bazelQueryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
         bazelQueryResult.getTargetList().stream()
@@ -28,7 +28,7 @@ public class CCBinaryExtractor implements Extractor<Build.QueryResult, ProjectIn
 
         String projectUuid = UUID.randomUUID().toString();
 
-        return ProjectInput.builder()
+        return ProjectSeed.builder()
                 .cppFileName(sourceFileList.stream().findFirst().orElse(null))
                 .projectGuild(projectUuid).build();
     }

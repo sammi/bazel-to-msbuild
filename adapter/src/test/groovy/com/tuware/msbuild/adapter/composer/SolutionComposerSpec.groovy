@@ -1,9 +1,9 @@
 package com.tuware.msbuild.adapter.composer
 
-import com.tuware.msbuild.contract.input.SolutionInput
 import com.tuware.msbuild.contract.msbuild.solution.MSBuildVersion
 import com.tuware.msbuild.contract.msbuild.solution.MsBuildEnvironment
 import com.tuware.msbuild.contract.msbuild.solution.Solution
+import com.tuware.msbuild.contract.seed.SolutionSeed
 import spock.lang.Specification
 
 class SolutionComposerSpec extends Specification{
@@ -18,7 +18,7 @@ class SolutionComposerSpec extends Specification{
         SolutionComposer solutionComposer = new SolutionComposer(msBuildEnvironment)
 
         when:
-        Solution solution = solutionComposer.compose(SolutionInput.builder().location("fakeLocation").build())
+        Solution solution = solutionComposer.compose(SolutionSeed.builder().location("fakeLocation").build())
 
         then:
         solution != null

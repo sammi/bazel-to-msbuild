@@ -1,4 +1,4 @@
-package com.tuware.msbuild.contract.input;
+package com.tuware.msbuild.contract.seed;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-public class ProjectFilerInput {
+public class ProjectFilerSeed {
     private String sourceFilesFilterGuid;
     private String headerFilesFilterGuid;
     private String resourceFilesFilterGuid;

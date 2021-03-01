@@ -1,8 +1,12 @@
 package com.tuware.msbuild.contract.adapter;
 
+/**
+ *
+ * @param <Q> Query result class
+ * @param <S> Seed data data, the data is being grabbed from query result object.
+ */
+public interface Extractor<Q, S> {
 
-public interface Extractor<R, O> {
-
-    O extract(R bazelQueryResult);
+    S extract(Q bazelQResult);
 
 }

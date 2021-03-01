@@ -1,4 +1,4 @@
-package com.tuware.msbuild.contract.input;
+package com.tuware.msbuild.contract.seed;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-public class ProjectInput {
+public class ProjectSeed {
     private String cppFileName;
     private String projectGuild;
 }

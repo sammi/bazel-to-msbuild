@@ -1,4 +1,4 @@
-package com.tuware.msbuild.contract.input;
+package com.tuware.msbuild.contract.seed;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-public class SolutionInput {
+public class SolutionSeed {
     private Path solutionPath;
     private String name;
     private String location;

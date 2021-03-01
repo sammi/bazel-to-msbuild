@@ -6,6 +6,7 @@ import com.tuware.msbuild.contract.adapter.Query;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 @Component
@@ -18,9 +19,9 @@ public class PackageQuery implements Query<Build.QueryResult> {
     }
 
     @Override
-    public Build.QueryResult query(String bazelWorkspaceAbsolutePath, List<String> commands) throws AdapterException {
+    public Build.QueryResult query(Path bazelWorkspaceAbsolutePath, List<String> commands) throws AdapterException {
         try {
-            Process process = bazelProcessBuilder.startBazelQueryProcess(bazelWorkspaceAbsolutePath, commands);
+            Process process = bazelProcessBuilder.startBazelQueryProcess(bazelWorkspaceAbsolutePath.toFile(), commands);
             return Build.QueryResult.parseFrom(process.getInputStream());
         } catch (AdapterException | IOException e) {
             throw new AdapterException(e);

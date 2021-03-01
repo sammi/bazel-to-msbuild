@@ -4,6 +4,9 @@ import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
+import java.nio.file.Path
+import java.nio.file.Paths
+
 class PackageQuerySpec extends Specification {
 
     PackageQuery packageQueryAdapter = new PackageQuery(new BazelProcessBuilder())
@@ -11,7 +14,7 @@ class PackageQuerySpec extends Specification {
     def "parse the result from bazel query command as Build.QueryResult object"() {
 
         given:
-        String bazelWorkspaceAbsolutePath = new ClassPathResource("stage1").getFile().getAbsoluteFile()
+        Path bazelWorkspaceAbsolutePath = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
 
         when:
         def expectRule = Build.Rule.newBuilder()

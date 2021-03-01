@@ -1,7 +1,11 @@
 package com.tuware.msbuild.contract.adapter;
 
+/**
+ *
+ * @param <T> Template Data Class
+ */
 public interface Generator<T> {
 
-    void generate(T projectTemplateData, String generateProjectFileAbsolutePath)  throws AdapterException;
+    String generate(T tData)  throws AdapterException;
 
 }
