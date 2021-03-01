@@ -11,6 +11,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class UniqueProjectGuid {
     private UUID value;
+
     public String getValue() {
         return String.format("{%s}", value);
     }

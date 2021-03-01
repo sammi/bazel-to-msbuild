@@ -3,7 +3,7 @@ package com.tuware.msbuild.adapter.composer
 import com.tuware.msbuild.contract.msbuild.project.Project
 import spock.lang.Specification
 
-class ProjectUserComposerSpec extends Specification{
+class ProjectUserComposerSpec extends Specification {
 
     def "build default c++ project user template"() {
         given:

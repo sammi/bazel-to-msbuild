@@ -11,13 +11,10 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 public class Solution {
+    List<Project> projectList;
     private Path fileName;
-
     private MSBuildVersion formatVersion;
     private MSBuildVersion visualStudioVersion;
     private MSBuildVersion minimumVisualStudioVersion;
-
-    List<Project> projectList;
-
     private Global global;
 }

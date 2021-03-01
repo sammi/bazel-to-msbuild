@@ -7,9 +7,9 @@ import java.nio.file.FileSystem
 import java.nio.file.Files
 import java.nio.file.Path
 
-class FileRepositorySpec extends Specification{
+class FileRepositorySpec extends Specification {
 
-    def "test save text to a file" () {
+    def "test save text to a file"() {
 
         given:
         FileRepository fileRepository = new FileRepository()

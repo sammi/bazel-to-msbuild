@@ -6,11 +6,11 @@ public enum ProjectTypeGuid {
 
     private String value;
 
-    public String getValue() {
-        return String.format("{%s}", value);
-    }
-
     ProjectTypeGuid(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return String.format("{%s}", value);
     }
 }

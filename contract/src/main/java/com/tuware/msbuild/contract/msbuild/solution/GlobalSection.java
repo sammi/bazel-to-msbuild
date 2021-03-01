@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 public class GlobalSection {
+    List<Pair<String, String>> configList;
     private VsPackage vsPackage;
     private Phase phase;
-    List<Pair<String, String>> configList;
 }

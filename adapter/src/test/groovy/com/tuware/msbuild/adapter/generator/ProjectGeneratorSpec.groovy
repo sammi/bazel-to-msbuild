@@ -1,14 +1,14 @@
 package com.tuware.msbuild.adapter.generator
 
-import com.github.jknack.handlebars.Handlebars
+
 import com.tuware.msbuild.contract.template.CppProjectTemplateData
 import spock.lang.Specification
 
-class CppGeneratorSpec extends Specification {
+class ProjectGeneratorSpec extends Specification {
 
-    def "Generate default template xml project file when data object is emtpy"(){
+    def "Generate default template xml project file when data object is emtpy"() {
         given:
-        CppGenerator cppProjectGenerator = new CppGenerator()
+        ProjectGenerator cppProjectGenerator = new ProjectGenerator()
         CppProjectTemplateData cppProjectTemplateData = new CppProjectTemplateData()
 
         when:

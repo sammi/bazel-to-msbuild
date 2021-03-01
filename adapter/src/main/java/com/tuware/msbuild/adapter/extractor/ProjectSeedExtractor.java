@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class CCBinaryExtractor implements Extractor<Build.QueryResult, ProjectSeed> {
+public class ProjectSeedExtractor implements Extractor<Build.QueryResult, ProjectSeed> {
 
     @Override
     public ProjectSeed extract(Build.QueryResult bazelQueryResult) {

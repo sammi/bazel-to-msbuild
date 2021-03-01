@@ -6,7 +6,7 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution
 import com.tuware.msbuild.contract.seed.SolutionSeed
 import spock.lang.Specification
 
-class SolutionComposerSpec extends Specification{
+class SolutionComposerSpec extends Specification {
 
     def "build default solution template data"() {
         given:

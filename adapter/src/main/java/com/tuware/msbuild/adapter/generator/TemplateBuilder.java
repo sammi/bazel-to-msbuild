@@ -19,7 +19,7 @@ class TemplateBuilder {
     }
 
     String compileFromTemplateFile(String xmlTemplateFilePath, Object data) throws IOException, URISyntaxException {
-        Path path = Paths.get(CppGenerator.class.getResource(xmlTemplateFilePath).toURI());
+        Path path = Paths.get(ProjectGenerator.class.getResource(xmlTemplateFilePath).toURI());
         String template = String.join("\n", Files.readAllLines(path));
         return handlebars.prettyPrint(true).compileInline(template).apply(data);
     }

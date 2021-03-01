@@ -10,5 +10,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(PARAMETER)
 public @interface NamedArg {
     String value();
+
     String defaultValue() default "";
 }

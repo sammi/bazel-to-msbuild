@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 @Component
-public class CppGenerator implements Generator<CppProjectTemplateData> {
+public class ProjectGenerator implements Generator<CppProjectTemplateData> {
 
     private TemplateBuilder templateBuilder;
 
-    public CppGenerator() {
+    public ProjectGenerator() {
         this.templateBuilder = new TemplateBuilder(new Handlebars());
     }
 

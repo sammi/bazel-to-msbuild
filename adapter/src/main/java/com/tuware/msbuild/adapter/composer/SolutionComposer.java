@@ -1,9 +1,9 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.Composer;
-import com.tuware.msbuild.contract.seed.SolutionSeed;
 import com.tuware.msbuild.contract.msbuild.Pair;
 import com.tuware.msbuild.contract.msbuild.solution.*;
+import com.tuware.msbuild.contract.seed.SolutionSeed;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;

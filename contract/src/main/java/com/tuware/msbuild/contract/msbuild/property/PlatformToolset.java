@@ -7,6 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 public class PlatformToolset {
-    private String condition;
     protected String value;
+    private String condition;
 }

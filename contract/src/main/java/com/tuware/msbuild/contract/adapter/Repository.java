@@ -1,7 +1,6 @@
 package com.tuware.msbuild.contract.adapter;
 
 /**
- *
  * @param <I> - The identifier class, when saved to file, it will be a Path
  * @param <C> - The content class, when save text, it will be String
  */

@@ -1,15 +1,17 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.Composer;
-import com.tuware.msbuild.contract.seed.ProjectFilerSeed;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.Filter;
 import com.tuware.msbuild.contract.msbuild.project.ItemGroup;
 import com.tuware.msbuild.contract.msbuild.project.Project;
+import com.tuware.msbuild.contract.seed.ProjectFilerSeed;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collections;
 
+@Component
 public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed> {
 
     @Override

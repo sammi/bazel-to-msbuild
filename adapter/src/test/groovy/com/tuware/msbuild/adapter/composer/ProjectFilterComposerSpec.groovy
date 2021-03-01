@@ -4,7 +4,7 @@ import com.tuware.msbuild.contract.msbuild.project.Project
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import spock.lang.Specification
 
-class ProjectFilterComposerSpec extends Specification{
+class ProjectFilterComposerSpec extends Specification {
 
     def "build default c++ project filter template"() {
         given:

@@ -2,10 +2,10 @@
 <Project DefaultTargets="{{defaultTargets}}" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <ItemGroup Label="{{projectConfigurations.label}}">
         {{#each projectConfigurations.projectConfigurationList}}
-        <ProjectConfiguration Include="{{include}}">
-            <Configuration>{{configuration}}</Configuration>
-            <Platform>{{platform}}</Platform>
-        </ProjectConfiguration>
+            <ProjectConfiguration Include="{{include}}">
+                <Configuration>{{configuration}}</Configuration>
+                <Platform>{{platform}}</Platform>
+            </ProjectConfiguration>
         {{/each}}
     </ItemGroup>
     <PropertyGroup Label="{{globals.label}}">
@@ -17,15 +17,15 @@
     </PropertyGroup>
     <Import Project="{{cppDefaultPropsImport}}"/>
     {{#each configurationPropertyGroupList}}
-    <PropertyGroup Condition="{{{condition}}}" Label="Configuration">
-        <ConfigurationType>{{configurationType}}</ConfigurationType>
-        <UseDebugLibraries>{{useDebugLibraries.value}}</UseDebugLibraries>
-        <PlatformToolset>{{platformToolset.value}}</PlatformToolset>
-        {{#if wholeProgramOptimization}}
-        <WholeProgramOptimization>{{wholeProgramOptimization.value}}</WholeProgramOptimization>
-        {{/if}}
-        <CharacterSet>{{characterSet}}</CharacterSet>
-    </PropertyGroup>
+        <PropertyGroup Condition="{{{condition}}}" Label="Configuration">
+            <ConfigurationType>{{configurationType}}</ConfigurationType>
+            <UseDebugLibraries>{{useDebugLibraries.value}}</UseDebugLibraries>
+            <PlatformToolset>{{platformToolset.value}}</PlatformToolset>
+            {{#if wholeProgramOptimization}}
+                <WholeProgramOptimization>{{wholeProgramOptimization.value}}</WholeProgramOptimization>
+            {{/if}}
+            <CharacterSet>{{characterSet}}</CharacterSet>
+        </PropertyGroup>
     {{/each}}
     <Import Project="{{cppPropsImport}}"/>
     <ImportGroup Label="ExtensionSettings">
@@ -33,16 +33,20 @@
     <ImportGroup Label="Shared">
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+                Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+                Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+                Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+                Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
     </ImportGroup>
     <PropertyGroup Label="UserMacros"/>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -65,8 +69,8 @@
             <ConformanceMode>true</ConformanceMode>
         </ClCompile>
         <Link>
-            <SubSystem>Console</SubSystem>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
+        <SubSystem>Console</SubSystem>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,10 +83,10 @@
             <ConformanceMode>true</ConformanceMode>
         </ClCompile>
         <Link>
-            <SubSystem>Console</SubSystem>
-            <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <OptimizeReferences>true</OptimizeReferences>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
+        <SubSystem>Console</SubSystem>
+        <EnableCOMDATFolding>true</EnableCOMDATFolding>
+        <OptimizeReferences>true</OptimizeReferences>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -93,8 +97,8 @@
             <ConformanceMode>true</ConformanceMode>
         </ClCompile>
         <Link>
-            <SubSystem>Console</SubSystem>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
+        <SubSystem>Console</SubSystem>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -107,15 +111,15 @@
             <ConformanceMode>true</ConformanceMode>
         </ClCompile>
         <Link>
-            <SubSystem>Console</SubSystem>
-            <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <OptimizeReferences>true</OptimizeReferences>
-            <GenerateDebugInformation>true</GenerateDebugInformation>
+        <SubSystem>Console</SubSystem>
+        <EnableCOMDATFolding>true</EnableCOMDATFolding>
+        <OptimizeReferences>true</OptimizeReferences>
+        <GenerateDebugInformation>true</GenerateDebugInformation>
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
         {{#each clCompileItemGroup.clCompileList}}
-        <ClCompile Include="{{include}}"/>
+            <ClCompile Include="{{include}}"/>
         {{/each}}
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>

@@ -1,17 +1,27 @@
 package com.tuware.msbuild.integration
 
 
-import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import com.tuware.msbuild.adapter.composer.ProjectComposer
-import com.tuware.msbuild.adapter.extractor.CCBinaryExtractor
-import com.tuware.msbuild.adapter.generator.CppGenerator
+import com.tuware.msbuild.adapter.composer.ProjectFilterComposer
+import com.tuware.msbuild.adapter.composer.ProjectUserComposer
+import com.tuware.msbuild.adapter.composer.SolutionComposer
+import com.tuware.msbuild.adapter.extractor.ProjectFilerSeedExtractor
+import com.tuware.msbuild.adapter.extractor.ProjectSeedExtractor
+import com.tuware.msbuild.adapter.extractor.SolutionExtractor
+import com.tuware.msbuild.adapter.generator.ProjectFilterGenerator
+import com.tuware.msbuild.adapter.generator.ProjectGenerator
+import com.tuware.msbuild.adapter.generator.ProjectUserGenerator
+import com.tuware.msbuild.adapter.generator.SolutionGenerator
 import com.tuware.msbuild.adapter.provider.BazelQueryAllProtoProvider
 import com.tuware.msbuild.adapter.query.PackageQuery
 import com.tuware.msbuild.adapter.repository.FileRepository
-import com.tuware.msbuild.contract.adapter.*
-import com.tuware.msbuild.contract.seed.ProjectSeed
-import com.tuware.msbuild.contract.template.CppProjectTemplateData
+import com.tuware.msbuild.contract.msbuild.solution.MSBuildVersion
+import com.tuware.msbuild.contract.msbuild.solution.MsBuildEnvironment
 import com.tuware.msbuild.feature.CppProjectFeature
+import com.tuware.msbuild.feature.service.ComposerService
+import com.tuware.msbuild.feature.service.ExtractorService
+import com.tuware.msbuild.feature.service.GeneratorService
+import com.tuware.msbuild.feature.service.QueryService
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
@@ -22,32 +32,48 @@ class HelloWorldCppProjectSpec extends Specification {
 
     def "generate msbuild solution from bazel hello world cpp project"() {
         given:
-        Provider provider = new BazelQueryAllProtoProvider()
-        Query<Build.QueryResult> query = new PackageQuery()
-        Extractor<Build.QueryResult, ProjectSeed> extractor = new CCBinaryExtractor()
-        Composer<CppProjectTemplateData, ProjectSeed> composer = new ProjectComposer()
-        Generator<CppProjectTemplateData> generator = new CppGenerator()
+        BazelQueryAllProtoProvider bazelQueryAllProtoProvider = new BazelQueryAllProtoProvider()
+        PackageQuery packageQuery = new PackageQuery()
+        QueryService queryService = new QueryService(bazelQueryAllProtoProvider, packageQuery)
+
+        ProjectSeedExtractor projectSeedExtractor = new ProjectSeedExtractor()
+        ProjectFilerSeedExtractor projectFilerSeedExtractor = new ProjectFilerSeedExtractor()
+        SolutionExtractor solutionExtractor = new SolutionExtractor()
+
+        ExtractorService extractorService = new ExtractorService(projectSeedExtractor, projectFilerSeedExtractor, solutionExtractor)
+
+        ProjectComposer projectComposer = new ProjectComposer()
+        ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
+        ProjectUserComposer projectUserComposer = new ProjectUserComposer()
+
+        MsBuildEnvironment msBuildEnvironment = MsBuildEnvironment.builder()
+                .formatVersion(MSBuildVersion.builder().major("12").minor("00").build())
+                .visualStudioVersion(MSBuildVersion.builder().major("16").minor("0").patch("30804").revision("86").build())
+                .minimumVisualStudioVersion(MSBuildVersion.builder().major("10").minor("0").patch("40219").revision("1").build())
+                .build()
+
+        SolutionComposer solutionComposer = new SolutionComposer(msBuildEnvironment)
+
+        ComposerService composerService = new ComposerService(projectComposer, projectFilterComposer, projectUserComposer, solutionComposer)
+
+        ProjectGenerator projectGenerator = new ProjectGenerator()
+        ProjectFilterGenerator projectFilterGenerator = new ProjectFilterGenerator()
+        ProjectUserGenerator projectUserGenerator = new ProjectUserGenerator()
+        SolutionGenerator solutionGenerator = new SolutionGenerator()
+
+        GeneratorService generatorService = new GeneratorService(projectGenerator, projectFilterGenerator, solutionGenerator, projectUserGenerator)
 
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
         Path msbuildProjectFilePath = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath() + "/HelloWorld.vcxproj")
         FileRepository repository = Mock()
 
-        CppProjectFeature cppProjectFeature = new CppProjectFeature(
-                provider,
-                query,
-                extractor,
-                composer,
-                generator,
-                repository
-        )
-
-        String xmlHeader = '<?xml version="1.0" encoding="utf-8"?>'
+        CppProjectFeature cppProjectFeature = new CppProjectFeature(queryService, composerService, extractorService, generatorService, repository)
 
         when:
         cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildProjectFilePath)
 
         then:
-        1 * repository.save(msbuildProjectFilePath, { it.contains(xmlHeader) })
+        4 * repository.save(msbuildProjectFilePath, { it != null })
 
     }
 }

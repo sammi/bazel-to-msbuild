@@ -1,10 +1,10 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.Composer;
-import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
+import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.template.CppProjectTemplateData;
 import org.springframework.stereotype.Component;
 
@@ -62,12 +62,12 @@ public class ProjectComposer implements Composer<CppProjectTemplateData, Project
 
         List<PropertyGroup> configurationPropertyGroupList = Arrays.asList(
                 PropertyGroup.builder()
-                    .condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
-                    .configurationType(ConfigurationType.Application)
-                    .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
-                    .platformToolset(PlatformToolset.builder().value("v142").build())
-                    .characterSet(CharacterSet.Unicode)
-                .build(),
+                        .condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
+                        .configurationType(ConfigurationType.Application)
+                        .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
+                        .platformToolset(PlatformToolset.builder().value("v142").build())
+                        .characterSet(CharacterSet.Unicode)
+                        .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Release|Win32'")
                         .configurationType(ConfigurationType.Application)
@@ -108,11 +108,11 @@ public class ProjectComposer implements Composer<CppProjectTemplateData, Project
                         configurationPropertyGroupList.stream()
                 ).collect(Collectors.toList()))
                 .importList(Arrays.asList(
-                    Import.builder().project(cppDefaultPropsImport).build(),
-                    Import.builder().project(cppPropsImport).build(),
-                    Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.targets").build()
-                )
-            ).build();
+                        Import.builder().project(cppDefaultPropsImport).build(),
+                        Import.builder().project(cppPropsImport).build(),
+                        Import.builder().project("$(VCTargetsPath)\\Microsoft.Cpp.targets").build()
+                        )
+                ).build();
 
         return CppProjectTemplateData.builder()
                 .defaultTargets(project.getDefaultTargets())
