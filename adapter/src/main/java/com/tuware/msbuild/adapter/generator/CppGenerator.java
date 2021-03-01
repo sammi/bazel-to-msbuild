@@ -19,11 +19,11 @@ public class CppGenerator implements Generator<CppProjectTemplateData> {
     }
 
     @Override
-    public String generate(CppProjectTemplateData cppProjectTemplateData) throws AdapterException {
+    public String generate(CppProjectTemplateData templateData) throws AdapterException {
         try {
-            return templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", cppProjectTemplateData);
+            return templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", templateData);
         } catch (IOException | URISyntaxException e) {
-            throw new AdapterException("Failed to write context to file system.", e);
+            throw new AdapterException("Failed to compile xml content.", e);
         }
     }
 

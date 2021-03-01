@@ -15,7 +15,7 @@ public class FileRepository implements Repository<Path, String> {
         try {
             Files.write(absoluteFilePath, utf8Text.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            throw new AdapterException(e);
+            throw new AdapterException("Failed to save file:" + absoluteFilePath, e);
         }
     }
 }

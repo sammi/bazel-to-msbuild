@@ -6,6 +6,6 @@ package com.tuware.msbuild.contract.adapter;
  */
 public interface Generator<T> {
 
-    String generate(T tData)  throws AdapterException;
+    String generate(T templateData)  throws AdapterException;
 
 }

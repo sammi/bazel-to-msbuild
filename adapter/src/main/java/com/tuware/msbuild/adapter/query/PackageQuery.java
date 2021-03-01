@@ -24,7 +24,7 @@ public class PackageQuery implements Query<Build.QueryResult> {
             Process process = bazelProcessBuilder.startBazelQueryProcess(bazelWorkspaceAbsolutePath.toFile(), commands);
             return Build.QueryResult.parseFrom(process.getInputStream());
         } catch (AdapterException | IOException e) {
-            throw new AdapterException(e);
+            throw new AdapterException("Failed to start bazel process", e);
         }
     }
 }
