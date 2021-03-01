@@ -11,11 +11,11 @@ import java.nio.file.Path;
 public class FileRepository implements Repository<Path, String> {
 
     @Override
-    public void save(Path absoluteFilePath, String utf8Text) throws AdapterException {
+    public void save(Path identifier, String content) throws AdapterException {
         try {
-            Files.write(absoluteFilePath, utf8Text.getBytes(StandardCharsets.UTF_8));
+            Files.write(identifier, content.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            throw new AdapterException("Failed to save file:" + absoluteFilePath, e);
+            throw new AdapterException("Failed to save file:" + identifier, e);
         }
     }
 }

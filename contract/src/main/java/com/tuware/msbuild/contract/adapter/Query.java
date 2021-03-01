@@ -8,6 +8,6 @@ import java.util.List;
  */
 public interface Query<Q> {
 
-    Q query(Path bazelProjectRootAbsolutePath, List<String> commands) throws AdapterException;
+    Q query(Path bazelWorkspaceFolder, List<String> commands) throws AdapterException;
 
 }

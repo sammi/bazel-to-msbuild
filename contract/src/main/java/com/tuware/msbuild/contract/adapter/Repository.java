@@ -6,6 +6,6 @@ package com.tuware.msbuild.contract.adapter;
  */
 public interface Repository<I, C> {
 
-    void save(final I i, final C c) throws AdapterException;
+    void save(final I identifier, final C content) throws AdapterException;
 
 }

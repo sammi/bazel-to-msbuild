@@ -19,9 +19,9 @@ public class PackageQuery implements Query<Build.QueryResult> {
     }
 
     @Override
-    public Build.QueryResult query(Path bazelWorkspaceAbsolutePath, List<String> commands) throws AdapterException {
+    public Build.QueryResult query(Path bazelWorkspaceFolder, List<String> commands) throws AdapterException {
         try {
-            Process process = bazelProcessBuilder.startBazelQueryProcess(bazelWorkspaceAbsolutePath.toFile(), commands);
+            Process process = bazelProcessBuilder.startBazelQueryProcess(bazelWorkspaceFolder.toFile(), commands);
             return Build.QueryResult.parseFrom(process.getInputStream());
         } catch (AdapterException | IOException e) {
             throw new AdapterException("Failed to start bazel process", e);
