@@ -9,11 +9,13 @@ The project modules are organized by [hexagonal architecture](https://en.wikiped
 It defines project shared dependencies, which includes springboot dependencies, spock test framework, and groovy plugin.
 ## contract
 * It defines interfaces which are required by feature, being implemented by adapter;
-* It defines shared msbuild model classes, bazel protobuf meta data, and related gRPC dependencies, which are being used by feature and adapter;
+* It defines shared msbuild model classes, bazel protobuf metadata, and related gRPC dependencies, which are being used by feature and adapter;
 ## feature
 It defines features to be used by end user, it depends on contract model at compile time, calls adapter model implementations at run time.
 ## adapter
-It implements interfaces defined in contract model, it only depends on conract model, not feature module.
+It implements interfaces defined in contract model, it only depends on contract model, not feature module.
+## integration
+Integrate adapter and feature together to run end to end integration tests.
 
 # Set up development environment 
 1. [Install Bazel on Windows](https://docs.bazel.build/versions/master/install-windows.html), make sure it is available in your PATH
