@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class BazelProcessBuilder {
+class BazelProcessBuilder {
 
     public Process startBazelQueryProcess(File commandWorkingDirectory, List<String> commands) throws AdapterException {
         ProcessBuilder processBuilder = new ProcessBuilder();

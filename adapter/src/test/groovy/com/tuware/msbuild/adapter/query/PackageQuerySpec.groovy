@@ -9,7 +9,7 @@ import java.nio.file.Paths
 
 class PackageQuerySpec extends Specification {
 
-    PackageQuery packageQueryAdapter = new PackageQuery(new BazelProcessBuilder())
+    PackageQuery packageQueryAdapter = new PackageQuery()
 
     def "parse the result from bazel query command as Build.QueryResult object"() {
 

@@ -8,7 +8,7 @@ class CppGeneratorSpec extends Specification {
 
     def "Generate default template xml project file when data object is emtpy"(){
         given:
-        CppGenerator cppProjectGenerator = new CppGenerator(new TemplateBuilder(new Handlebars()))
+        CppGenerator cppProjectGenerator = new CppGenerator()
         CppProjectTemplateData cppProjectTemplateData = new CppProjectTemplateData()
 
         when:

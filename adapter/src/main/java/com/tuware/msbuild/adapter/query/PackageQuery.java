@@ -14,8 +14,8 @@ public class PackageQuery implements Query<Build.QueryResult> {
 
     private BazelProcessBuilder bazelProcessBuilder;
 
-    public PackageQuery(BazelProcessBuilder bazelProcessBuilder) {
-        this.bazelProcessBuilder = bazelProcessBuilder;
+    public PackageQuery() {
+        this.bazelProcessBuilder = new BazelProcessBuilder();
     }
 
     @Override
