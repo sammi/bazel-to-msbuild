@@ -14,8 +14,8 @@ class TemplateBuilder {
 
     private Handlebars handlebars;
 
-    public TemplateBuilder(Handlebars handlebars) {
-        this.handlebars = handlebars;
+    public TemplateBuilder() {
+        this.handlebars = new Handlebars();
     }
 
     String compileFromTemplateFile(String xmlTemplateFilePath, Object data) throws IOException, URISyntaxException {

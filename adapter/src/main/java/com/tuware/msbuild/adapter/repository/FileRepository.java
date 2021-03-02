@@ -2,12 +2,14 @@ package com.tuware.msbuild.adapter.repository;
 
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.Repository;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@Component
 public class FileRepository implements Repository<Path, String> {
 
     @Override

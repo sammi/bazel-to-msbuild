@@ -24,8 +24,12 @@ public class SolutionComposer implements Composer<Solution, SolutionSeed> {
 
     private MsBuildEnvironment msBuildEnvironment;
 
-    public SolutionComposer(MsBuildEnvironment msBuildEnvironment) {
-        this.msBuildEnvironment = msBuildEnvironment;
+    public SolutionComposer() {
+        this.msBuildEnvironment = MsBuildEnvironment.builder()
+                .formatVersion(MSBuildVersion.builder().major("12").minor("00").build())
+                .visualStudioVersion(MSBuildVersion.builder().major("16").minor("0").patch("30804").revision("86").build())
+                .minimumVisualStudioVersion(MSBuildVersion.builder().major("10").minor("0").patch("40219").revision("1").build())
+                .build();
     }
 
     @Override

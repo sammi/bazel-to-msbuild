@@ -11,20 +11,20 @@ import org.springframework.stereotype.Component;
 public class GeneratorService {
 
     private Generator<CppProjectTemplateData> cppProjectGenerator;
-    private Generator<Project> cppProjectFilterGenerator;
+    private Generator<Project> projectFilterGenerator;
     private Generator<Solution> solutionGenerator;
-    private Generator<Object>  cppProjectUserGenerator;
+    private Generator<Object> projectUserGenerator;
 
     public GeneratorService(
             Generator<CppProjectTemplateData> cppProjectGenerator,
-            Generator<Project> cppProjectFilterGenerator,
+            Generator<Project> projectFilterGenerator,
             Generator<Solution> solutionGenerator,
-            Generator<Object> cppProjectUserGenerator
+            Generator<Object> projectUserGenerator
     ) {
         this.cppProjectGenerator = cppProjectGenerator;
-        this.cppProjectFilterGenerator = cppProjectFilterGenerator;
+        this.projectFilterGenerator = projectFilterGenerator;
         this.solutionGenerator = solutionGenerator;
-        this.cppProjectUserGenerator = cppProjectUserGenerator;
+        this.projectUserGenerator = projectUserGenerator;
     }
 
     public String generateCppProjectXml(CppProjectTemplateData cppProjectTemplateData) throws AdapterException {
@@ -32,7 +32,7 @@ public class GeneratorService {
     }
 
     public String generateCppProjectFilterXml(Project project) throws AdapterException {
-        return cppProjectFilterGenerator.generate(project);
+        return projectFilterGenerator.generate(project);
     }
 
     public String generateSolution(Solution solution) throws AdapterException {
@@ -40,6 +40,6 @@ public class GeneratorService {
     }
 
     public String generateProjectUserXml(Project project) throws AdapterException {
-        return cppProjectUserGenerator.generate(project);
+        return projectUserGenerator.generate(project);
     }
 }

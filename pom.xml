@@ -108,6 +108,7 @@
         <module>feature</module>
         <module>adapter</module>
         <module>integration</module>
+        <module>cli</module>
     </modules>
 
 </project>

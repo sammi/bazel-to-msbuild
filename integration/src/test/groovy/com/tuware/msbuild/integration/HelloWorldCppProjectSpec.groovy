@@ -1,6 +1,5 @@
 package com.tuware.msbuild.integration
 
-
 import com.tuware.msbuild.adapter.composer.ProjectComposer
 import com.tuware.msbuild.adapter.composer.ProjectFilterComposer
 import com.tuware.msbuild.adapter.composer.ProjectUserComposer
@@ -15,8 +14,6 @@ import com.tuware.msbuild.adapter.generator.SolutionGenerator
 import com.tuware.msbuild.adapter.provider.BazelQueryAllProtoProvider
 import com.tuware.msbuild.adapter.query.PackageQuery
 import com.tuware.msbuild.adapter.repository.FileRepository
-import com.tuware.msbuild.contract.msbuild.solution.MSBuildVersion
-import com.tuware.msbuild.contract.msbuild.solution.MsBuildEnvironment
 import com.tuware.msbuild.feature.CppProjectFeature
 import com.tuware.msbuild.feature.service.ComposerService
 import com.tuware.msbuild.feature.service.ExtractorService
@@ -46,13 +43,7 @@ class HelloWorldCppProjectSpec extends Specification {
         ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
         ProjectUserComposer projectUserComposer = new ProjectUserComposer()
 
-        MsBuildEnvironment msBuildEnvironment = MsBuildEnvironment.builder()
-                .formatVersion(MSBuildVersion.builder().major("12").minor("00").build())
-                .visualStudioVersion(MSBuildVersion.builder().major("16").minor("0").patch("30804").revision("86").build())
-                .minimumVisualStudioVersion(MSBuildVersion.builder().major("10").minor("0").patch("40219").revision("1").build())
-                .build()
-
-        SolutionComposer solutionComposer = new SolutionComposer(msBuildEnvironment)
+        SolutionComposer solutionComposer = new SolutionComposer()
 
         ComposerService composerService = new ComposerService(projectComposer, projectFilterComposer, projectUserComposer, solutionComposer)
 

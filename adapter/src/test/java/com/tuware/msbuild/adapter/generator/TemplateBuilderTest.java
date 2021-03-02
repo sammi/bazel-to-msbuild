@@ -1,6 +1,5 @@
 package com.tuware.msbuild.adapter.generator;
 
-import com.github.jknack.handlebars.Handlebars;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -12,7 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class TemplateBuilderTest {
 
-    TemplateBuilder templateBuilder = new TemplateBuilder(new Handlebars());
+    TemplateBuilder templateBuilder = new TemplateBuilder();
 
     @Test
     void compileFromTemplateFile() throws IOException, URISyntaxException {

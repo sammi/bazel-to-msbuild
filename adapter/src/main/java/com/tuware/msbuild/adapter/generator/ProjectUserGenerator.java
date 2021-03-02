@@ -1,12 +1,13 @@
 package com.tuware.msbuild.adapter.generator;
 
 import com.tuware.msbuild.contract.adapter.Generator;
-import com.tuware.msbuild.contract.msbuild.project.Project;
+import org.springframework.stereotype.Component;
 
-public class ProjectUserGenerator implements Generator<Project> {
+@Component
+public class ProjectUserGenerator implements Generator<Object> {
 
     @Override
-    public String generate(Project templateData) {
+    public String generate(Object templateData) {
         return "";
     }
 }

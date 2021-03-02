@@ -1,6 +1,5 @@
 package com.tuware.msbuild.adapter.generator;
 
-import com.github.jknack.handlebars.Handlebars;
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.Generator;
 import com.tuware.msbuild.contract.template.CppProjectTemplateData;
@@ -15,7 +14,7 @@ public class ProjectGenerator implements Generator<CppProjectTemplateData> {
     private TemplateBuilder templateBuilder;
 
     public ProjectGenerator() {
-        this.templateBuilder = new TemplateBuilder(new Handlebars());
+        this.templateBuilder = new TemplateBuilder();
     }
 
     @Override
