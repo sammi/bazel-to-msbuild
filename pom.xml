@@ -13,10 +13,9 @@
     </parent>
 
     <groupId>com.tuware.msbuild</groupId>
-    <artifactId>base</artifactId>
+    <artifactId>bazel-to-msbuild</artifactId>
     <packaging>pom</packaging>
     <version>0.1.0-SNAPSHOT</version>
-    <name>bazel-to-msbuild</name>
 
     <properties>
         <groovy.version>3.0.7</groovy.version>
@@ -67,12 +66,6 @@
             <artifactId>spock-junit4</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.jimfs</groupId>
-            <artifactId>jimfs</artifactId>
-            <version>${jimf.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -107,8 +100,19 @@
         <module>contract</module>
         <module>feature</module>
         <module>adapter</module>
-        <module>integration</module>
         <module>cli</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>it</id>
+            <modules>
+                <module>contract</module>
+                <module>feature</module>
+                <module>adapter</module>
+                <module>integration</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

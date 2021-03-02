@@ -37,9 +37,16 @@ Integrate adapter and feature together to run end to end integration tests.
    in your PATH
 1. [Install lombok plugin](https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project ) in
    intellij to support lombok annotations.
-1. Then start up the tests and enjoy coding!
+1. Run unit tests and install
 
 ```
 cd bazel-to-msbuild
 mvn clean test
 ```
+1. Run integration tests, note: you could not run ```mvn clean install```, because you could not install integration test module.
+
+```
+cd bazel-to-msbuild
+mvn -P it clean test
+```
+
