@@ -8,7 +8,7 @@ Generate msbuild project from bazel project
 The project modules are organized
 by [hexagonal architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) style.
 
-## base
+## bazel-to-msbuild
 
 It defines project shared dependencies, which includes springboot dependencies, spock test framework, and groovy plugin.
 
