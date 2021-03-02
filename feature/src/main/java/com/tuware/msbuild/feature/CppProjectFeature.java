@@ -41,43 +41,43 @@ public class CppProjectFeature implements Feature {
     }
 
     @Override
-    public void buildMsbuildSolutionFromBazelWorkspace(Path bazelWorkspaceFolder, Path msbuildProjectFile) throws FeatureException {
+    public void buildMsbuildSolutionFromBazelWorkspace(Path bazelWorkspaceFolder, Path msbuildSolutionFolder) throws FeatureException {
         Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
         try {
-            buildCppProject(msbuildProjectFile, queryResult);
-            buildCppProjectFilter(msbuildProjectFile, queryResult);
-            buildCppProjectUser(msbuildProjectFile);
-            buildSolution(msbuildProjectFile, queryResult);
+            buildCppProject(msbuildSolutionFolder, queryResult);
+            buildCppProjectFilter(msbuildSolutionFolder, queryResult);
+            buildCppProjectUser(msbuildSolutionFolder);
+            buildSolution(msbuildSolutionFolder, queryResult);
         } catch (AdapterException e) {
             throw new FeatureException(e);
         }
     }
 
-    private void buildSolution(Path msbuildProjectFile, Build.QueryResult queryResult) throws AdapterException {
+    private void buildSolution(Path msbuildSolutionFolder, Build.QueryResult queryResult) throws AdapterException {
         SolutionSeed solutionSeed = extractorService.extractSolution(queryResult);
         Solution solution = composerService.composeSolutionTemplateData(solutionSeed);
         String xml = generatorService.generateSolution(solution);
-        repository.save(msbuildProjectFile, xml);
+        repository.save(msbuildSolutionFolder, xml);
     }
 
-    private void buildCppProjectUser(Path msbuildProjectFile) throws AdapterException {
+    private void buildCppProjectUser(Path msbuildSolutionFolder) throws AdapterException {
         Project project = composerService.composeCppProjectUserTemplateData(new Object());
         String xml = generatorService.generateProjectUserXml(project);
-        repository.save(msbuildProjectFile, xml);
+        repository.save(msbuildSolutionFolder, xml);
     }
 
-    private void buildCppProject(Path msbuildProjectFile, Build.QueryResult queryResult) throws AdapterException {
+    private void buildCppProject(Path msbuildSolutionFolder, Build.QueryResult queryResult) throws AdapterException {
         ProjectSeed projectSeed = extractorService.extractProject(queryResult);
         CppProjectTemplateData cppProjectTemplateData = composerService.composeCppProjectTemplateData(projectSeed);
         String xml = generatorService.generateCppProjectXml(cppProjectTemplateData);
-        repository.save(msbuildProjectFile, xml);
+        repository.save(msbuildSolutionFolder, xml);
     }
 
-    private void buildCppProjectFilter(Path msbuildProjectFile, Build.QueryResult queryResult) throws AdapterException {
+    private void buildCppProjectFilter(Path msbuildSolutionFolder, Build.QueryResult queryResult) throws AdapterException {
         ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter(queryResult);
         Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
         String xml = generatorService.generateCppProjectFilterXml(project);
-        repository.save(msbuildProjectFile, xml);
+        repository.save(msbuildSolutionFolder, xml);
     }
 
 }

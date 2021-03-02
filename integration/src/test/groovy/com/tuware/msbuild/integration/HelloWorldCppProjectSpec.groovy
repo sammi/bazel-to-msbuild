@@ -55,16 +55,16 @@ class HelloWorldCppProjectSpec extends Specification {
         GeneratorService generatorService = new GeneratorService(projectGenerator, projectFilterGenerator, solutionGenerator, projectUserGenerator)
 
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
-        Path msbuildProjectFilePath = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath() + "/HelloWorld.vcxproj")
+        Path msbuildSolutionFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
         FileRepository repository = Mock()
 
         CppProjectFeature cppProjectFeature = new CppProjectFeature(queryService, composerService, extractorService, generatorService, repository)
 
         when:
-        cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildProjectFilePath)
+        cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder)
 
         then:
-        4 * repository.save(msbuildProjectFilePath, { it != null })
+        4 * repository.save(msbuildSolutionFolder, { it != null })
 
     }
 }
