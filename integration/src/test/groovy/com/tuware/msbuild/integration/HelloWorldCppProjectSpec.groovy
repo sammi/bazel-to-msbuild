@@ -64,7 +64,7 @@ class HelloWorldCppProjectSpec extends Specification {
         cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder)
 
         then:
-        4 * repository.save(msbuildSolutionFolder, { it != null })
+        4 * repository.save(_, { it != null })
 
     }
 }

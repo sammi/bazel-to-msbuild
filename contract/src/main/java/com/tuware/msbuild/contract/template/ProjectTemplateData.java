@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
-public class CppProjectTemplateData {
+public class ProjectTemplateData {
     private String defaultTargets;
     private ItemGroup projectConfigurations;
     private PropertyGroup globals;

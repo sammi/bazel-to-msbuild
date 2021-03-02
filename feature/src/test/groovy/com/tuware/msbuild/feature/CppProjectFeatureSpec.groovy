@@ -7,7 +7,7 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.contract.seed.ProjectSeed
 import com.tuware.msbuild.contract.seed.SolutionSeed
-import com.tuware.msbuild.contract.template.CppProjectTemplateData
+import com.tuware.msbuild.contract.template.ProjectTemplateData
 import com.tuware.msbuild.feature.service.ComposerService
 import com.tuware.msbuild.feature.service.ExtractorService
 import com.tuware.msbuild.feature.service.GeneratorService
@@ -35,16 +35,16 @@ class CppProjectFeatureSpec extends Specification {
                 repository
         )
 
-        Path bazelWorkspaceAbsolutePath = Mock()
-        Path msbuildSolutionAbsolutePath = Mock()
+        Path bazelWorkspaceFolder = Mock()
+        Path msbuildSolutionFolder = Mock()
 
         Build.QueryResult queryResult = GroovyMock()
-
         ProjectSeed projectSeed = Mock()
+
         ProjectFilerSeed projectFilerSeed = Mock()
         SolutionSeed solutionSeed = Mock()
 
-        CppProjectTemplateData cppProjectTemplate = Mock()
+        ProjectTemplateData cppProjectTemplate = Mock()
         Project projectFilterTemplate = Mock()
         Project projectUserTemplate = Mock()
         Solution solutionTemplate = Mock()
@@ -55,30 +55,30 @@ class CppProjectFeatureSpec extends Specification {
         String solutionXml = GroovyMock()
 
         when:
-        cppProjectConverter.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceAbsolutePath, msbuildSolutionAbsolutePath)
+        cppProjectConverter.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder)
 
         then:
 
-        1 * queryService.query(bazelWorkspaceAbsolutePath) >> queryResult
+        1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
         1 * extractorService.extractProject(queryResult) >> projectSeed
         1 * extractorService.extractProjectFilter(queryResult) >> projectFilerSeed
         1 * extractorService.extractSolution(queryResult) >> solutionSeed
 
-        1 * composerService.composeCppProjectTemplateData(projectSeed) >> cppProjectTemplate
+        1 * composerService.composeProjectTemplateData(projectSeed) >> cppProjectTemplate
         1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
         1 * composerService.composeCppProjectUserTemplateData(_) >> projectUserTemplate
         1 * composerService.composeSolutionTemplateData(solutionSeed) >> solutionTemplate
 
-        1 * generatorService.generateCppProjectXml(cppProjectTemplate) >> projectXml
+        1 * generatorService.generateProjectXml(cppProjectTemplate) >> projectXml
         1 * generatorService.generateCppProjectFilterXml(projectFilterTemplate) >> projectFilterXml
         1 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
         1 * generatorService.generateSolution(solutionTemplate) >> solutionXml
 
-        1 * repository.save(msbuildSolutionAbsolutePath, projectXml)
-        1 * repository.save(msbuildSolutionAbsolutePath, projectFilterXml)
-        1 * repository.save(msbuildSolutionAbsolutePath, projectUserXml)
-        1 * repository.save(msbuildSolutionAbsolutePath, solutionXml)
+        1 * repository.save(_, projectXml)
+        1 * repository.save(_, projectFilterXml)
+        1 * repository.save(_, projectUserXml)
+        1 * repository.save(_, solutionXml)
     }
 
 }

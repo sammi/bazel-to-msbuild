@@ -1,7 +1,7 @@
 package com.tuware.msbuild.adapter.generator
 
 
-import com.tuware.msbuild.contract.template.CppProjectTemplateData
+import com.tuware.msbuild.contract.template.ProjectTemplateData
 import spock.lang.Specification
 
 class ProjectGeneratorSpec extends Specification {
@@ -9,7 +9,7 @@ class ProjectGeneratorSpec extends Specification {
     def "Generate default template xml project file when data object is emtpy"() {
         given:
         ProjectGenerator cppProjectGenerator = new ProjectGenerator()
-        CppProjectTemplateData cppProjectTemplateData = new CppProjectTemplateData()
+        ProjectTemplateData cppProjectTemplateData = new ProjectTemplateData()
 
         when:
         String projectXml = cppProjectGenerator.generate(cppProjectTemplateData)
