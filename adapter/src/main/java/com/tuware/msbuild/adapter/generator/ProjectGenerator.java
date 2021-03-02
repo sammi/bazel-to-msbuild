@@ -20,7 +20,7 @@ public class ProjectGenerator implements Generator<ProjectTemplateData> {
     @Override
     public String generate(ProjectTemplateData templateData) throws AdapterException {
         try {
-            return templateBuilder.compileFromTemplateFile("/templates/vcxproj.hbs", templateData);
+            return templateBuilder.compileFromTemplateFile(TemplatePathProvider.projectTemplate(), templateData);
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to compile project xml content.", e);
         }

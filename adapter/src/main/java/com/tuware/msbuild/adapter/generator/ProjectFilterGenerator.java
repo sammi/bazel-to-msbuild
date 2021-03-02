@@ -20,7 +20,7 @@ public class ProjectFilterGenerator implements Generator<Project> {
     @Override
     public String generate(Project templateData) throws AdapterException {
         try {
-            return templateBuilder.compileFromTemplateFile("/templates/vcxproj.filters.hbs", templateData);
+            return templateBuilder.compileFromTemplateFile(TemplatePathProvider.projectFilterTemplate(), templateData);
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to compile project filter xml content.", e);
         }
