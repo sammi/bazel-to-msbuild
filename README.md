@@ -41,7 +41,7 @@ Integrate adapter and feature together to run end to end integration tests.
 
 ```
 cd bazel-to-msbuild
-mvn clean test
+mvn clean install
 ```
 1. Run integration tests, note: you could not run ```mvn clean install```, because you could not install integration test module.
 
