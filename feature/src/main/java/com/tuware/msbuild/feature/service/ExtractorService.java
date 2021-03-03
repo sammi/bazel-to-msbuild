@@ -7,22 +7,22 @@ import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.seed.SolutionSeed;
 import org.springframework.stereotype.Component;
 
+import java.nio.file.Path;
+import java.util.UUID;
+
 @Component
 public class ExtractorService {
 
     private static final String CC_BINARY = "cc_binary";
     private Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor;
     private Extractor<Build.QueryResult, ProjectFilerSeed> projectFilerExtractor;
-    private Extractor<Build.QueryResult, SolutionSeed> solutionExtractor;
 
     public ExtractorService(
             Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor,
-            Extractor<Build.QueryResult, ProjectFilerSeed> projectFilerExtractor,
-            Extractor<Build.QueryResult, SolutionSeed> solutionExtractor
+            Extractor<Build.QueryResult, ProjectFilerSeed> projectFilerExtractor
     ) {
         this.projectSeedExtractor = projectSeedExtractor;
         this.projectFilerExtractor = projectFilerExtractor;
-        this.solutionExtractor = solutionExtractor;
     }
 
     public ProjectSeed extractProject(Build.QueryResult queryResult) {
@@ -33,8 +33,14 @@ public class ExtractorService {
         return projectFilerExtractor.extract(queryResult, CC_BINARY);
     }
 
-    public SolutionSeed extractSolution(Build.QueryResult queryResult) {
-        return solutionExtractor.extract(queryResult, CC_BINARY);
+    public SolutionSeed buildSolutionSeed(Path solutionPath, String solutionName, UUID solutionUUID, UUID projectUUID) {
+
+        return SolutionSeed.builder()
+                .name(solutionName)
+                .location(solutionPath.toFile().getPath())
+                .solutionGuid(solutionUUID)
+                .projectGuid(projectUUID)
+                .build();
     }
 
 }

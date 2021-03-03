@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 public class BazelToMsbuildCommand implements Runnable {
 
     @CommandLine.Parameters(parameterConsumer = BazelMsbuildPairConsumer.class, description = "bazel workspace folder and msbuild solution folder")
-    private BazelMsbuildPair bazelMsbuildPair;
+    private Parameters parameters;
 
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "show usage info")
     private boolean helpRequested = false;
@@ -31,14 +31,15 @@ public class BazelToMsbuildCommand implements Runnable {
 
     @Override
     public void run() {
-        String from = bazelMsbuildPair.getBazelWorkspaceFolder();
-        String to = bazelMsbuildPair.getMsbuildSolutionFolder();
-
+        String from = parameters.getBazelWorkspaceFolder();
+        String to = parameters.getMsbuildSolutionFolder();
         Path bazelPath = Paths.get(from);
         Path msBuildPath = Paths.get(to);
 
+        String projectName = parameters.getProjectName();
+
         try {
-            cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelPath, msBuildPath, "App");
+            cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelPath, msBuildPath, projectName);
         } catch (FeatureException e) {
             log.error("Failed to convert bazel workspace: {} to msbuild solution: {}", from, to, e);
             System.exit(1);

@@ -27,7 +27,7 @@ class ProjectSeedExtractorSpec extends Specification {
         ProjectSeed projectSeed = ccBinaryMapper.extract(queryResult, "cc_binary")
 
         then:
-        projectSeed.getProjectGuild() != null
+        projectSeed.getProjectGuid() != null
         projectSeed.getCppFileName() == "main" + File.separator + "test.cpp"
     }
 }

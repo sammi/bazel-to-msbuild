@@ -6,7 +6,7 @@ import com.tuware.msbuild.adapter.composer.ProjectUserComposer
 import com.tuware.msbuild.adapter.composer.SolutionComposer
 import com.tuware.msbuild.adapter.extractor.ProjectFilerSeedExtractor
 import com.tuware.msbuild.adapter.extractor.ProjectSeedExtractor
-import com.tuware.msbuild.adapter.extractor.SolutionExtractor
+
 import com.tuware.msbuild.adapter.generator.ProjectFilterGenerator
 import com.tuware.msbuild.adapter.generator.ProjectGenerator
 import com.tuware.msbuild.adapter.generator.ProjectUserGenerator
@@ -19,6 +19,7 @@ import com.tuware.msbuild.feature.service.ComposerService
 import com.tuware.msbuild.feature.service.ExtractorService
 import com.tuware.msbuild.feature.service.GeneratorService
 import com.tuware.msbuild.feature.service.QueryService
+import com.tuware.msbuild.feature.service.RepositoryService
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
@@ -35,9 +36,8 @@ class HelloWorldCppProjectSpec extends Specification {
 
         ProjectSeedExtractor projectSeedExtractor = new ProjectSeedExtractor()
         ProjectFilerSeedExtractor projectFilerSeedExtractor = new ProjectFilerSeedExtractor()
-        SolutionExtractor solutionExtractor = new SolutionExtractor()
 
-        ExtractorService extractorService = new ExtractorService(projectSeedExtractor, projectFilerSeedExtractor, solutionExtractor)
+        ExtractorService extractorService = new ExtractorService(projectSeedExtractor, projectFilerSeedExtractor)
 
         ProjectComposer projectComposer = new ProjectComposer()
         ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
@@ -57,8 +57,9 @@ class HelloWorldCppProjectSpec extends Specification {
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
         Path msbuildSolutionFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
         FileRepository repository = Mock()
+        RepositoryService repositoryService = new RepositoryService(repository)
 
-        CppProjectFeature cppProjectFeature = new CppProjectFeature(queryService, composerService, extractorService, generatorService, repository)
+        CppProjectFeature cppProjectFeature = new CppProjectFeature(queryService, composerService, extractorService, generatorService, repositoryService)
 
         when:
         cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder, "App")

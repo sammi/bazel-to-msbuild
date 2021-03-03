@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,7 +30,7 @@ public class ProjectComposer implements Composer<ProjectTemplateData, ProjectSee
     @Override
     public ProjectTemplateData compose(ProjectSeed projectSeed) {
         String cppFileName = projectSeed.getCppFileName();
-        String projectGuild = projectSeed.getProjectGuild();
+        UUID projectGuild = projectSeed.getProjectGuid();
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(

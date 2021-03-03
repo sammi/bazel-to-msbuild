@@ -1,17 +1,13 @@
 package com.tuware.msbuild.feature
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build
-import com.tuware.msbuild.contract.adapter.Repository
 import com.tuware.msbuild.contract.msbuild.project.Project
 import com.tuware.msbuild.contract.msbuild.solution.Solution
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.contract.seed.ProjectSeed
 import com.tuware.msbuild.contract.seed.SolutionSeed
 import com.tuware.msbuild.contract.template.ProjectTemplateData
-import com.tuware.msbuild.feature.service.ComposerService
-import com.tuware.msbuild.feature.service.ExtractorService
-import com.tuware.msbuild.feature.service.GeneratorService
-import com.tuware.msbuild.feature.service.QueryService
+import com.tuware.msbuild.feature.service.*
 import spock.lang.Specification
 
 import java.nio.file.Path
@@ -25,21 +21,23 @@ class CppProjectFeatureSpec extends Specification {
         ExtractorService extractorService = Mock()
         ComposerService composerService = Mock()
         GeneratorService generatorService = Mock()
-        Repository<Path, String> repository = Mock()
+        RepositoryService repositoryService = Mock()
 
         CppProjectFeature cppProjectConverter = new CppProjectFeature(
                 queryService,
                 composerService,
                 extractorService,
                 generatorService,
-                repository
+                repositoryService
         )
 
         Path bazelWorkspaceFolder = Mock()
         Path msbuildSolutionFolder = Mock()
 
         Build.QueryResult queryResult = GroovyMock()
-        ProjectSeed projectSeed = Mock()
+
+        UUID projectUUID = UUID.randomUUID()
+        ProjectSeed projectSeed = ProjectSeed.builder().cppFileName(GroovyMock(String.class)).projectGuid(projectUUID).build()
 
         ProjectFilerSeed projectFilerSeed = Mock()
         SolutionSeed solutionSeed = Mock()
@@ -53,7 +51,7 @@ class CppProjectFeatureSpec extends Specification {
         String projectFilterXml = GroovyMock()
         String projectUserXml = GroovyMock()
         String solutionXml = GroovyMock()
-        String projectName = "App"
+        String projectName = GroovyMock()
 
         when:
         cppProjectConverter.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder, projectName)
@@ -64,7 +62,8 @@ class CppProjectFeatureSpec extends Specification {
 
         1 * extractorService.extractProject(queryResult) >> projectSeed
         1 * extractorService.extractProjectFilter(queryResult) >> projectFilerSeed
-        1 * extractorService.extractSolution(queryResult) >> solutionSeed
+
+        1 * extractorService.buildSolutionSeed(msbuildSolutionFolder, projectName, _, projectUUID) >> solutionSeed
 
         1 * composerService.composeProjectTemplateData(projectSeed) >> cppProjectTemplate
         1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
@@ -76,10 +75,10 @@ class CppProjectFeatureSpec extends Specification {
         1 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
         1 * generatorService.generateSolution(solutionTemplate) >> solutionXml
 
-        1 * repository.save(_, projectXml)
-        1 * repository.save(_, projectFilterXml)
-        1 * repository.save(_, projectUserXml)
-        1 * repository.save(_, solutionXml)
+        1 * repositoryService.saveProject(msbuildSolutionFolder, projectName, projectXml)
+        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, projectName, projectFilterXml)
+        1 * repositoryService.saveProjectUser(msbuildSolutionFolder, projectName, projectUserXml)
+        1 * repositoryService.saveSolution(msbuildSolutionFolder, projectName, solutionXml)
     }
 
 }

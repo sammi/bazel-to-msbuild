@@ -3,6 +3,8 @@ package com.tuware.msbuild.contract.msbuild.project;
 import com.tuware.msbuild.contract.msbuild.property.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
@@ -37,6 +39,6 @@ public class PropertyGroup {
     private ErrorText errorText;
     private String vcProjectVersion;
     private String keyword;
-    private String projectGuid;
+    private UUID projectGuid;
     private String tootNamespace;
 }

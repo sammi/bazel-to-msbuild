@@ -30,11 +30,11 @@ public class ProjectSeedExtractor implements Extractor<Build.QueryResult, Projec
                                 ))
                 );
 
-        String projectUuid = UUID.randomUUID().toString();
+        UUID projectUuid = UUID.randomUUID();
 
         return ProjectSeed.builder()
                 .cppFileName(sourceFileList.stream().findFirst().orElse(null))
-                .projectGuild(projectUuid).build();
+                .projectGuid(projectUuid).build();
     }
 
 }
