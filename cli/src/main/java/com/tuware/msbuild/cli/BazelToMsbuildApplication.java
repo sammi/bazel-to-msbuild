@@ -1,15 +1,19 @@
 package com.tuware.msbuild.cli;
 
-import com.tuware.msbuild.cli.command.BazelToMsbuildCommand;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
 import picocli.CommandLine;
 
 @SpringBootApplication
-@Import(BazelToMsbuildApplicationConfiguration.class)
+@ComponentScan(basePackages = {
+        "com.tuware.msbuild.contract",
+        "com.tuware.msbuild.feature",
+        "com.tuware.msbuild.adapter",
+        "com.tuware.msbuild.cli.command",
+})
 public class BazelToMsbuildApplication implements CommandLineRunner {
 
     private BazelToMsbuildCommand bazelToMsbuildCommand;

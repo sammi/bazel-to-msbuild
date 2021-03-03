@@ -1,4 +1,4 @@
-package com.tuware.msbuild.cli.command;
+package com.tuware.msbuild.cli;
 
 import picocli.CommandLine;
 
