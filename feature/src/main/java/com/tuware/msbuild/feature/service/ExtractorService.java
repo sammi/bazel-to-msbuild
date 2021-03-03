@@ -2,6 +2,7 @@ package com.tuware.msbuild.feature.service;
 
 import com.google.devtools.build.lib.query2.proto.proto2api.Build;
 import com.tuware.msbuild.contract.adapter.Extractor;
+import com.tuware.msbuild.contract.adapter.Provider;
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed;
 import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.seed.SolutionSeed;
@@ -15,22 +16,22 @@ public class ExtractorService {
 
     private static final String CC_BINARY = "cc_binary";
     private Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor;
-    private Extractor<Build.QueryResult, ProjectFilerSeed> projectFilerExtractor;
+    private Provider<ProjectFilerSeed> projectFilerProvider;
 
     public ExtractorService(
             Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor,
-            Extractor<Build.QueryResult, ProjectFilerSeed> projectFilerExtractor
+            Provider<ProjectFilerSeed> projectFilerProvider
     ) {
         this.projectSeedExtractor = projectSeedExtractor;
-        this.projectFilerExtractor = projectFilerExtractor;
+        this.projectFilerProvider = projectFilerProvider;
     }
 
     public ProjectSeed extractProject(Build.QueryResult queryResult) {
         return projectSeedExtractor.extract(queryResult, CC_BINARY);
     }
 
-    public ProjectFilerSeed extractProjectFilter(Build.QueryResult queryResult) {
-        return projectFilerExtractor.extract(queryResult, CC_BINARY);
+    public ProjectFilerSeed extractProjectFilter() {
+        return projectFilerProvider.provide();
     }
 
     public SolutionSeed buildSolutionSeed(Path solutionPath, String solutionName, UUID solutionUUID, UUID projectUUID) {

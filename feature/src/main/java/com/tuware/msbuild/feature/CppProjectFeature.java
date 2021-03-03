@@ -49,7 +49,7 @@ public class CppProjectFeature implements Feature {
 
             buildSolution(msbuildSolutionFolder, projectName, UUID.randomUUID(), projectSeed.getProjectGuid());
 
-            buildCppProjectFilter(msbuildSolutionFolder, queryResult, projectName);
+            buildCppProjectFilter(msbuildSolutionFolder, projectSeed, projectName);
             buildCppProjectUser(msbuildSolutionFolder, projectName);
         } catch (AdapterException e) {
             throw new FeatureException(e);
@@ -62,8 +62,9 @@ public class CppProjectFeature implements Feature {
         repositoryService.saveProject(msbuildSolutionFolder, projectName, xml);
     }
 
-    private void buildCppProjectFilter(Path msbuildSolutionFolder, Build.QueryResult queryResult, String projectName) throws AdapterException {
-        ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter(queryResult);
+    private void buildCppProjectFilter(Path msbuildSolutionFolder, ProjectSeed projectSeed, String projectName) throws AdapterException {
+        ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter();
+        projectFilerSeed.setSourceFile(projectSeed.getCppFileName());
         Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
         String xml = generatorService.generateCppProjectFilterXml(project);
         repositoryService.saveProjectFilter(msbuildSolutionFolder, projectName, xml);
@@ -86,6 +87,5 @@ public class CppProjectFeature implements Feature {
         String xml = generatorService.generateSolution(solution);
         repositoryService.saveSolution(msbuildSolutionFolder, projectName, xml);
     }
-
 
 }

@@ -26,12 +26,12 @@ public class RepositoryService {
     }
 
     public void saveProjectUser(Path msbuildSolutionFolder, String projectName, String xml) throws AdapterException {
-        String path = String.format(S_S_VCXPROJ_FILTERS, msbuildSolutionFolder.toAbsolutePath(), projectName);
+        String path = String.format(S_VCXPROJ_USER, msbuildSolutionFolder.toAbsolutePath(), projectName);
         repository.save(Paths.get(path), xml);
     }
 
     public void saveProjectFilter(Path msbuildSolutionFolder, String projectName, String xml) throws AdapterException {
-        String path = String.format(S_VCXPROJ_USER, msbuildSolutionFolder.toAbsolutePath(), projectName);
+        String path = String.format(S_S_VCXPROJ_FILTERS, msbuildSolutionFolder.toAbsolutePath(), projectName);
         repository.save(Paths.get(path), xml);
     }
 

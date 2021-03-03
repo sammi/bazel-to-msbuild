@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.UUID;
 
 @Component
 public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed> {
@@ -17,9 +18,10 @@ public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed
     @Override
     public Project compose(ProjectFilerSeed seed) {
 
-        String sourceFilesFilterGuid = seed.getSourceFilesFilterGuid();
-        String headerFilesFilterGuid = seed.getHeaderFilesFilterGuid();
-        String resourceFilesFilterGuid = seed.getResourceFilesFilterGuid();
+        UUID sourceFilesFilterGuid = seed.getSourceFilesFilterGuid();
+        UUID headerFilesFilterGuid = seed.getHeaderFilesFilterGuid();
+        UUID resourceFilesFilterGuid = seed.getResourceFilesFilterGuid();
+        String sourceFile = seed.getSourceFile();
 
         String sourceFilesFilterName = "Source Files";
 
@@ -47,7 +49,7 @@ public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed
                                 ItemGroup.builder().clCompileList(
                                         Collections.singletonList(
                                                 ClCompile.builder()
-                                                        .include("ConsoleApplication1.cpp")
+                                                        .include(sourceFile)
                                                         .filter(sourceFilesFilterName)
                                                         .build()
                                         )

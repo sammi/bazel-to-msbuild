@@ -1,9 +1,11 @@
 package com.tuware.msbuild.contract.adapter;
 
-import java.util.List;
+/**
+ *
+ * @param <C> - provided content class type.
+ */
+public interface Provider <C> {
 
-public interface Provider {
-
-    List<String> provide();
+    C provide();
 
 }

@@ -61,7 +61,7 @@ class CppProjectFeatureSpec extends Specification {
         1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
         1 * extractorService.extractProject(queryResult) >> projectSeed
-        1 * extractorService.extractProjectFilter(queryResult) >> projectFilerSeed
+        1 * extractorService.extractProjectFilter() >> projectFilerSeed
 
         1 * extractorService.buildSolutionSeed(msbuildSolutionFolder, projectName, _, projectUUID) >> solutionSeed
 

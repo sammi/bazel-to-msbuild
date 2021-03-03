@@ -4,7 +4,7 @@ import com.tuware.msbuild.adapter.composer.ProjectComposer
 import com.tuware.msbuild.adapter.composer.ProjectFilterComposer
 import com.tuware.msbuild.adapter.composer.ProjectUserComposer
 import com.tuware.msbuild.adapter.composer.SolutionComposer
-import com.tuware.msbuild.adapter.extractor.ProjectFilerSeedExtractor
+
 import com.tuware.msbuild.adapter.extractor.ProjectSeedExtractor
 
 import com.tuware.msbuild.adapter.generator.ProjectFilterGenerator
@@ -12,8 +12,11 @@ import com.tuware.msbuild.adapter.generator.ProjectGenerator
 import com.tuware.msbuild.adapter.generator.ProjectUserGenerator
 import com.tuware.msbuild.adapter.generator.SolutionGenerator
 import com.tuware.msbuild.adapter.provider.BazelQueryAllProtoProvider
+import com.tuware.msbuild.adapter.provider.ProjectFilterSeedProvider
 import com.tuware.msbuild.adapter.query.PackageQuery
 import com.tuware.msbuild.adapter.repository.FileRepository
+import com.tuware.msbuild.contract.adapter.Provider
+import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.feature.CppProjectFeature
 import com.tuware.msbuild.feature.service.ComposerService
 import com.tuware.msbuild.feature.service.ExtractorService
@@ -35,9 +38,10 @@ class HelloWorldCppProjectSpec extends Specification {
         QueryService queryService = new QueryService(bazelQueryAllProtoProvider, packageQuery)
 
         ProjectSeedExtractor projectSeedExtractor = new ProjectSeedExtractor()
-        ProjectFilerSeedExtractor projectFilerSeedExtractor = new ProjectFilerSeedExtractor()
 
-        ExtractorService extractorService = new ExtractorService(projectSeedExtractor, projectFilerSeedExtractor)
+        Provider<ProjectFilerSeed> projectFilerProvider = new ProjectFilterSeedProvider()
+
+        ExtractorService extractorService = new ExtractorService(projectSeedExtractor, projectFilerProvider)
 
         ProjectComposer projectComposer = new ProjectComposer()
         ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()

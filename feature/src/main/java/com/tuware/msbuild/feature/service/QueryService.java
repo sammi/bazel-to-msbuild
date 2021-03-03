@@ -13,10 +13,10 @@ import java.util.List;
 @Component
 public class QueryService {
 
-    private Provider provider;
+    private Provider<List<String>> provider;
     private Query<Build.QueryResult> query;
 
-    public QueryService(Provider provider, Query<Build.QueryResult> query) {
+    public QueryService(Provider<List<String>> provider, Query<Build.QueryResult> query) {
         this.provider = provider;
         this.query = query;
     }
