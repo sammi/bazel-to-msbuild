@@ -12,7 +12,7 @@ import picocli.CommandLine;
         "com.tuware.msbuild.contract",
         "com.tuware.msbuild.feature",
         "com.tuware.msbuild.adapter",
-        "com.tuware.msbuild.cli.command",
+        "com.tuware.msbuild.cli",
 })
 public class BazelToMsbuildApplication implements CommandLineRunner {
 
