@@ -20,7 +20,7 @@ public class SolutionGenerator implements Generator<Solution> {
     @Override
     public String generate(Solution templateData) throws AdapterException {
         try {
-            return templateBuilder.compileFromTemplateFile(TemplatePathProvider.solutionTemplate(), templateData);
+            return templateBuilder.compileFromTemplateFile(TemplatePaths.solutionTemplate(), templateData);
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to compile solution xml content.", e);
         }

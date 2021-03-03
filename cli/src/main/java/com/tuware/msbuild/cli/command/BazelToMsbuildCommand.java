@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 @Slf4j
 public class BazelToMsbuildCommand implements Runnable {
 
-    @CommandLine.Parameters(parameterConsumer = BazelMsbuildPairConsumer.class, description = "bazel workspace folder and msbuild solution folder")
+    @CommandLine.Parameters(parameterConsumer = ParametersConsumer.class, description = "bazel workspace folder and msbuild solution folder")
     private Parameters parameters;
 
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "show usage info")

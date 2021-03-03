@@ -4,7 +4,7 @@ import picocli.CommandLine;
 
 import java.util.Stack;
 
-public class BazelMsbuildPairConsumer implements CommandLine.IParameterConsumer {
+public class ParametersConsumer implements CommandLine.IParameterConsumer {
 
     @Override
     public void consumeParameters(Stack<String> args, CommandLine.Model.ArgSpec argSpec, CommandLine.Model.CommandSpec commandSpec) {

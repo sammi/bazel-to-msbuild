@@ -1,13 +1,13 @@
 package com.tuware.msbuild.adapter.generator;
 
-public class TemplatePathProvider {
+public class TemplatePaths {
 
     private static final String TEMPLATES_VCXPROJ_HBS = "/templates/vcxproj.hbs";
     private static final String TEMPLATES_VCXPROJ_USER_HBS = "/templates/vcxproj.user.hbs";
     private static final String TEMPLATES_VCXPROJ_FILTERS_HBS = "/templates/vcxproj.filters.hbs";
     private static final String TEMPLATES_SOLUTION_HBS = "/templates/solution.hbs";
 
-    private TemplatePathProvider() {}
+    private TemplatePaths() {}
 
     public static String projectTemplate() {
         return TEMPLATES_VCXPROJ_HBS;

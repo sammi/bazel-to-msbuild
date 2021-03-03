@@ -19,7 +19,7 @@ public class ProjectUserGenerator implements Generator<Object> {
     @Override
     public String generate(Object templateData) throws AdapterException {
         try {
-            return templateBuilder.compileFromTemplateFile(TemplatePathProvider.projectUserTemplate(), templateData);
+            return templateBuilder.compileFromTemplateFile(TemplatePaths.projectUserTemplate(), templateData);
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to compile project user xml content.", e);
         }
