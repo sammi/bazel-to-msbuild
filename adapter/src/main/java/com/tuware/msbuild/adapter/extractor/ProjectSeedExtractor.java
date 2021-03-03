@@ -5,6 +5,7 @@ import com.tuware.msbuild.contract.adapter.Extractor;
 import com.tuware.msbuild.contract.seed.ProjectSeed;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,10 @@ public class ProjectSeedExtractor implements Extractor<Build.QueryResult, Projec
                 .forEach(
                         rule -> rule.getRuleInputList().stream()
                                 .filter(ruleInput -> !ruleInput.contains("@"))
-                                .forEach(sourceFileList::add)
+                                .forEach(ruleInput -> sourceFileList.add(
+                                        ruleInput.replace("//", "")
+                                                .replace(":", File.separator)
+                                ))
                 );
 
         String projectUuid = UUID.randomUUID().toString();

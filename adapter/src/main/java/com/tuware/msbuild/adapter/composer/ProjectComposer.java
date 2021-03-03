@@ -21,6 +21,10 @@ public class ProjectComposer implements Composer<ProjectTemplateData, ProjectSee
     static final String RELEASE_X_64 = "Release|x64";
     static final String DEBUG_WIN_32 = "Debug|Win32";
     static final String RELEASE_WIN_32 = "Release|Win32";
+    public static final String WIN_32 = "Win32";
+    public static final String DEBUG = "Debug";
+    public static final String RELEASE = "Release";
+    public static final String X_64 = "x64";
 
     @Override
     public ProjectTemplateData compose(ProjectSeed projectSeed) {
@@ -30,20 +34,20 @@ public class ProjectComposer implements Composer<ProjectTemplateData, ProjectSee
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(
                         ProjectConfiguration.builder().include(DEBUG_WIN_32)
-                                .configuration("Debug")
-                                .platform("Win32")
+                                .configuration(DEBUG)
+                                .platform(WIN_32)
                                 .build(),
                         ProjectConfiguration.builder().include(RELEASE_WIN_32)
-                                .configuration("Release")
-                                .platform("Win32")
+                                .configuration(RELEASE)
+                                .platform(WIN_32)
                                 .build(),
                         ProjectConfiguration.builder().include(DEBUG_X_64)
-                                .configuration("Debug")
-                                .platform("x64")
+                                .configuration(DEBUG)
+                                .platform(X_64)
                                 .build(),
                         ProjectConfiguration.builder().include(RELEASE_X_64)
-                                .configuration("Release")
-                                .platform("x64")
+                                .configuration(RELEASE)
+                                .platform(X_64)
                                 .build()
                         )
                 ).build();
