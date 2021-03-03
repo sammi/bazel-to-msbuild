@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExtractorService {
 
+    private static final String CC_BINARY = "cc_binary";
     private Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor;
     private Extractor<Build.QueryResult, ProjectFilerSeed> projectFilerExtractor;
     private Extractor<Build.QueryResult, SolutionSeed> solutionExtractor;
@@ -25,15 +26,15 @@ public class ExtractorService {
     }
 
     public ProjectSeed extractProject(Build.QueryResult queryResult) {
-        return projectSeedExtractor.extract(queryResult);
+        return projectSeedExtractor.extract(queryResult, CC_BINARY);
     }
 
     public ProjectFilerSeed extractProjectFilter(Build.QueryResult queryResult) {
-        return projectFilerExtractor.extract(queryResult);
+        return projectFilerExtractor.extract(queryResult, CC_BINARY);
     }
 
     public SolutionSeed extractSolution(Build.QueryResult queryResult) {
-        return solutionExtractor.extract(queryResult);
+        return solutionExtractor.extract(queryResult, CC_BINARY);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Component
 public class SolutionExtractor implements Extractor<Build.QueryResult, SolutionSeed> {
     @Override
-    public SolutionSeed extract(Build.QueryResult bazelQResult) {
+    public SolutionSeed extract(Build.QueryResult bazelQResult, String ruleClass) {
         return SolutionSeed.builder()
                 .solutionGuid(UUID.randomUUID())
                 .name("solutionName")

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ProjectFilerSeedExtractor implements Extractor<Build.QueryResult, ProjectFilerSeed> {
 
     @Override
-    public ProjectFilerSeed extract(Build.QueryResult bazelQResult) {
+    public ProjectFilerSeed extract(Build.QueryResult bazelQResult, String ruleClass) {
         return ProjectFilerSeed.builder().build();
     }
 }

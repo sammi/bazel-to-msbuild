@@ -24,7 +24,7 @@ class ProjectSeedExtractorSpec extends Specification {
         .build()
 
         when:
-        ProjectSeed projectSeed = ccBinaryMapper.extract(queryResult)
+        ProjectSeed projectSeed = ccBinaryMapper.extract(queryResult, "cc_binary")
 
         then:
         projectSeed.getProjectGuild() != null

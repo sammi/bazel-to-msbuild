@@ -14,13 +14,13 @@ import java.util.UUID;
 public class ProjectSeedExtractor implements Extractor<Build.QueryResult, ProjectSeed> {
 
     @Override
-    public ProjectSeed extract(Build.QueryResult bazelQueryResult) {
+    public ProjectSeed extract(Build.QueryResult bazelQueryResult, String ruleClass) {
         List<String> sourceFileList = new ArrayList<>();
 
         bazelQueryResult.getTargetList().stream()
                 .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
                 .map(Build.Target::getRule)
-                .filter(rule -> rule.getRuleClass().equals("cc_binary"))
+                .filter(rule -> rule.getRuleClass().equals(ruleClass))
                 .forEach(
                         rule -> rule.getRuleInputList().stream()
                                 .filter(ruleInput -> !ruleInput.contains("@"))

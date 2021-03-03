@@ -61,10 +61,10 @@ class HelloWorldCppProjectSpec extends Specification {
         CppProjectFeature cppProjectFeature = new CppProjectFeature(queryService, composerService, extractorService, generatorService, repository)
 
         when:
-        cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder)
+        cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder, "App")
 
         then:
-        4 * repository.save(_, { it != null })
+        4 * repository.save({ it -> it.toString().contains("App") }, { it != null })
 
     }
 }

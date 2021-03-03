@@ -53,9 +53,10 @@ class CppProjectFeatureSpec extends Specification {
         String projectFilterXml = GroovyMock()
         String projectUserXml = GroovyMock()
         String solutionXml = GroovyMock()
+        String projectName = "App"
 
         when:
-        cppProjectConverter.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder)
+        cppProjectConverter.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder, projectName)
 
         then:
 

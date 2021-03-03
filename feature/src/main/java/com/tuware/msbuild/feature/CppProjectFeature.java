@@ -21,7 +21,11 @@ import java.nio.file.Paths;
 @Component
 public class CppProjectFeature implements Feature {
 
-    public static final String S_S_VCXPROJ = "%s/%s.vcxproj";
+    private static final String S_S_VCXPROJ = "%s/%s.vcxproj";
+    private static final String S_S_VCXPROJ_FILTERS = "%s/%s.vcxproj.filters";
+    private static final String S_VCXPROJ_USER = "%s/%s.vcxproj.user";
+    private static final String S_S_SLN = "%s/%s.sln";
+
     private QueryService queryService;
     private ComposerService composerService;
     private GeneratorService generatorService;
@@ -43,45 +47,45 @@ public class CppProjectFeature implements Feature {
     }
 
     @Override
-    public void buildMsbuildSolutionFromBazelWorkspace(Path bazelWorkspaceFolder, Path msbuildSolutionFolder) throws FeatureException {
+    public void buildMsbuildSolutionFromBazelWorkspace(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String projectName) throws FeatureException {
         Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
         try {
-            buildCppProject(msbuildSolutionFolder, queryResult);
-            buildCppProjectFilter(msbuildSolutionFolder, queryResult);
-            buildCppProjectUser(msbuildSolutionFolder);
-            buildSolution(msbuildSolutionFolder, queryResult);
+            buildCppProject(msbuildSolutionFolder, queryResult, projectName);
+            buildCppProjectFilter(msbuildSolutionFolder, queryResult, projectName);
+            buildCppProjectUser(msbuildSolutionFolder, projectName);
+            buildSolution(msbuildSolutionFolder, queryResult, projectName);
         } catch (AdapterException e) {
             throw new FeatureException(e);
         }
     }
 
-    private void buildCppProject(Path msbuildSolutionFolder, Build.QueryResult queryResult) throws AdapterException {
+    private void buildCppProject(Path msbuildSolutionFolder, Build.QueryResult queryResult, String projectName) throws AdapterException {
         ProjectSeed projectSeed = extractorService.extractProject(queryResult);
         ProjectTemplateData projectTemplateData = composerService.composeProjectTemplateData(projectSeed);
         String xml = generatorService.generateProjectXml(projectTemplateData);
-        String path = String.format(S_S_VCXPROJ, msbuildSolutionFolder.toAbsolutePath(), "project");
+        String path = String.format(S_S_VCXPROJ, msbuildSolutionFolder.toAbsolutePath(), projectName);
         repository.save(Paths.get(path), xml);
     }
 
-    private void buildCppProjectFilter(Path msbuildSolutionFolder, Build.QueryResult queryResult) throws AdapterException {
+    private void buildCppProjectFilter(Path msbuildSolutionFolder, Build.QueryResult queryResult, String projectName) throws AdapterException {
         ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter(queryResult);
         Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
-        String path = String.format(S_S_VCXPROJ, msbuildSolutionFolder.toAbsolutePath(), "project.filter");
+        String path = String.format(S_S_VCXPROJ_FILTERS, msbuildSolutionFolder.toAbsolutePath(), projectName);
         String xml = generatorService.generateCppProjectFilterXml(project);
         repository.save(Paths.get(path), xml);
     }
 
-    private void buildCppProjectUser(Path msbuildSolutionFolder) throws AdapterException {
+    private void buildCppProjectUser(Path msbuildSolutionFolder, String projectName) throws AdapterException {
         Project project = composerService.composeCppProjectUserTemplateData(new Object());
-        String path = String.format(S_S_VCXPROJ, msbuildSolutionFolder.toAbsolutePath(), "project.user");
+        String path = String.format(S_VCXPROJ_USER, msbuildSolutionFolder.toAbsolutePath(), projectName);
         String xml = generatorService.generateProjectUserXml(project);
         repository.save(Paths.get(path), xml);
     }
 
-    private void buildSolution(Path msbuildSolutionFolder, Build.QueryResult queryResult) throws AdapterException {
+    private void buildSolution(Path msbuildSolutionFolder, Build.QueryResult queryResult, String projectName) throws AdapterException {
         SolutionSeed solutionSeed = extractorService.extractSolution(queryResult);
         Solution solution = composerService.composeSolutionTemplateData(solutionSeed);
-        String path = String.format("%s/%s.sln", msbuildSolutionFolder.toAbsolutePath(), "solution");
+        String path = String.format(S_S_SLN, msbuildSolutionFolder.toAbsolutePath(), projectName);
         String xml = generatorService.generateSolution(solution);
         repository.save(Paths.get(path), xml);
     }
