@@ -18,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 public class BazelToMsbuildCommand implements Runnable {
 
-    @CommandLine.Parameters(parameterConsumer = ParametersConsumer.class, description = "bazel workspace folder and msbuild solution folder")
+    @CommandLine.Parameters(parameterConsumer = ParametersConsumer.class, description = "bazelWorkspacePath msbuildSolutionPath ProjectName")
     private Parameters parameters;
 
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "show usage info")
