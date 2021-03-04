@@ -7,7 +7,6 @@ import com.tuware.msbuild.contract.seed.SolutionSeed;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
@@ -33,13 +32,13 @@ public class SolutionComposer implements Composer<Solution, SolutionSeed> {
     }
 
     @Override
-    public Solution compose(SolutionSeed seed) {
+    public Solution compose(SolutionSeed solutionSeed) {
 
-        Path solutionPath = seed.getSolutionPath();
-        String name = seed.getName();
-        String location = seed.getLocation();
-        UUID projectGuid = seed.getProjectGuid();
-        UUID solutionGuid = seed.getSolutionGuid();
+        Path solutionPath = solutionSeed.getSolutionPath();
+        String name = solutionSeed.getName();
+        Path projectFilePath = solutionSeed.getProjectFilePath();
+        UUID projectGuid = solutionSeed.getProjectUuid();
+        UUID solutionGuid = solutionSeed.getSolutionUuid();
 
         return Solution.builder()
                 .fileName(solutionPath)
@@ -49,7 +48,7 @@ public class SolutionComposer implements Composer<Solution, SolutionSeed> {
                 .projectList(Collections.singletonList(com.tuware.msbuild.contract.msbuild.solution.Project.builder()
                         .projectTypeGuid(ProjectTypeGuid.CPP)
                         .name(name)
-                        .location(Paths.get(location))
+                        .projectFilePath(projectFilePath)
                         .uniqueProjectGuid(UniqueProjectGuid.builder().value(projectGuid).build())
                         .build()
                 ))

@@ -12,7 +12,7 @@ import java.util.UUID;
 public class SolutionSeed {
     private Path solutionPath;
     private String name;
-    private String location;
-    private UUID projectGuid;
-    private UUID solutionGuid;
+    private Path projectFilePath;
+    private UUID projectUuid;
+    private UUID solutionUuid;
 }

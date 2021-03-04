@@ -1,7 +1,7 @@
 package com.tuware.msbuild.contract.msbuild.solution;
 
 public enum Phase {
-    PRE_SOLUTION("presolution"),
+    PRE_SOLUTION("preSolution"),
     POST_SOLUTION("postSolution");
 
     private String value;

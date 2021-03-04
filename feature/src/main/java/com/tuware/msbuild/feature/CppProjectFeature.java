@@ -73,12 +73,12 @@ public class CppProjectFeature implements Feature {
 
     private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUUID, UUID projectUUID) throws AdapterException {
         SolutionSeed solutionSeed = extractorService.buildSolutionSeed(
-                msbuildSolutionFolder,
                 projectName,
                 solutionUUID,
                 projectUUID
         );
         Solution solution = composerService.composeSolutionTemplateData(solutionSeed);
+
         String xml = generatorService.generateSolution(solution);
         repositoryService.saveSolution(msbuildSolutionFolder, projectName, xml);
     }

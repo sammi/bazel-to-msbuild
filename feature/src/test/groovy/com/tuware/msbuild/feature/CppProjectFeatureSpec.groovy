@@ -32,12 +32,18 @@ class CppProjectFeatureSpec extends Specification {
         )
 
         Path bazelWorkspaceFolder = Mock()
-        Path msbuildSolutionFolder = Mock()
+        Path msbuildSolutionFolder = Stub(Path.class)
+        File file = Stub(File.class)
+        file.getPath() >> "FakePath"
+        msbuildSolutionFolder.toFile() >> file
 
         Build.QueryResult queryResult = GroovyMock()
 
         UUID projectUuid = UUID.randomUUID()
-        ProjectSeed projectSeed = ProjectSeed.builder().projectGuid(projectUuid).cppFileName(GroovyMock(String.class)).build()
+        ProjectSeed projectSeed = ProjectSeed.builder()
+            .projectGuid(projectUuid)
+            .cppFileName(GroovyMock(String.class))
+        .build()
 
         ProjectFilerSeed projectFilerSeed = Mock()
         SolutionSeed solutionSeed = Mock()
@@ -64,7 +70,7 @@ class CppProjectFeatureSpec extends Specification {
         1 * extractorService.extractProject(queryResult, projectUuid) >> projectSeed
         1 * extractorService.extractProjectFilter() >> projectFilerSeed
 
-        1 * extractorService.buildSolutionSeed(msbuildSolutionFolder, projectName, _, projectUuid) >> solutionSeed
+        1 * extractorService.buildSolutionSeed(projectName, _, projectUuid) >> solutionSeed
 
         1 * composerService.composeProjectTemplateData(projectSeed) >> cppProjectTemplate
         1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate

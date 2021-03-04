@@ -12,6 +12,6 @@ import java.nio.file.Path;
 public class Project {
     private ProjectTypeGuid projectTypeGuid;
     private String name;
-    private Path location;
+    private Path projectFilePath;
     private UniqueProjectGuid uniqueProjectGuid;
 }

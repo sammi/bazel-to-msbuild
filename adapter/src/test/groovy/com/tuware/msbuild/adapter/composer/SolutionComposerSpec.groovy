@@ -5,6 +5,8 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution
 import com.tuware.msbuild.contract.seed.SolutionSeed
 import spock.lang.Specification
 
+import java.nio.file.Path
+
 class SolutionComposerSpec extends Specification {
 
     def "build default solution template data"() {
@@ -12,7 +14,7 @@ class SolutionComposerSpec extends Specification {
         SolutionComposer solutionComposer = new SolutionComposer()
 
         when:
-        Solution solution = solutionComposer.compose(SolutionSeed.builder().location("fakeLocation").build())
+        Solution solution = solutionComposer.compose(SolutionSeed.builder().projectFilePath(Mock(Path.class)).build())
 
         then:
         solution != null

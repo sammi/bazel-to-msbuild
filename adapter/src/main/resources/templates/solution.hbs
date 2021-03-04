@@ -1,10 +1,11 @@
+
 Microsoft Visual Studio Solution File, Format Version {{formatVersion.major}}.{{formatVersion.minor}}
 # Visual Studio Version {{visualStudioVersion.major}}
 VisualStudioVersion = {{visualStudioVersion.major}}.{{visualStudioVersion.minor}}.{{visualStudioVersion.patch}}.{{visualStudioVersion.revision}}
 MinimumVisualStudioVersion = {{minimumVisualStudioVersion.major}}.{{minimumVisualStudioVersion.minor}}.{{minimumVisualStudioVersion.patch}}.{{minimumVisualStudioVersion.revision}}
 {{#each projectList}}
-    Project("{{projectTypeGuid.value}}") = "{{name}}", "{{location.fileName}}", "{{uniqueProjectGuid.value}}"
-    EndProject
+Project("{{projectTypeGuid.value}}") = "{{name}}", "{{projectFilePath}}", "{{uniqueProjectGuid.value}}"
+EndProject
 {{/each}}
 Global
 {{#each global.globalSectionList}}
@@ -16,3 +17,4 @@ Global
 {{/each}}
 EndGlobal
 
+preSolution

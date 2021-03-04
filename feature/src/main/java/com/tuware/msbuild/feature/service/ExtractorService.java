@@ -9,6 +9,7 @@ import com.tuware.msbuild.contract.seed.SolutionSeed;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Component
@@ -35,13 +36,15 @@ public class ExtractorService {
         return projectFilerProvider.provide();
     }
 
-    public SolutionSeed buildSolutionSeed(Path solutionPath, String solutionName, UUID solutionUUID, UUID projectUUID) {
+    public SolutionSeed buildSolutionSeed(String projectName, UUID solutionUUID, UUID projectUUID) {
+
+        Path projectFilePath = Paths.get(projectName + ".vcxproj");
 
         return SolutionSeed.builder()
-                .name(solutionName)
-                .location(solutionPath.toFile().getPath())
-                .solutionGuid(solutionUUID)
-                .projectGuid(projectUUID)
+                .name(projectName)
+                .projectFilePath(projectFilePath)
+                .solutionUuid(solutionUUID)
+                .projectUuid(projectUUID)
                 .build();
     }
 
