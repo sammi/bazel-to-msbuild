@@ -8,19 +8,18 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Component
-public class ProjectSeedExtractor implements Extractor<Build.QueryResult, ProjectSeed> {
+public class CcBinaryExtractor implements Extractor<Build.QueryResult, ProjectSeed> {
 
     @Override
-    public ProjectSeed extract(Build.QueryResult bazelQueryResult, String ruleClass) {
+    public ProjectSeed extract(Build.QueryResult bazelQueryResult) {
         List<String> sourceFileList = new ArrayList<>();
 
         bazelQueryResult.getTargetList().stream()
                 .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
                 .map(Build.Target::getRule)
-                .filter(rule -> rule.getRuleClass().equals(ruleClass))
+                .filter(rule -> rule.getRuleClass().equals("cc_binary"))
                 .forEach(
                         rule -> rule.getRuleInputList().stream()
                                 .filter(ruleInput -> !ruleInput.contains("@"))
@@ -30,11 +29,8 @@ public class ProjectSeedExtractor implements Extractor<Build.QueryResult, Projec
                                 ))
                 );
 
-        UUID projectUuid = UUID.randomUUID();
-
         return ProjectSeed.builder()
-                .cppFileName(sourceFileList.stream().findFirst().orElse(null))
-                .projectGuid(projectUuid).build();
+                .cppFileName(sourceFileList.stream().findFirst().orElse(null)).build();
     }
 
 }

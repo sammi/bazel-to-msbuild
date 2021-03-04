@@ -8,6 +8,7 @@ import picocli.CommandLine;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Component
 @CommandLine.Command(
@@ -37,9 +38,11 @@ public class BazelToMsbuildCommand implements Runnable {
         Path msBuildPath = Paths.get(to);
 
         String projectName = parameters.getProjectName();
+        UUID solutionUuid = UUID.randomUUID();
+        UUID projectUuid = UUID.randomUUID();
 
         try {
-            cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelPath, msBuildPath, projectName);
+            cppProjectFeature.buildSingleProjectSolution(bazelPath, msBuildPath, projectName, solutionUuid, projectUuid);
         } catch (FeatureException e) {
             log.error("Failed to convert bazel workspace: {} to msbuild solution: {}", from, to, e);
             System.exit(1);

@@ -36,8 +36,8 @@ class CppProjectFeatureSpec extends Specification {
 
         Build.QueryResult queryResult = GroovyMock()
 
-        UUID projectUUID = UUID.randomUUID()
-        ProjectSeed projectSeed = ProjectSeed.builder().cppFileName(GroovyMock(String.class)).projectGuid(projectUUID).build()
+        UUID projectUuid = UUID.randomUUID()
+        ProjectSeed projectSeed = ProjectSeed.builder().projectGuid(projectUuid).cppFileName(GroovyMock(String.class)).build()
 
         ProjectFilerSeed projectFilerSeed = Mock()
         SolutionSeed solutionSeed = Mock()
@@ -52,18 +52,19 @@ class CppProjectFeatureSpec extends Specification {
         String projectUserXml = GroovyMock()
         String solutionXml = GroovyMock()
         String projectName = GroovyMock()
+        UUID solutionUuid = UUID.randomUUID()
 
         when:
-        cppProjectConverter.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder, projectName)
+        cppProjectConverter.buildSingleProjectSolution(bazelWorkspaceFolder, msbuildSolutionFolder, projectName, solutionUuid, projectUuid)
 
         then:
 
         1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
-        1 * extractorService.extractProject(queryResult) >> projectSeed
+        1 * extractorService.extractProject(queryResult, projectUuid) >> projectSeed
         1 * extractorService.extractProjectFilter() >> projectFilerSeed
 
-        1 * extractorService.buildSolutionSeed(msbuildSolutionFolder, projectName, _, projectUUID) >> solutionSeed
+        1 * extractorService.buildSolutionSeed(msbuildSolutionFolder, projectName, _, projectUuid) >> solutionSeed
 
         1 * composerService.composeProjectTemplateData(projectSeed) >> cppProjectTemplate
         1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate

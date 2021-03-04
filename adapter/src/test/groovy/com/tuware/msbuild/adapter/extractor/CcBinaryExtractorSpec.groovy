@@ -4,12 +4,12 @@ import com.google.devtools.build.lib.query2.proto.proto2api.Build
 import com.tuware.msbuild.contract.seed.ProjectSeed
 import spock.lang.Specification
 
-class ProjectSeedExtractorSpec extends Specification {
+class CcBinaryExtractorSpec extends Specification {
 
     def "Extract c++ source code from bazel cc_binary package"() {
         given:
 
-        ProjectSeedExtractor ccBinaryMapper = new ProjectSeedExtractor()
+        CcBinaryExtractor ccBinaryMapper = new CcBinaryExtractor()
         Build.QueryResult queryResult = Build.QueryResult.newBuilder()
             .addAllTarget(Arrays.asList(
                 Build.Target.newBuilder()
@@ -24,10 +24,10 @@ class ProjectSeedExtractorSpec extends Specification {
         .build()
 
         when:
-        ProjectSeed projectSeed = ccBinaryMapper.extract(queryResult, "cc_binary")
+        ProjectSeed projectSeed = ccBinaryMapper.extract(queryResult)
 
         then:
-        projectSeed.getProjectGuid() != null
+        projectSeed.getProjectGuid() == null
         projectSeed.getCppFileName() == "main" + File.separator + "test.cpp"
     }
 }

@@ -6,6 +6,6 @@ package com.tuware.msbuild.contract.adapter;
  */
 public interface Extractor<Q, S> {
 
-    S extract(Q bazelQResult, String ruleClass);
+    S extract(Q bazelQResult);
 
 }

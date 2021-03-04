@@ -5,7 +5,7 @@ import com.tuware.msbuild.adapter.composer.ProjectFilterComposer
 import com.tuware.msbuild.adapter.composer.ProjectUserComposer
 import com.tuware.msbuild.adapter.composer.SolutionComposer
 
-import com.tuware.msbuild.adapter.extractor.ProjectSeedExtractor
+import com.tuware.msbuild.adapter.extractor.CcBinaryExtractor
 
 import com.tuware.msbuild.adapter.generator.ProjectFilterGenerator
 import com.tuware.msbuild.adapter.generator.ProjectGenerator
@@ -37,7 +37,7 @@ class HelloWorldCppProjectSpec extends Specification {
         PackageQuery packageQuery = new PackageQuery()
         QueryService queryService = new QueryService(bazelQueryAllProtoProvider, packageQuery)
 
-        ProjectSeedExtractor projectSeedExtractor = new ProjectSeedExtractor()
+        CcBinaryExtractor projectSeedExtractor = new CcBinaryExtractor()
 
         Provider<ProjectFilerSeed> projectFilerProvider = new ProjectFilterSeedProvider()
 
@@ -66,7 +66,7 @@ class HelloWorldCppProjectSpec extends Specification {
         CppProjectFeature cppProjectFeature = new CppProjectFeature(queryService, composerService, extractorService, generatorService, repositoryService)
 
         when:
-        cppProjectFeature.buildMsbuildSolutionFromBazelWorkspace(bazelWorkspaceFolder, msbuildSolutionFolder, "App")
+        cppProjectFeature.buildSingleProjectSolution(bazelWorkspaceFolder, msbuildSolutionFolder, "App", UUID.randomUUID(), UUID.randomUUID())
 
         then:
         4 * repository.save({ it -> it.toString().contains("App") }, { it != null })

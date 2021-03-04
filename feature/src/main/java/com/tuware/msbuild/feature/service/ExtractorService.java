@@ -14,7 +14,6 @@ import java.util.UUID;
 @Component
 public class ExtractorService {
 
-    private static final String CC_BINARY = "cc_binary";
     private Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor;
     private Provider<ProjectFilerSeed> projectFilerProvider;
 
@@ -26,8 +25,10 @@ public class ExtractorService {
         this.projectFilerProvider = projectFilerProvider;
     }
 
-    public ProjectSeed extractProject(Build.QueryResult queryResult) {
-        return projectSeedExtractor.extract(queryResult, CC_BINARY);
+    public ProjectSeed extractProject(Build.QueryResult queryResult, UUID projectUuid) {
+        ProjectSeed projectSeed = projectSeedExtractor.extract(queryResult);
+        projectSeed.setProjectGuid(projectUuid);
+        return projectSeed;
     }
 
     public ProjectFilerSeed extractProjectFilter() {
