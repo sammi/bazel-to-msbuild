@@ -3,6 +3,7 @@ package com.tuware.msbuild.contract.seed;
 import lombok.*;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ProjectSeed {
+    private List<String> sourceFileList;
     private String cppFileName;
     private UUID projectGuid;
     private Path projectFilePath;
