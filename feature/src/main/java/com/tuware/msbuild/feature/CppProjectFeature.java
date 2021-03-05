@@ -12,6 +12,8 @@ import com.tuware.msbuild.feature.service.*;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.UUID;
 
 @Component
@@ -43,7 +45,7 @@ public class CppProjectFeature implements Feature {
             Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
             ProjectSeed projectSeed = extractorService.extractProject(queryResult, projectUuid);
             buildProject(msbuildSolutionFolder, projectSeed, projectName);
-            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeed.getProjectGuid());
+            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeed.getUuid());
             buildProjectFilter(msbuildSolutionFolder, projectSeed, projectName);
             buildProjectUser(msbuildSolutionFolder, projectName);
         } catch (AdapterException e) {
@@ -71,11 +73,17 @@ public class CppProjectFeature implements Feature {
         repositoryService.saveProjectUser(msbuildSolutionFolder, projectName, xml);
     }
 
-    private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUUID, UUID projectUUID) throws AdapterException {
+    private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUuid, UUID projectUuid) throws AdapterException {
+
+        Path projectPath = Paths.get(projectName + ".vcxproj");
+
         SolutionSeed solutionSeed = extractorService.buildSolutionSeed(
+                solutionUuid,
                 projectName,
-                solutionUUID,
-                projectUUID
+                msbuildSolutionFolder,
+                Collections.singletonList(ProjectSeed.builder()
+                        .name(projectName).uuid(projectUuid).path(projectPath)
+                        .build())
         );
         Solution solution = composerService.composeSolutionTemplateData(solutionSeed);
 

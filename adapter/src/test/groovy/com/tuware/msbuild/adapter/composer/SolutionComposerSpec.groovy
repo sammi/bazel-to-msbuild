@@ -14,7 +14,14 @@ class SolutionComposerSpec extends Specification {
         SolutionComposer solutionComposer = new SolutionComposer()
 
         when:
-        Solution solution = solutionComposer.compose(SolutionSeed.builder().projectFilePath(Mock(Path.class)).build())
+        Solution solution = solutionComposer.compose(
+                SolutionSeed.builder()
+                        .projectFilePath(Mock(Path.class))
+                    .projectList(Arrays.asList(
+                            SolutionSeed.Project.builder().uuid(UUID.randomUUID()).path(Mock(Path.class)).build()
+                    ))
+                .build()
+        )
 
         then:
         solution != null

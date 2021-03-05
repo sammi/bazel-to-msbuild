@@ -40,8 +40,10 @@ class CppProjectFeatureSpec extends Specification {
         Build.QueryResult queryResult = GroovyMock()
 
         UUID projectUuid = UUID.randomUUID()
+        String projectName = "testProject"
         ProjectSeed projectSeed = ProjectSeed.builder()
-            .projectGuid(projectUuid)
+            .name(projectName)
+            .uuid(projectUuid)
             .cppFileName(GroovyMock(String.class))
         .build()
 
@@ -57,7 +59,6 @@ class CppProjectFeatureSpec extends Specification {
         String projectFilterXml = GroovyMock()
         String projectUserXml = GroovyMock()
         String solutionXml = GroovyMock()
-        String projectName = GroovyMock()
         UUID solutionUuid = UUID.randomUUID()
 
         when:
@@ -70,7 +71,7 @@ class CppProjectFeatureSpec extends Specification {
         1 * extractorService.extractProject(queryResult, projectUuid) >> projectSeed
         1 * extractorService.extractProjectFilter() >> projectFilerSeed
 
-        1 * extractorService.buildSolutionSeed(projectName, _, projectUuid) >> solutionSeed
+        1 * extractorService.buildSolutionSeed(solutionUuid, projectName, _, _) >> solutionSeed
 
         1 * composerService.composeProjectTemplateData(projectSeed) >> cppProjectTemplate
         1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate

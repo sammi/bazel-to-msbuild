@@ -13,5 +13,5 @@ public class Project {
     private ProjectTypeGuid projectTypeGuid;
     private String name;
     private Path projectFilePath;
-    private UniqueProjectGuid uniqueProjectGuid;
+    private UniqueProjectGuid uuid;
 }

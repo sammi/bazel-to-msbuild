@@ -6,27 +6,21 @@ import com.tuware.msbuild.contract.seed.ProjectSeed;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
-public class CppExtractor implements Extractor<Build.QueryResult, Map<String, ProjectSeed>> {
+public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSeed>> {
 
     @Override
-    public Map<String, ProjectSeed> extract(Build.QueryResult bazelQueryResult) {
-        Map<String, ProjectSeed> projectSeedMap = new HashMap<>();
-        bazelQueryResult.getTargetList().stream()
+    public List<ProjectSeed> extract(Build.QueryResult bazelQueryResult) {
+        return bazelQueryResult.getTargetList().stream()
                 .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
                 .map(Build.Target::getRule)
                 .filter(this::isCppRule)
-                .forEach(rule -> projectSeedMap.put(
-                    rule.getName(),
-                    extractProjectSeedFromCppRule(rule)
-                ));
-        return projectSeedMap;
+                .map(this::extractProjectSeedFromCppRule)
+        .collect(Collectors.toList());
     }
 
     private ProjectSeed extractProjectSeedFromCppRule(Build.Rule rule) {
@@ -34,7 +28,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, Map<String, Pr
             .filter(isCppSourceCode())
             .map(this::getLabelRelativePath)
         .collect(Collectors.toList());
-        return ProjectSeed.builder().sourceFileList(sourceFileList).build();
+        return ProjectSeed.builder().name(rule.getName()).sourceFileList(sourceFileList).build();
     }
 
     private boolean isCppRule(Build.Rule rule) {

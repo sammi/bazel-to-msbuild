@@ -30,7 +30,7 @@ public class ProjectComposer implements Composer<ProjectTemplateData, ProjectSee
     @Override
     public ProjectTemplateData compose(ProjectSeed projectSeed) {
         String cppFileName = projectSeed.getCppFileName();
-        UUID projectGuild = projectSeed.getProjectGuid();
+        UUID projectGuild = projectSeed.getUuid();
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(

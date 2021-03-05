@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version {{formatVersion.major}}.{{
 VisualStudioVersion = {{visualStudioVersion.major}}.{{visualStudioVersion.minor}}.{{visualStudioVersion.patch}}.{{visualStudioVersion.revision}}
 MinimumVisualStudioVersion = {{minimumVisualStudioVersion.major}}.{{minimumVisualStudioVersion.minor}}.{{minimumVisualStudioVersion.patch}}.{{minimumVisualStudioVersion.revision}}
 {{#each projectList}}
-Project("{{projectTypeGuid.value}}") = "{{name}}", "{{projectFilePath}}", "{{uniqueProjectGuid.value}}"
+Project("{{projectTypeGuid.value}}") = "{{name}}", "{{projectFilePath}}", "{{uuid.value}}"
 EndProject
 {{/each}}
 Global

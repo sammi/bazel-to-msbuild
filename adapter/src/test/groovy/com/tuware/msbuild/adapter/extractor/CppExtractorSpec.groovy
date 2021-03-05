@@ -18,14 +18,14 @@ class CppExtractorSpec extends Specification {
         .build()
 
         when:
-        Map<String,ProjectSeed> projectSeedMap = cppExtractor.extract(queryResult)
+        List<ProjectSeed> projectSeeds = cppExtractor.extract(queryResult)
 
         then:
-        projectSeedMap.size() == 2
-        projectSeedMap.forEach((k, v) -> {
-            k.contains("test")
-            v.projectGuid == null
-            v.getSourceFileList() == [
+        projectSeeds.size() == 2
+        projectSeeds.forEach(projectSeed -> {
+            projectSeed.getName().contains("test")
+            projectSeed.uuid == null
+            projectSeed.getSourceFileList() == [
                     "main" + File.separator + "test.cpp",
                     "main" + File.separator + "test.h",
             ]

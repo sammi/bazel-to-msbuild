@@ -34,22 +34,25 @@ public class SolutionComposer implements Composer<Solution, SolutionSeed> {
     @Override
     public Solution compose(SolutionSeed solutionSeed) {
 
-        Path solutionPath = solutionSeed.getSolutionPath();
-        String name = solutionSeed.getName();
-        Path projectFilePath = solutionSeed.getProjectFilePath();
-        UUID projectGuid = solutionSeed.getProjectUuid();
-        UUID solutionGuid = solutionSeed.getSolutionUuid();
+        Path solutionPath = solutionSeed.getPath();
+        String solutionName = solutionSeed.getName();
+        UUID solutionGuid = solutionSeed.getUuid();
+
+        SolutionSeed.Project project =  solutionSeed.getProjectList().get(0);
+
+        UUID projectGuid = project.getUuid();
+        Path projectFilePath = project.getPath();
 
         return Solution.builder()
                 .fileName(solutionPath)
                 .formatVersion(msBuildEnvironment.getFormatVersion())
                 .visualStudioVersion(msBuildEnvironment.getVisualStudioVersion())
                 .minimumVisualStudioVersion(msBuildEnvironment.getMinimumVisualStudioVersion())
-                .projectList(Collections.singletonList(com.tuware.msbuild.contract.msbuild.solution.Project.builder()
+                .projectList(Collections.singletonList(Project.builder()
                         .projectTypeGuid(ProjectTypeGuid.CPP)
-                        .name(name)
+                        .name(solutionName)
                         .projectFilePath(projectFilePath)
-                        .uniqueProjectGuid(UniqueProjectGuid.builder().value(projectGuid).build())
+                        .uuid(UniqueProjectGuid.builder().value(projectGuid).build())
                         .build()
                 ))
                 .global(

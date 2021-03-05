@@ -12,8 +12,10 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ProjectSeed {
+    private UUID uuid;
+    private Path path;
+    private String name;
     private List<String> sourceFileList;
+
     private String cppFileName;
-    private UUID projectGuid;
-    private Path projectFilePath;
 }
