@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -43,10 +44,10 @@ public class CppProjectFeature implements Feature {
     public void buildSingleProjectSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String projectName, UUID solutionUuid, UUID projectUuid) throws FeatureException {
         try {
             Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
-            ProjectSeed projectSeed = extractorService.extractProject(queryResult, projectUuid);
-            buildProject(msbuildSolutionFolder, projectSeed, projectName);
-            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeed.getUuid());
-            buildProjectFilter(msbuildSolutionFolder, projectSeed, projectName);
+            List<ProjectSeed> projectSeedList = extractorService.extractProjectSeedList(queryResult);
+            buildProject(msbuildSolutionFolder, projectSeedList.get(0), projectName);
+            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeedList.get(0).getUuid());
+            buildProjectFilter(msbuildSolutionFolder, projectSeedList.get(0), projectName);
             buildProjectUser(msbuildSolutionFolder, projectName);
         } catch (AdapterException e) {
             throw new FeatureException(e);
@@ -61,7 +62,7 @@ public class CppProjectFeature implements Feature {
 
     private void buildProjectFilter(Path msbuildSolutionFolder, ProjectSeed projectSeed, String projectName) throws AdapterException {
         ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter();
-        projectFilerSeed.setSourceFile(projectSeed.getCppFileName());
+        projectFilerSeed.setSourceFile(projectSeed.getSourceFileList().get(0));
         Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
         String xml = generatorService.generateCppProjectFilterXml(project);
         repositoryService.saveProjectFilter(msbuildSolutionFolder, projectName, xml);

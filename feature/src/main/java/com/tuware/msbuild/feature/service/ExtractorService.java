@@ -17,21 +17,21 @@ import java.util.stream.Collectors;
 @Component
 public class ExtractorService {
 
-    private Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor;
+    private Extractor<Build.QueryResult, List<ProjectSeed>> projectSeedExtractor;
     private Provider<ProjectFilerSeed> projectFilerProvider;
 
     public ExtractorService(
-            Extractor<Build.QueryResult, ProjectSeed> projectSeedExtractor,
+            Extractor<Build.QueryResult, List<ProjectSeed>> projectSeedExtractor,
             Provider<ProjectFilerSeed> projectFilerProvider
     ) {
         this.projectSeedExtractor = projectSeedExtractor;
         this.projectFilerProvider = projectFilerProvider;
     }
 
-    public ProjectSeed extractProject(Build.QueryResult queryResult, UUID projectUuid) {
-        ProjectSeed projectSeed = projectSeedExtractor.extract(queryResult);
-        projectSeed.setUuid(projectUuid);
-        return projectSeed;
+    public List<ProjectSeed> extractProjectSeedList(Build.QueryResult queryResult) {
+        List<ProjectSeed> projectSeedList = projectSeedExtractor.extract(queryResult);
+        projectSeedList.forEach(projectSeed -> projectSeed.setUuid(UUID.randomUUID()));
+        return projectSeedList;
     }
 
     public ProjectFilerSeed extractProjectFilter() {
@@ -44,7 +44,7 @@ public class ExtractorService {
                 .name(solutionName)
                 .path(solutionPath)
                 .projectList(projectSeedList.stream().map(projectSeed -> SolutionSeed.Project.builder()
-                        .name(solutionName/*projectSeed.getName()*/)
+                        .name(projectSeed.getName())
                         .uuid(projectSeed.getUuid())
                         .path(projectSeed.getPath())
                         .typeUuid(ProjectTypeGuid.CPP)

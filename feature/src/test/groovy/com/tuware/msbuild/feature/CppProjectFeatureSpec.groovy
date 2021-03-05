@@ -44,7 +44,7 @@ class CppProjectFeatureSpec extends Specification {
         ProjectSeed projectSeed = ProjectSeed.builder()
             .name(projectName)
             .uuid(projectUuid)
-            .cppFileName(GroovyMock(String.class))
+            .sourceFileList(Collections.singletonList("test.cpp"))
         .build()
 
         ProjectFilerSeed projectFilerSeed = Mock()
@@ -68,7 +68,7 @@ class CppProjectFeatureSpec extends Specification {
 
         1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
-        1 * extractorService.extractProject(queryResult, projectUuid) >> projectSeed
+        1 * extractorService.extractProjectSeedList(queryResult) >> [projectSeed]
         1 * extractorService.extractProjectFilter() >> projectFilerSeed
 
         1 * extractorService.buildSolutionSeed(solutionUuid, projectName, _, _) >> solutionSeed

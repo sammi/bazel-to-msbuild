@@ -4,9 +4,7 @@ import com.tuware.msbuild.adapter.composer.ProjectComposer
 import com.tuware.msbuild.adapter.composer.ProjectFilterComposer
 import com.tuware.msbuild.adapter.composer.ProjectUserComposer
 import com.tuware.msbuild.adapter.composer.SolutionComposer
-
-import com.tuware.msbuild.adapter.extractor.CcBinaryExtractor
-
+import com.tuware.msbuild.adapter.extractor.CppExtractor
 import com.tuware.msbuild.adapter.generator.ProjectFilterGenerator
 import com.tuware.msbuild.adapter.generator.ProjectGenerator
 import com.tuware.msbuild.adapter.generator.ProjectUserGenerator
@@ -18,11 +16,7 @@ import com.tuware.msbuild.adapter.repository.FileRepository
 import com.tuware.msbuild.contract.adapter.Provider
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.feature.CppProjectFeature
-import com.tuware.msbuild.feature.service.ComposerService
-import com.tuware.msbuild.feature.service.ExtractorService
-import com.tuware.msbuild.feature.service.GeneratorService
-import com.tuware.msbuild.feature.service.QueryService
-import com.tuware.msbuild.feature.service.RepositoryService
+import com.tuware.msbuild.feature.service.*
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
 
@@ -37,11 +31,11 @@ class HelloWorldCppProjectSpec extends Specification {
         PackageQuery packageQuery = new PackageQuery()
         QueryService queryService = new QueryService(bazelQueryAllProtoProvider, packageQuery)
 
-        CcBinaryExtractor projectSeedExtractor = new CcBinaryExtractor()
+        CppExtractor cppExtractor = new CppExtractor()
 
         Provider<ProjectFilerSeed> projectFilerProvider = new ProjectFilterSeedProvider()
 
-        ExtractorService extractorService = new ExtractorService(projectSeedExtractor, projectFilerProvider)
+        ExtractorService extractorService = new ExtractorService(cppExtractor, projectFilerProvider)
 
         ProjectComposer projectComposer = new ProjectComposer()
         ProjectFilterComposer projectFilterComposer = new ProjectFilterComposer()
