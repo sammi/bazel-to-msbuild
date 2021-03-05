@@ -1,4 +1,4 @@
-package com.tuware.msbuild.cli;
+package com.tuware.msbuild.cli.command;
 
 public class Parameters {
     private String bazelWorkspaceFolder;
