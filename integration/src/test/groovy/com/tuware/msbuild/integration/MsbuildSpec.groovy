@@ -23,7 +23,7 @@ import spock.lang.Specification
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class CppProjectSpec extends Specification {
+class MsbuildSpec extends Specification {
 
     def "generate msbuild solution from bazel hello-world cpp workspace"() {
         given:
