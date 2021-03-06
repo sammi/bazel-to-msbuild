@@ -7,7 +7,7 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution;
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed;
 import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.seed.SolutionSeed;
-import com.tuware.msbuild.contract.template.ProjectTemplateData;
+import com.tuware.msbuild.contract.template.ProjectTemplate;
 import com.tuware.msbuild.feature.service.*;
 import org.springframework.stereotype.Component;
 
@@ -55,8 +55,8 @@ public class CppProjectFeature implements Feature {
 
     private void buildProjects(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
         for (ProjectSeed projectSeed : projectSeedList) {
-            ProjectTemplateData projectTemplateData = composerService.composeProjectTemplateData(projectSeed);
-            String xml = generatorService.generateProjectXml(projectTemplateData);
+            ProjectTemplate projectTemplate = composerService.composeProjectTemplateData(projectSeed);
+            String xml = generatorService.generateProjectXml(projectTemplate);
             repositoryService.saveProject(msbuildSolutionFolder, projectSeed.getPath(), projectSeed.getName(), xml);
         }
     }

@@ -6,18 +6,18 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution;
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed;
 import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.seed.SolutionSeed;
-import com.tuware.msbuild.contract.template.ProjectTemplateData;
+import com.tuware.msbuild.contract.template.ProjectTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ComposerService {
-    private Composer<ProjectTemplateData, ProjectSeed> projectComposer;
+    private Composer<ProjectTemplate, ProjectSeed> projectComposer;
     private Composer<Project, ProjectFilerSeed> projectFilterComposer;
     private Composer<Project, Object> projectUserComposer;
     private Composer<Solution, SolutionSeed> solutionComposer;
 
     public ComposerService(
-            Composer<ProjectTemplateData, ProjectSeed> projectComposer,
+            Composer<ProjectTemplate, ProjectSeed> projectComposer,
             Composer<Project, ProjectFilerSeed> projectFilterComposer,
             Composer<Project, Object> projectUserComposer,
             Composer<Solution, SolutionSeed> solutionComposer
@@ -28,7 +28,7 @@ public class ComposerService {
         this.solutionComposer = solutionComposer;
     }
 
-    public ProjectTemplateData composeProjectTemplateData(ProjectSeed projectSeed) {
+    public ProjectTemplate composeProjectTemplateData(ProjectSeed projectSeed) {
         return projectComposer.compose(projectSeed);
     }
 

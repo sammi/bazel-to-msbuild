@@ -2,14 +2,14 @@ package com.tuware.msbuild.adapter.generator;
 
 import com.tuware.msbuild.contract.adapter.AdapterException;
 import com.tuware.msbuild.contract.adapter.Generator;
-import com.tuware.msbuild.contract.template.ProjectTemplateData;
+import com.tuware.msbuild.contract.template.ProjectTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 @Component
-public class ProjectGenerator implements Generator<ProjectTemplateData> {
+public class ProjectGenerator implements Generator<ProjectTemplate> {
 
     private TemplateBuilder templateBuilder;
 
@@ -18,7 +18,7 @@ public class ProjectGenerator implements Generator<ProjectTemplateData> {
     }
 
     @Override
-    public String generate(ProjectTemplateData templateData) throws AdapterException {
+    public String generate(ProjectTemplate templateData) throws AdapterException {
         try {
             return templateBuilder.compileFromTemplateFile(TemplatePaths.projectTemplate(), templateData);
         } catch (IOException | URISyntaxException e) {

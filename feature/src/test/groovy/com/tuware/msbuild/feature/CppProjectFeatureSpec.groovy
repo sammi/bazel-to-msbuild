@@ -6,7 +6,7 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.contract.seed.ProjectSeed
 import com.tuware.msbuild.contract.seed.SolutionSeed
-import com.tuware.msbuild.contract.template.ProjectTemplateData
+import com.tuware.msbuild.contract.template.ProjectTemplate
 import com.tuware.msbuild.feature.service.*
 import spock.lang.Specification
 
@@ -52,7 +52,7 @@ class CppProjectFeatureSpec extends Specification {
         ProjectFilerSeed projectFilerSeed = Mock()
         SolutionSeed solutionSeed = Mock()
 
-        ProjectTemplateData cppProjectTemplate = Mock()
+        ProjectTemplate cppProjectTemplate = Mock()
         Project projectFilterTemplate = Mock()
         Project projectUserTemplate = Mock()
         Solution solutionTemplate = Mock()
