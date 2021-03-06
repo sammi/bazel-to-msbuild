@@ -12,19 +12,17 @@ import com.tuware.msbuild.feature.service.*;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @Component
 public class CppProjectFeature implements Feature {
 
-    private QueryService queryService;
-    private ComposerService composerService;
-    private GeneratorService generatorService;
-    private ExtractorService extractorService;
-    private RepositoryService repositoryService;
+    private final QueryService queryService;
+    private final ComposerService composerService;
+    private final GeneratorService generatorService;
+    private final ExtractorService extractorService;
+    private final RepositoryService repositoryService;
 
     public CppProjectFeature(
             QueryService queryService,
@@ -41,12 +39,12 @@ public class CppProjectFeature implements Feature {
     }
 
     @Override
-    public void buildSingleProjectSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String projectName, UUID solutionUuid, UUID projectUuid) throws FeatureException {
+    public void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String projectName, UUID solutionUuid, UUID projectUuid) throws FeatureException {
         try {
             Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
             List<ProjectSeed> projectSeedList = extractorService.extractProjectSeedList(queryResult);
-            buildProject(msbuildSolutionFolder, projectSeedList.get(0), projectName);
-            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeedList.get(0).getUuid());
+            buildProjects(msbuildSolutionFolder, projectSeedList);
+            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeedList);
             buildProjectFilter(msbuildSolutionFolder, projectSeedList.get(0), projectName);
             buildProjectUser(msbuildSolutionFolder, projectName);
         } catch (AdapterException e) {
@@ -54,10 +52,12 @@ public class CppProjectFeature implements Feature {
         }
     }
 
-    private void buildProject(Path msbuildSolutionFolder, ProjectSeed projectSeed, String projectName) throws AdapterException {
-        ProjectTemplateData projectTemplateData = composerService.composeProjectTemplateData(projectSeed);
-        String xml = generatorService.generateProjectXml(projectTemplateData);
-        repositoryService.saveProject(msbuildSolutionFolder, projectName, xml);
+    private void buildProjects(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
+        for (ProjectSeed projectSeed : projectSeedList) {
+            ProjectTemplateData projectTemplateData = composerService.composeProjectTemplateData(projectSeed);
+            String xml = generatorService.generateProjectXml(projectTemplateData);
+            repositoryService.saveProject(msbuildSolutionFolder, projectSeed.getPath(), projectSeed.getName(), xml);
+        }
     }
 
     private void buildProjectFilter(Path msbuildSolutionFolder, ProjectSeed projectSeed, String projectName) throws AdapterException {
@@ -74,17 +74,13 @@ public class CppProjectFeature implements Feature {
         repositoryService.saveProjectUser(msbuildSolutionFolder, projectName, xml);
     }
 
-    private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUuid, UUID projectUuid) throws AdapterException {
-
-        Path projectPath = Paths.get(projectName + ".vcxproj");
+    private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUuid, List<ProjectSeed> projectSeedList) throws AdapterException {
 
         SolutionSeed solutionSeed = extractorService.buildSolutionSeed(
                 solutionUuid,
                 projectName,
                 msbuildSolutionFolder,
-                Collections.singletonList(ProjectSeed.builder()
-                        .name(projectName).uuid(projectUuid).path(projectPath)
-                        .build())
+                projectSeedList
         );
         Solution solution = composerService.composeSolutionTemplateData(solutionSeed);
 

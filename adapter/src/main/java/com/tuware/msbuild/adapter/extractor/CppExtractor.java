@@ -6,6 +6,7 @@ import com.tuware.msbuild.contract.seed.ProjectSeed;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -20,15 +21,19 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
                 .map(Build.Target::getRule)
                 .filter(this::isCppRule)
                 .map(this::extractProjectSeedFromCppRule)
-        .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     private ProjectSeed extractProjectSeedFromCppRule(Build.Rule rule) {
         List<String> sourceFileList = rule.getRuleInputList().stream()
-            .filter(isCppSourceCode())
-            .map(this::getLabelRelativePath)
-        .collect(Collectors.toList());
-        return ProjectSeed.builder().name(rule.getName()).sourceFileList(sourceFileList).build();
+                .filter(isCppSourceCode())
+                .map(this::getFilePath)
+                .collect(Collectors.toList());
+        return ProjectSeed.builder()
+                .path(Paths.get(getFolderPath(rule.getName())))
+                .name(getProjectName(rule.getName()))
+                .sourceFileList(sourceFileList)
+                .build();
     }
 
     private boolean isCppRule(Build.Rule rule) {
@@ -41,8 +46,22 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
         );
     }
 
-    private String getLabelRelativePath(String ruleInput) {
-        return ruleInput.replace("//", "").replace(":", File.separator);
+    private String getProjectName(String label) {
+        String[] pair = label != null ? label.split(":") : new String[]{};
+        return pair.length > 1 ? pair[1] : extractProjectName(label);
+    }
+
+    private String extractProjectName(String label) {
+        return label != null ? label.replace("//", ":") : null;
+    }
+
+    private String getFolderPath(String label) {
+        String[] pair = label.split(":");
+        return pair[0].replace("//", "");
+    }
+
+    private String getFilePath(String label) {
+        return label.replace("//", "").replace(":", File.separator);
     }
 
 }

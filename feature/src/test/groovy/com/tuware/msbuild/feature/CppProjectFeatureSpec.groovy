@@ -39,13 +39,13 @@ class CppProjectFeatureSpec extends Specification {
 
         Build.QueryResult queryResult = GroovyMock()
 
-        UUID projectUuid = UUID.randomUUID()
-        String projectName = "testProject"
-        ProjectSeed projectSeed = ProjectSeed.builder()
-            .name(projectName)
-            .uuid(projectUuid)
-            .sourceFileList(Collections.singletonList("test.cpp"))
-        .build()
+        UUID project1Uuid = UUID.randomUUID()
+        UUID project2Uuid = UUID.randomUUID()
+        String project1 = "project1"
+        String project2 = "project2"
+
+        ProjectSeed projectSeed1 = buildProjectSeed(project1, project1Uuid)
+        ProjectSeed projectSeed2 = buildProjectSeed(project2, project2Uuid)
 
         ProjectFilerSeed projectFilerSeed = Mock()
         SolutionSeed solutionSeed = Mock()
@@ -62,18 +62,18 @@ class CppProjectFeatureSpec extends Specification {
         UUID solutionUuid = UUID.randomUUID()
 
         when:
-        cppProjectConverter.buildSingleProjectSolution(bazelWorkspaceFolder, msbuildSolutionFolder, projectName, solutionUuid, projectUuid)
+        cppProjectConverter.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, project1, solutionUuid, project1Uuid)
 
         then:
 
         1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
-        1 * extractorService.extractProjectSeedList(queryResult) >> [projectSeed]
+        1 * extractorService.extractProjectSeedList(queryResult) >> [projectSeed1, projectSeed2]
         1 * extractorService.extractProjectFilter() >> projectFilerSeed
 
-        1 * extractorService.buildSolutionSeed(solutionUuid, projectName, _, _) >> solutionSeed
+        1 * extractorService.buildSolutionSeed(solutionUuid, project1, _, _) >> solutionSeed
 
-        1 * composerService.composeProjectTemplateData(projectSeed) >> cppProjectTemplate
+        1 * composerService.composeProjectTemplateData(projectSeed1) >> cppProjectTemplate
         1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
         1 * composerService.composeCppProjectUserTemplateData(_) >> projectUserTemplate
         1 * composerService.composeSolutionTemplateData(solutionSeed) >> solutionTemplate
@@ -83,10 +83,19 @@ class CppProjectFeatureSpec extends Specification {
         1 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
         1 * generatorService.generateSolution(solutionTemplate) >> solutionXml
 
-        1 * repositoryService.saveProject(msbuildSolutionFolder, projectName, projectXml)
-        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, projectName, projectFilterXml)
-        1 * repositoryService.saveProjectUser(msbuildSolutionFolder, projectName, projectUserXml)
-        1 * repositoryService.saveSolution(msbuildSolutionFolder, projectName, solutionXml)
+        1 * repositoryService.saveProject(msbuildSolutionFolder, _, project1, projectXml)
+        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, project1, projectFilterXml)
+        1 * repositoryService.saveProjectUser(msbuildSolutionFolder, project1, projectUserXml)
+        1 * repositoryService.saveSolution(msbuildSolutionFolder, project1, solutionXml)
+    }
+
+    private static ProjectSeed buildProjectSeed(String project1, UUID projectUuid) {
+        ProjectSeed projectSeed = ProjectSeed.builder()
+                .name(project1)
+                .uuid(projectUuid)
+                .sourceFileList(Collections.singletonList("test.cpp"))
+                .build()
+        projectSeed
     }
 
 }

@@ -13,14 +13,22 @@ class SolutionComposerSpec extends Specification {
         given:
         SolutionComposer solutionComposer = new SolutionComposer()
 
+        Path projectPath = Stub(Path.class)
+        File file = Stub(File.class)
+        file.toPath() >> "testProjectPath"
+        projectPath.toFile() >> file
+
         when:
         Solution solution = solutionComposer.compose(
-                SolutionSeed.builder()
-                        .projectFilePath(Mock(Path.class))
-                    .projectList(Arrays.asList(
-                            SolutionSeed.Project.builder().uuid(UUID.randomUUID()).path(Mock(Path.class)).build()
-                    ))
-                .build()
+                SolutionSeed.builder().projectFilePath(Mock(Path.class))
+                        .projectList(Arrays.asList(
+                                SolutionSeed.Project.builder()
+                                        .uuid(UUID.randomUUID())
+                                        .path(projectPath)
+                                        .name("testProject")
+                                        .build()
+                        ))
+                        .build()
         )
 
         then:

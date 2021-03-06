@@ -9,19 +9,19 @@ import java.nio.file.Paths;
 
 @Component
 public class RepositoryService {
-    private static final String S_S_VCXPROJ = "%s/%s.vcxproj";
+    private static final String S_S_VCXPROJ = "%s/%s/%s.vcxproj";
     private static final String S_S_VCXPROJ_FILTERS = "%s/%s.vcxproj.filters";
     private static final String S_VCXPROJ_USER = "%s/%s.vcxproj.user";
     private static final String S_S_SLN = "%s/%s.sln";
 
-    private Repository<Path, String> repository;
+    private final Repository<Path, String> repository;
 
     public RepositoryService(Repository<Path, String> repository) {
         this.repository = repository;
     }
 
-    public void saveProject(Path msbuildSolutionFolder, String projectName, String xml) throws AdapterException {
-        String path = String.format(S_S_VCXPROJ, msbuildSolutionFolder.toAbsolutePath(), projectName);
+    public void saveProject(Path msbuildSolutionFolder, Path projectPath, String projectName, String xml) throws AdapterException {
+        String path = String.format(S_S_VCXPROJ, msbuildSolutionFolder.toAbsolutePath(), projectPath.toFile().getPath(), projectName);
         repository.save(Paths.get(path), xml);
     }
 

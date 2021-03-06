@@ -8,6 +8,7 @@ import java.nio.file.Path;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode
 public class Project {
     private ProjectTypeGuid projectTypeGuid;

@@ -16,6 +16,4 @@ public class ProjectSeed {
     private Path path;
     private String name;
     private List<String> sourceFileList;
-
-    private String cppFileName;
 }

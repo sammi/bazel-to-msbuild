@@ -1,27 +1,34 @@
 package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.Composer;
-import com.tuware.msbuild.contract.msbuild.Pair;
+import com.tuware.msbuild.contract.msbuild.Config;
 import com.tuware.msbuild.contract.msbuild.solution.*;
 import com.tuware.msbuild.contract.seed.SolutionSeed;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.UUID;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class SolutionComposer implements Composer<Solution, SolutionSeed> {
 
-    private static final String DEBUG_X_64 = "Debug|x64";
-    private static final String DEBUG_X_86 = "Debug|x86";
-    private static final String RELEASE_X_64 = "Release|x64";
-    private static final String RELEASE_X_86 = "Release|x86";
-    private static final String DEBUG_WIN_32 = "Debug|Win32";
-    private static final String RELEASE_WIN_32 = "Release|Win32";
+    private static final String DEBUG = "Debug";
+    private static final String X_64 = "x64";
+    private static final String DEBUG_X_64 = DEBUG + "|" + X_64;
+    private static final String X_86 = "x86";
+    private static final String DEBUG_X_86 = DEBUG + "|" + X_86;
+    private static final String RELEASE = "Release";
+    private static final String RELEASE_X_64 = RELEASE + "|" + X_64;
+    private static final String RELEASE_X_86 = RELEASE + "|" + X_86;
+    private static final String DEBUG_WIN_32 = DEBUG + "|Win32";
+    private static final String RELEASE_WIN_32 = RELEASE + "|Win32";
+    private static final String ACTIVE_CFG = "ActiveCfg";
+    private static final String BUILD_0 = "Build.0";
+    private static final String S = "{%s}.";
 
-    private MsBuildEnvironment msBuildEnvironment;
+    private final MsBuildEnvironment msBuildEnvironment;
 
     public SolutionComposer() {
         this.msBuildEnvironment = MsBuildEnvironment.builder()
@@ -35,61 +42,65 @@ public class SolutionComposer implements Composer<Solution, SolutionSeed> {
     public Solution compose(SolutionSeed solutionSeed) {
 
         Path solutionPath = solutionSeed.getPath();
-        String solutionName = solutionSeed.getName();
         UUID solutionGuid = solutionSeed.getUuid();
 
-        SolutionSeed.Project project =  solutionSeed.getProjectList().get(0);
+        List<Project> projectList = solutionSeed.getProjectList().stream().map(project ->
+                Project.builder()
+                        .projectTypeGuid(ProjectTypeGuid.CPP)
+                        .name(project.getName())
+                        .projectFilePath(Paths.get(project.getPath().toFile().getPath(), project.getName() + ".vcxproj"))
+                        .uuid(UniqueProjectGuid.builder().value(project.getUuid()).build())
+                        .build()
+        ).collect(Collectors.toList());
 
-        UUID projectGuid = project.getUuid();
-        Path projectFilePath = project.getPath();
+        List<Config> configList = new ArrayList<>();
+        for (SolutionSeed.Project project : solutionSeed.getProjectList()) {
+            configList.add(Config.builder().key(String.format(S + DEBUG + "|" + X_64 + "." + ACTIVE_CFG, project.getUuid())).value(DEBUG_X_64).build());
+            configList.add(Config.builder().key(String.format(S + DEBUG + "|" + X_64 + "." + BUILD_0, project.getUuid())).value(DEBUG_X_64).build());
+            configList.add(Config.builder().key(String.format(S + DEBUG + "|" + X_86 + "." + ACTIVE_CFG, project.getUuid())).value(DEBUG_WIN_32).build());
+            configList.add(Config.builder().key(String.format(S + DEBUG + "|" + X_86 + "." + BUILD_0, project.getUuid())).value(DEBUG_WIN_32).build());
+            configList.add(Config.builder().key(String.format(S + RELEASE + "|" + X_64 + "." + ACTIVE_CFG, project.getUuid())).value(RELEASE_X_64).build());
+            configList.add(Config.builder().key(String.format(S + RELEASE + "|" + X_64 + "." + BUILD_0, project.getUuid())).value(RELEASE_X_64).build());
+            configList.add(Config.builder().key(String.format(S + RELEASE + "|" + X_86 + "." + ACTIVE_CFG, project.getUuid())).value(RELEASE_WIN_32).build());
+            configList.add(Config.builder().key(String.format(S + RELEASE + "|" + X_86 + "." + BUILD_0, project.getUuid())).value(RELEASE_WIN_32).build());
+        }
 
         return Solution.builder()
                 .fileName(solutionPath)
                 .formatVersion(msBuildEnvironment.getFormatVersion())
                 .visualStudioVersion(msBuildEnvironment.getVisualStudioVersion())
                 .minimumVisualStudioVersion(msBuildEnvironment.getMinimumVisualStudioVersion())
-                .projectList(Collections.singletonList(Project.builder()
-                        .projectTypeGuid(ProjectTypeGuid.CPP)
-                        .name(solutionName)
-                        .projectFilePath(projectFilePath)
-                        .uuid(UniqueProjectGuid.builder().value(projectGuid).build())
-                        .build()
-                ))
+                .projectList(projectList)
                 .global(
                         Global.builder().globalSectionList(Arrays.asList(
                                 GlobalSection.builder()
                                         .phase(Phase.PRE_SOLUTION)
                                         .vsPackage(VsPackage.SolutionConfigurationPlatforms)
                                         .configList(Arrays.asList(
-                                                new Pair<>(DEBUG_X_64, DEBUG_X_64),
-                                                new Pair<>(DEBUG_X_86, DEBUG_X_86),
-                                                new Pair<>(RELEASE_X_64, RELEASE_X_64),
-                                                new Pair<>(RELEASE_X_86, RELEASE_X_86)
+                                                Config.builder().key(DEBUG_X_64).value(DEBUG_X_64).build(),
+                                                Config.builder().key(DEBUG_X_86).value(DEBUG_X_86).build(),
+                                                Config.builder().key(RELEASE_X_64).value(RELEASE_X_64).build(),
+                                                Config.builder().key(RELEASE_X_86).value(RELEASE_X_86).build()
                                         ))
                                         .build(),
                                 GlobalSection.builder()
                                         .phase(Phase.POST_SOLUTION)
                                         .vsPackage(VsPackage.ProjectConfigurationPlatforms)
-                                        .configList(Arrays.asList(
-                                                new Pair<>(String.format("{%s}.Debug|x64.ActiveCfg", projectGuid), DEBUG_X_64),
-                                                new Pair<>(String.format("{%s}.Debug|x64.Build.0", projectGuid), DEBUG_X_64),
-                                                new Pair<>(String.format("{%s}.Debug|x86.ActiveCfg", projectGuid), DEBUG_WIN_32),
-                                                new Pair<>(String.format("{%s}.Debug|x86.Build.0", projectGuid), DEBUG_WIN_32),
-                                                new Pair<>(String.format("{%s}.Release|x64.ActiveCfg", projectGuid), RELEASE_X_64),
-                                                new Pair<>(String.format("{%s}.Release|x64.Build.0", projectGuid), RELEASE_X_64),
-                                                new Pair<>(String.format("{%s}.Release|x86.ActiveCfg", projectGuid), RELEASE_WIN_32),
-                                                new Pair<>(String.format("{%s}.Release|x86.Build.0", projectGuid), RELEASE_WIN_32)
-                                        ))
+                                        .configList(configList)
                                         .build(),
                                 GlobalSection.builder()
                                         .phase(Phase.PRE_SOLUTION)
                                         .vsPackage(VsPackage.SolutionProperties)
-                                        .configList(Collections.singletonList(new Pair<>("HideSolutionNode", "FALSE")))
+                                        .configList(Collections.singletonList(
+                                                Config.builder().key("HideSolutionNode").value("FALSE").build()
+                                        ))
                                         .build(),
                                 GlobalSection.builder()
                                         .phase(Phase.POST_SOLUTION)
                                         .vsPackage(VsPackage.ExtensibilityGlobals)
-                                        .configList(Collections.singletonList(new Pair<>("SolutionGuid", String.format("{%s}", solutionGuid))))
+                                        .configList(Collections.singletonList(
+                                                Config.builder().key("SolutionGuid").value(String.format("{%s}", solutionGuid)).build()
+                                        ))
                                         .build()
                         )).build()
                 )

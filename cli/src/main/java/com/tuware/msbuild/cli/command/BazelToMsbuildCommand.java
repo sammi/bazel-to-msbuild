@@ -22,9 +22,9 @@ public class BazelToMsbuildCommand implements Runnable {
     private Parameters parameters;
 
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "show usage info")
-    private boolean helpRequested = false;
+    private static final boolean helpRequested = false;
 
-    private CppProjectFeature cppProjectFeature;
+    private final CppProjectFeature cppProjectFeature;
 
     public BazelToMsbuildCommand(CppProjectFeature cppProjectFeature) {
         this.cppProjectFeature = cppProjectFeature;
@@ -42,7 +42,7 @@ public class BazelToMsbuildCommand implements Runnable {
         UUID projectUuid = UUID.randomUUID();
 
         try {
-            cppProjectFeature.buildSingleProjectSolution(bazelPath, msBuildPath, projectName, solutionUuid, projectUuid);
+            cppProjectFeature.buildSolution(bazelPath, msBuildPath, projectName, solutionUuid, projectUuid);
         } catch (FeatureException e) {
             log.error("Failed to convert bazel workspace: {} to msbuild solution: {}", from, to, e);
             System.exit(1);

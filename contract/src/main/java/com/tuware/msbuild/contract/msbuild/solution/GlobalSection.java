@@ -1,6 +1,6 @@
 package com.tuware.msbuild.contract.msbuild.solution;
 
-import com.tuware.msbuild.contract.msbuild.Pair;
+import com.tuware.msbuild.contract.msbuild.Config;
 import lombok.*;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 public class GlobalSection {
-    List<Pair<String, String>> configList;
+    List<Config> configList;
     private VsPackage vsPackage;
     private Phase phase;
 }
