@@ -39,6 +39,8 @@ class CppProjectFeatureSpec extends Specification {
 
         Build.QueryResult queryResult = GroovyMock()
 
+        String solutionName= "testSolution"
+
         UUID project1Uuid = UUID.randomUUID()
         UUID project2Uuid = UUID.randomUUID()
         String project1 = "project1"
@@ -62,7 +64,7 @@ class CppProjectFeatureSpec extends Specification {
         UUID solutionUuid = UUID.randomUUID()
 
         when:
-        cppProjectConverter.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, project1, solutionUuid, project1Uuid)
+        cppProjectConverter.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, solutionName, solutionUuid)
 
         then:
 
@@ -71,22 +73,22 @@ class CppProjectFeatureSpec extends Specification {
         1 * extractorService.extractProjectSeedList(queryResult) >> [projectSeed1, projectSeed2]
         2 * extractorService.extractProjectFilter() >> projectFilerSeed
 
-        1 * extractorService.buildSolutionSeed(solutionUuid, project1, _, _) >> solutionSeed
+        1 * extractorService.buildSolutionSeed(solutionUuid, solutionName, _, _) >> solutionSeed
 
         1 * composerService.composeProjectTemplateData(projectSeed1) >> cppProjectTemplate
         2 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
-        1 * composerService.composeCppProjectUserTemplateData(_) >> projectUserTemplate
+        2 * composerService.composeCppProjectUserTemplateData(_) >> projectUserTemplate
         1 * composerService.composeSolutionTemplateData(solutionSeed) >> solutionTemplate
 
         1 * generatorService.generateProjectXml(cppProjectTemplate) >> projectXml
         2 * generatorService.generateCppProjectFilterXml(projectFilterTemplate) >> projectFilterXml
-        1 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
+        2 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
         1 * generatorService.generateSolution(solutionTemplate) >> solutionXml
 
         1 * repositoryService.saveProject(msbuildSolutionFolder, _, project1, projectXml)
         2 * repositoryService.saveProjectFilter(msbuildSolutionFolder, _, projectFilterXml)
-        1 * repositoryService.saveProjectUser(msbuildSolutionFolder, project1, projectUserXml)
-        1 * repositoryService.saveSolution(msbuildSolutionFolder, project1, solutionXml)
+        2 * repositoryService.saveProjectUser(msbuildSolutionFolder, _, projectUserXml)
+        1 * repositoryService.saveSolution(msbuildSolutionFolder, solutionName, solutionXml)
     }
 
     private static ProjectSeed buildProjectSeed(String project1, UUID projectUuid) {

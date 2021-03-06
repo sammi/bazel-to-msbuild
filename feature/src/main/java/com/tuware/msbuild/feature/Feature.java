@@ -5,6 +5,6 @@ import java.util.UUID;
 
 public interface Feature {
 
-    void buildSolution(Path bazelWorkspaceFolder, Path msbuildProjectFile, String projectName, UUID solutionUuid, UUID projectUuid) throws FeatureException;
+    void buildSolution(Path bazelWorkspaceFolder, Path msbuildProjectFile, String projectName, UUID solutionUuid) throws FeatureException;
 
 }

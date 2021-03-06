@@ -37,10 +37,9 @@ public class BazelToMsbuildCommand implements Runnable {
 
         String projectName = parameters.getProjectName();
         UUID solutionUuid = UUID.randomUUID();
-        UUID projectUuid = UUID.randomUUID();
 
         try {
-            cppProjectFeature.buildSolution(bazelPath, msBuildPath, projectName, solutionUuid, projectUuid);
+            cppProjectFeature.buildSolution(bazelPath, msBuildPath, projectName, solutionUuid);
         } catch (FeatureException e) {
             log.error("Failed to convert bazel workspace: {} to msbuild solution: {}", from, to, e);
             System.exit(1);

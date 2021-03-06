@@ -40,14 +40,14 @@ public class CppProjectFeature implements Feature {
     }
 
     @Override
-    public void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String projectName, UUID solutionUuid, UUID projectUuid) throws FeatureException {
+    public void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String solutionName, UUID solutionUuid) throws FeatureException {
         try {
             Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
             List<ProjectSeed> projectSeedList = extractorService.extractProjectSeedList(queryResult);
             buildProjects(msbuildSolutionFolder, projectSeedList);
-            buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeedList);
+            buildSolution(msbuildSolutionFolder, solutionName, solutionUuid, projectSeedList);
             buildProjectFilters(msbuildSolutionFolder, projectSeedList);
-            buildProjectUser(msbuildSolutionFolder, projectName);
+            buildProjectUsers(msbuildSolutionFolder, projectSeedList);
         } catch (AdapterException e) {
             throw new FeatureException(e);
         }
@@ -71,10 +71,12 @@ public class CppProjectFeature implements Feature {
         }
     }
 
-    private void buildProjectUser(Path msbuildSolutionFolder, String projectName) throws AdapterException {
-        Project project = composerService.composeCppProjectUserTemplateData(new Object());
-        String xml = generatorService.generateProjectUserXml(project);
-        repositoryService.saveProjectUser(msbuildSolutionFolder, projectName, xml);
+    private void buildProjectUsers(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
+        for(ProjectSeed projectSeed: projectSeedList) {
+            Project project = composerService.composeCppProjectUserTemplateData(new Object());
+            String xml = generatorService.generateProjectUserXml(project);
+            repositoryService.saveProjectUser(msbuildSolutionFolder, projectSeed.getPath() + File.separator + projectSeed.getName(), xml);
+        }
     }
 
     private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUuid, List<ProjectSeed> projectSeedList) throws AdapterException {
