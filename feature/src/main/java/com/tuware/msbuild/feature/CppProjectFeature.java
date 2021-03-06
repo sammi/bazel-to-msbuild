@@ -11,6 +11,7 @@ import com.tuware.msbuild.contract.template.ProjectTemplateData;
 import com.tuware.msbuild.feature.service.*;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class CppProjectFeature implements Feature {
             List<ProjectSeed> projectSeedList = extractorService.extractProjectSeedList(queryResult);
             buildProjects(msbuildSolutionFolder, projectSeedList);
             buildSolution(msbuildSolutionFolder, projectName, solutionUuid, projectSeedList);
-            buildProjectFilter(msbuildSolutionFolder, projectSeedList.get(0), projectName);
+            buildProjectFilters(msbuildSolutionFolder, projectSeedList);
             buildProjectUser(msbuildSolutionFolder, projectName);
         } catch (AdapterException e) {
             throw new FeatureException(e);
@@ -60,12 +61,14 @@ public class CppProjectFeature implements Feature {
         }
     }
 
-    private void buildProjectFilter(Path msbuildSolutionFolder, ProjectSeed projectSeed, String projectName) throws AdapterException {
-        ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter();
-        projectFilerSeed.setSourceFile(projectSeed.getSourceFileList().get(0));
-        Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
-        String xml = generatorService.generateCppProjectFilterXml(project);
-        repositoryService.saveProjectFilter(msbuildSolutionFolder, projectName, xml);
+    private void buildProjectFilters(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
+        for (ProjectSeed projectSeed : projectSeedList) {
+            ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter();
+            projectFilerSeed.setSourceFileList(projectSeed.getSourceFileList());
+            Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
+            String xml = generatorService.generateCppProjectFilterXml(project);
+            repositoryService.saveProjectFilter(msbuildSolutionFolder, projectSeed.getPath() + File.separator + projectSeed.getName(), xml);
+        }
     }
 
     private void buildProjectUser(Path msbuildSolutionFolder, String projectName) throws AdapterException {

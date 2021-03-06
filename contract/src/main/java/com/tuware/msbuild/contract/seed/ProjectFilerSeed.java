@@ -2,6 +2,7 @@ package com.tuware.msbuild.contract.seed;
 
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -13,5 +14,5 @@ public class ProjectFilerSeed {
     private UUID sourceFilesFilterGuid;
     private UUID headerFilesFilterGuid;
     private UUID resourceFilesFilterGuid;
-    private String sourceFile;
+    private List<String> sourceFileList;
 }

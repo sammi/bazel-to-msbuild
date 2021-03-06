@@ -8,9 +8,11 @@ import com.tuware.msbuild.contract.msbuild.project.Project;
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed> {
@@ -21,9 +23,13 @@ public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed
         UUID sourceFilesFilterGuid = seed.getSourceFilesFilterGuid();
         UUID headerFilesFilterGuid = seed.getHeaderFilesFilterGuid();
         UUID resourceFilesFilterGuid = seed.getResourceFilesFilterGuid();
-        String sourceFile = seed.getSourceFile();
+        List<String> sourceFileList = seed.getSourceFileList() != null ? seed.getSourceFileList() : new ArrayList<>();
 
         String sourceFilesFilterName = "Source Files";
+
+        List<ClCompile> clCompileList = sourceFileList.stream().map(
+                sourceFile -> ClCompile.builder().include(sourceFile).filter(sourceFilesFilterName).build()
+        ).collect(Collectors.toList());
 
         return Project.builder()
                 .toolsVersion("4.0")
@@ -46,14 +52,7 @@ public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed
                                                 .extensions("rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms")
                                                 .build()
                                 )).build(),
-                                ItemGroup.builder().clCompileList(
-                                        Collections.singletonList(
-                                                ClCompile.builder()
-                                                        .include(sourceFile)
-                                                        .filter(sourceFilesFilterName)
-                                                        .build()
-                                        )
-                                ).build()
+                                ItemGroup.builder().clCompileList(clCompileList).build()
                         )
                 )
                 .build();

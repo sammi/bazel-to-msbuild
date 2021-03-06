@@ -69,22 +69,22 @@ class CppProjectFeatureSpec extends Specification {
         1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
         1 * extractorService.extractProjectSeedList(queryResult) >> [projectSeed1, projectSeed2]
-        1 * extractorService.extractProjectFilter() >> projectFilerSeed
+        2 * extractorService.extractProjectFilter() >> projectFilerSeed
 
         1 * extractorService.buildSolutionSeed(solutionUuid, project1, _, _) >> solutionSeed
 
         1 * composerService.composeProjectTemplateData(projectSeed1) >> cppProjectTemplate
-        1 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
+        2 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
         1 * composerService.composeCppProjectUserTemplateData(_) >> projectUserTemplate
         1 * composerService.composeSolutionTemplateData(solutionSeed) >> solutionTemplate
 
         1 * generatorService.generateProjectXml(cppProjectTemplate) >> projectXml
-        1 * generatorService.generateCppProjectFilterXml(projectFilterTemplate) >> projectFilterXml
+        2 * generatorService.generateCppProjectFilterXml(projectFilterTemplate) >> projectFilterXml
         1 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
         1 * generatorService.generateSolution(solutionTemplate) >> solutionXml
 
         1 * repositoryService.saveProject(msbuildSolutionFolder, _, project1, projectXml)
-        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, project1, projectFilterXml)
+        2 * repositoryService.saveProjectFilter(msbuildSolutionFolder, _, projectFilterXml)
         1 * repositoryService.saveProjectUser(msbuildSolutionFolder, project1, projectUserXml)
         1 * repositoryService.saveSolution(msbuildSolutionFolder, project1, solutionXml)
     }
