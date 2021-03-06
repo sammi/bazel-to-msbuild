@@ -60,20 +60,30 @@ class CppProjectFeatureSpec extends Specification {
 
         List<ProjectSeed> projectSeedList = [projectSeed1, projectSeed2]
 
-        ProjectFilerSeed projectFilerSeed = Mock()
+        ProjectFilerSeed projectFilerSeed1 = Stub()
+        projectFilerSeed1.getSourceFileList() >> ["test1.cpp"]
+
+        ProjectFilerSeed projectFilerSeed2 = Stub()
+        projectFilerSeed2.getSourceFileList() >> ["test2.cpp"]
+
         SolutionSeed solutionSeed = Mock()
 
         ProjectTemplate cppProjectTemplate1 = Mock()
         ProjectTemplate cppProjectTemplate2 = Mock()
 
-        Project projectFilterTemplate = Mock()
+        Project projectFilterTemplate1 = Mock()
+
+        Project projectFilterTemplate2 = Mock()
+
         Project projectUserTemplate = Mock()
         Solution solutionTemplate = Mock()
 
         String projectXml1 = GroovyMock()
         String projectXml2 = GroovyMock()
 
-        String projectFilterXml = GroovyMock()
+        String projectFilterXml1 = GroovyMock()
+        String projectFilterXml2 = GroovyMock()
+
         String projectUserXml = GroovyMock()
         String solutionXml = GroovyMock()
 
@@ -85,31 +95,37 @@ class CppProjectFeatureSpec extends Specification {
         1 * queryService.query(bazelWorkspaceFolder) >> queryResult
 
         1 * extractorService.extractProjectSeedList(queryResult) >> projectSeedList
-        2 * extractorService.extractProjectFilter() >> projectFilerSeed
+
+        1 * extractorService.extractProjectFilter(projectSeed1) >> projectFilerSeed1
+        1 * extractorService.extractProjectFilter(projectSeed2) >> projectFilerSeed2
 
         1 * extractorService.buildSolutionSeed(solutionName, _, _) >> solutionSeed
 
-        1 * composerService.composeProjectTemplateData(projectSeed1) >> cppProjectTemplate1
-        1 * composerService.composeProjectTemplateData(projectSeed2) >> cppProjectTemplate2
+        1 * composerService.composeProjectTemplate(projectSeed1) >> cppProjectTemplate1
+        1 * composerService.composeProjectTemplate(projectSeed2) >> cppProjectTemplate2
 
-        2 * composerService.composeCppProjectFilterTemplateData(projectFilerSeed) >> projectFilterTemplate
-        2 * composerService.composeCppProjectUserTemplateData(_) >> projectUserTemplate
+        1 * composerService.composeProjectFilterTemplate(projectFilerSeed1) >> projectFilterTemplate1
+        1 * composerService.composeProjectFilterTemplate(projectFilerSeed2) >> projectFilterTemplate2
+
+        2 * composerService.composeProjectUserTemplate() >> projectUserTemplate
 
         1 * composerService.composeSolutionTemplateData(solutionSeed) >> solutionTemplate
 
         1 * generatorService.generateProjectXml(cppProjectTemplate1) >> projectXml1
         1 * generatorService.generateProjectXml(cppProjectTemplate2) >> projectXml2
 
-        2 * generatorService.generateCppProjectFilterXml(projectFilterTemplate) >> projectFilterXml
+        1 * generatorService.generateProjectFilterXml(projectFilterTemplate1) >> projectFilterXml1
+        1 * generatorService.generateProjectFilterXml(projectFilterTemplate2) >> projectFilterXml2
+
         2 * generatorService.generateProjectUserXml(projectUserTemplate) >> projectUserXml
 
         1 * generatorService.generateSolution(solutionTemplate) >> solutionXml
 
         1 * repositoryService.saveProject(msbuildSolutionFolder, projectPath1, projectName1, projectXml1)
-        1 * repositoryService.saveProject(msbuildSolutionFolder, projectPath2, projectName2, projectXml1)
+        1 * repositoryService.saveProject(msbuildSolutionFolder, projectPath2, projectName2, projectXml2)
 
-        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, projectPath1, projectName1, projectFilterXml)
-        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, projectPath2, projectName2, projectFilterXml)
+        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, projectPath1, projectName1, projectFilterXml1)
+        1 * repositoryService.saveProjectFilter(msbuildSolutionFolder, projectPath2, projectName2, projectFilterXml2)
 
         1 * repositoryService.saveProjectUser(msbuildSolutionFolder, projectPath1, projectName1, projectUserXml)
         1 * repositoryService.saveProjectUser(msbuildSolutionFolder, projectPath2, projectName2, projectUserXml)

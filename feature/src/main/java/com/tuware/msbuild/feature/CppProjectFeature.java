@@ -53,7 +53,7 @@ public class CppProjectFeature implements Feature {
 
     private void buildProjects(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
         for (ProjectSeed projectSeed : projectSeedList) {
-            ProjectTemplate projectTemplate = composerService.composeProjectTemplateData(projectSeed);
+            ProjectTemplate projectTemplate = composerService.composeProjectTemplate(projectSeed);
             String xml = generatorService.generateProjectXml(projectTemplate);
             repositoryService.saveProject(msbuildSolutionFolder, projectSeed.getFolder(), projectSeed.getName(), xml);
         }
@@ -61,17 +61,16 @@ public class CppProjectFeature implements Feature {
 
     private void buildProjectFilters(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
         for (ProjectSeed projectSeed : projectSeedList) {
-            ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter();
-            projectFilerSeed.setSourceFileList(projectSeed.getSourceFileList());
-            Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
-            String xml = generatorService.generateCppProjectFilterXml(project);
+            ProjectFilerSeed projectFilerSeed = extractorService.extractProjectFilter(projectSeed);
+            Project project = composerService.composeProjectFilterTemplate(projectFilerSeed);
+            String xml = generatorService.generateProjectFilterXml(project);
             repositoryService.saveProjectFilter(msbuildSolutionFolder, projectSeed.getFolder(), projectSeed.getName(), xml);
         }
     }
 
     private void buildProjectUsers(Path msbuildSolutionFolder, List<ProjectSeed> projectSeedList) throws AdapterException {
         for(ProjectSeed projectSeed: projectSeedList) {
-            Project project = composerService.composeCppProjectUserTemplateData(new Object());
+            Project project = composerService.composeProjectUserTemplate();
             String xml = generatorService.generateProjectUserXml(project);
             repositoryService.saveProjectUser(msbuildSolutionFolder, projectSeed.getFolder(), projectSeed.getName(), xml);
         }

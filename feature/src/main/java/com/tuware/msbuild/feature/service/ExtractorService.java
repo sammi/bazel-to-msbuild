@@ -34,8 +34,10 @@ public class ExtractorService {
         return projectSeedList;
     }
 
-    public ProjectFilerSeed extractProjectFilter() {
-        return projectFilerProvider.provide();
+    public ProjectFilerSeed extractProjectFilter(ProjectSeed projectSeed) {
+        ProjectFilerSeed projectFilerSeed = projectFilerProvider.provide();
+        projectFilerSeed.setSourceFileList(projectSeed.getSourceFileList());
+        return projectFilerSeed;
     }
 
     public SolutionSeed buildSolutionSeed(String solutionName, Path solutionPath, List<ProjectSeed> projectSeedList) {

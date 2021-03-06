@@ -28,15 +28,15 @@ public class ComposerService {
         this.solutionComposer = solutionComposer;
     }
 
-    public ProjectTemplate composeProjectTemplateData(ProjectSeed projectSeed) {
+    public ProjectTemplate composeProjectTemplate(ProjectSeed projectSeed) {
         return projectComposer.compose(projectSeed);
     }
 
-    public Project composeCppProjectUserTemplateData(Object projectUserSeed) {
-        return projectUserComposer.compose(projectUserSeed);
+    public Project composeProjectUserTemplate() {
+        return projectUserComposer.compose(new Object());
     }
 
-    public Project composeCppProjectFilterTemplateData(ProjectFilerSeed projectFilerSeed) {
+    public Project composeProjectFilterTemplate(ProjectFilerSeed projectFilerSeed) {
         return projectFilterComposer.compose(projectFilerSeed);
     }
 

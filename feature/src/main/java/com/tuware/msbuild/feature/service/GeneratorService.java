@@ -31,7 +31,7 @@ public class GeneratorService {
         return cppProjectGenerator.generate(projectTemplate);
     }
 
-    public String generateCppProjectFilterXml(Project project) throws AdapterException {
+    public String generateProjectFilterXml(Project project) throws AdapterException {
         return projectFilterGenerator.generate(project);
     }
 
