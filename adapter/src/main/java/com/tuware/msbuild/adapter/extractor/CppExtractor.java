@@ -29,7 +29,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
                 .map(this::getFileName)
                 .collect(Collectors.toList());
         return ProjectSeed.builder()
-                .path(Paths.get(getFolderPath(rule.getName())))
+                .folder(Paths.get(getFolderPath(rule.getName())))
                 .name(getFileName(rule.getName()))
                 .sourceFileList(sourceFileList)
                 .build();

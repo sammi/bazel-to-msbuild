@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 public class ProjectSeed {
     private UUID uuid;
-    private Path path;
+    private Path folder;
     private String name;
     private List<String> sourceFileList;
 }

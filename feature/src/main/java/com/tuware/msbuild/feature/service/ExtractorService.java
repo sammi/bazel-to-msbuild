@@ -38,15 +38,15 @@ public class ExtractorService {
         return projectFilerProvider.provide();
     }
 
-    public SolutionSeed buildSolutionSeed(UUID solutionUuid, String solutionName, Path solutionPath, List<ProjectSeed> projectSeedList) {
+    public SolutionSeed buildSolutionSeed(String solutionName, Path solutionPath, List<ProjectSeed> projectSeedList) {
         return SolutionSeed.builder()
-                .uuid(solutionUuid)
+                .uuid(UUID.randomUUID())
                 .name(solutionName)
                 .path(solutionPath)
                 .projectList(projectSeedList.stream().map(projectSeed -> SolutionSeed.Project.builder()
                         .name(projectSeed.getName())
                         .uuid(projectSeed.getUuid())
-                        .path(projectSeed.getPath())
+                        .path(projectSeed.getFolder())
                         .typeUuid(ProjectTypeGuid.CPP)
                 .build()
                 ).collect(Collectors.toList()))

@@ -11,10 +11,8 @@ import com.tuware.msbuild.contract.template.ProjectTemplate;
 import com.tuware.msbuild.feature.service.*;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class CppProjectFeature implements Feature {
@@ -40,14 +38,14 @@ public class CppProjectFeature implements Feature {
     }
 
     @Override
-    public void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String solutionName, UUID solutionUuid) throws FeatureException {
+    public void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String solutionName) throws FeatureException {
         try {
             Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
             List<ProjectSeed> projectSeedList = extractorService.extractProjectSeedList(queryResult);
             buildProjects(msbuildSolutionFolder, projectSeedList);
-            buildSolution(msbuildSolutionFolder, solutionName, solutionUuid, projectSeedList);
             buildProjectFilters(msbuildSolutionFolder, projectSeedList);
             buildProjectUsers(msbuildSolutionFolder, projectSeedList);
+            buildSolution(msbuildSolutionFolder, solutionName, projectSeedList);
         } catch (AdapterException e) {
             throw new FeatureException(e);
         }
@@ -57,7 +55,7 @@ public class CppProjectFeature implements Feature {
         for (ProjectSeed projectSeed : projectSeedList) {
             ProjectTemplate projectTemplate = composerService.composeProjectTemplateData(projectSeed);
             String xml = generatorService.generateProjectXml(projectTemplate);
-            repositoryService.saveProject(msbuildSolutionFolder, projectSeed.getPath(), projectSeed.getName(), xml);
+            repositoryService.saveProject(msbuildSolutionFolder, projectSeed.getFolder(), projectSeed.getName(), xml);
         }
     }
 
@@ -67,7 +65,7 @@ public class CppProjectFeature implements Feature {
             projectFilerSeed.setSourceFileList(projectSeed.getSourceFileList());
             Project project = composerService.composeCppProjectFilterTemplateData(projectFilerSeed);
             String xml = generatorService.generateCppProjectFilterXml(project);
-            repositoryService.saveProjectFilter(msbuildSolutionFolder, projectSeed.getPath() + File.separator + projectSeed.getName(), xml);
+            repositoryService.saveProjectFilter(msbuildSolutionFolder, projectSeed.getFolder(), projectSeed.getName(), xml);
         }
     }
 
@@ -75,22 +73,21 @@ public class CppProjectFeature implements Feature {
         for(ProjectSeed projectSeed: projectSeedList) {
             Project project = composerService.composeCppProjectUserTemplateData(new Object());
             String xml = generatorService.generateProjectUserXml(project);
-            repositoryService.saveProjectUser(msbuildSolutionFolder, projectSeed.getPath() + File.separator + projectSeed.getName(), xml);
+            repositoryService.saveProjectUser(msbuildSolutionFolder, projectSeed.getFolder(), projectSeed.getName(), xml);
         }
     }
 
-    private void buildSolution(Path msbuildSolutionFolder, String projectName, UUID solutionUuid, List<ProjectSeed> projectSeedList) throws AdapterException {
+    private void buildSolution(Path msbuildSolutionFolder, String solutionName, List<ProjectSeed> projectSeedList) throws AdapterException {
 
         SolutionSeed solutionSeed = extractorService.buildSolutionSeed(
-                solutionUuid,
-                projectName,
+                solutionName,
                 msbuildSolutionFolder,
                 projectSeedList
         );
         Solution solution = composerService.composeSolutionTemplateData(solutionSeed);
 
         String xml = generatorService.generateSolution(solution);
-        repositoryService.saveSolution(msbuildSolutionFolder, projectName, xml);
+        repositoryService.saveSolution(msbuildSolutionFolder, solutionName, xml);
     }
 
 }
