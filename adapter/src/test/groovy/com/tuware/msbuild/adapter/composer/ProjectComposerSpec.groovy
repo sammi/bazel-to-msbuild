@@ -11,8 +11,13 @@ class ProjectComposerSpec extends Specification {
 
         given:
         String sourceFile = "a.cpp"
+        String headerFile = "a.h"
         UUID projectUuid = UUID.randomUUID()
-        ProjectSeed projectSeed = ProjectSeed.builder().sourceFileList(Collections.singletonList(sourceFile)).uuid(projectUuid).build()
+        ProjectSeed projectSeed = ProjectSeed.builder()
+            .sourceFileList(Collections.singletonList(sourceFile))
+            .headerFileList(Collections.singletonList(headerFile))
+            .uuid(projectUuid)
+        .build()
         ProjectComposer templateFactory = new ProjectComposer()
 
         when:

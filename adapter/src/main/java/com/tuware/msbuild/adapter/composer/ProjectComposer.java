@@ -9,6 +9,7 @@ import com.tuware.msbuild.contract.template.ProjectTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -97,11 +98,10 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
         );
 
         ItemGroup clCompileItemGroup = ItemGroup.builder()
-                .clCompileList(
-                        projectSeed.getSourceFileList().stream().map(
-                                sourceFile -> ClCompile.builder().include(sourceFile).build()
-                        ).collect(Collectors.toList()))
-                .build();
+                .clCompileList(Stream.of(
+                    projectSeed.getSourceFileList().stream().map(sourceFile -> ClCompile.builder().include(sourceFile).build()).collect(Collectors.toList()),
+                    projectSeed.getHeaderFileList().stream().map(headerFile -> ClCompile.builder().include(headerFile).build()).collect(Collectors.toList())
+                ).flatMap(Collection::stream).collect(Collectors.toList())).build();
 
         Project project = Project.builder()
                 .defaultTargets("Build")

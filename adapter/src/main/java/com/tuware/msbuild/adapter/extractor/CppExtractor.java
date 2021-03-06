@@ -25,13 +25,18 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
 
     private ProjectSeed extractProjectSeedFromCppRule(Build.Rule rule) {
         List<String> sourceFileList = rule.getRuleInputList().stream()
-                .filter(isCppSourceCode())
+                .filter(isCppSourceFile())
+                .map(this::getFileName)
+                .collect(Collectors.toList());
+        List<String> headerFileList = rule.getRuleInputList().stream()
+                .filter(isCppHeaderFile())
                 .map(this::getFileName)
                 .collect(Collectors.toList());
         return ProjectSeed.builder()
                 .folder(Paths.get(getFolderPath(rule.getName())))
                 .name(getFileName(rule.getName()))
                 .sourceFileList(sourceFileList)
+                .headerFileList(headerFileList)
                 .build();
     }
 
@@ -42,9 +47,15 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
                 rule.getRuleClass().equals("cc_test");
     }
 
-    private Predicate<String> isCppSourceCode() {
+    private Predicate<String> isCppSourceFile() {
         return ruleInput -> !ruleInput.contains("@") && (
-                ruleInput.endsWith(".cc") || ruleInput.endsWith(".h") || ruleInput.endsWith(".cpp")
+                ruleInput.endsWith(".cc") || ruleInput.endsWith(".cpp")
+        );
+    }
+
+    private Predicate<String> isCppHeaderFile() {
+        return ruleInput -> !ruleInput.contains("@") && (
+                ruleInput.endsWith(".h") || ruleInput.endsWith(".hpp")
         );
     }
 

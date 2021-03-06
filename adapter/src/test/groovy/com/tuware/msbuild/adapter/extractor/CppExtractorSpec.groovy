@@ -12,8 +12,8 @@ class CppExtractorSpec extends Specification {
         CppExtractor cppExtractor = new CppExtractor()
         Build.QueryResult queryResult = Build.QueryResult.newBuilder()
             .addAllTarget(Arrays.asList(
-                    buildCppRuleTarget("test1"),
-                    buildCppRuleTarget("test2"),
+                    buildCppRuleTarget("test1", "test1.cpp", "test1.hpp"),
+                    buildCppRuleTarget("test2", "test2.cc", "test2.h"),
             ))
         .build()
 
@@ -22,26 +22,27 @@ class CppExtractorSpec extends Specification {
 
         then:
         projectSeeds.size() == 2
-        projectSeeds.forEach(projectSeed -> {
-            projectSeed.getName().contains("test")
-            projectSeed.uuid == null
-            projectSeed.getSourceFileList() == [
-                    "main" + File.separator + "test.cpp",
-                    "main" + File.separator + "test.h",
-            ]
-        })
 
+        projectSeeds[0].getName() == "test1"
+        projectSeeds[0].uuid == null
+        projectSeeds[0].getSourceFileList() == ["test1.cpp"]
+        projectSeeds[0].getHeaderFileList() == ["test1.hpp"]
+
+        projectSeeds[1].getName() == "test2"
+        projectSeeds[1].uuid == null
+        projectSeeds[1].getSourceFileList() == ["test2.cc"]
+        projectSeeds[1].getHeaderFileList() == ["test2.h"]
     }
 
-    private static Build.Target buildCppRuleTarget(String name) {
+    private static Build.Target buildCppRuleTarget(String name, String sourceFile, String headerFile) {
         Build.Target.newBuilder()
                 .setType(Build.Target.Discriminator.RULE)
                 .setRule(Build.Rule.newBuilder().setRuleClass("cc_binary")
                         .setName(name)
                         .addAllRuleInput(
                                 Arrays.asList(
-                                        "//main:test.cpp",
-                                        "//main:test.h"
+                                        "//main:" + sourceFile,
+                                        "//main:" + headerFile
                                 )
                         ).build()
                 ).build()

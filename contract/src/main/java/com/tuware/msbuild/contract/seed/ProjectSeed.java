@@ -16,4 +16,5 @@ public class ProjectSeed {
     private Path folder;
     private String name;
     private List<String> sourceFileList;
+    private List<String> headerFileList;
 }

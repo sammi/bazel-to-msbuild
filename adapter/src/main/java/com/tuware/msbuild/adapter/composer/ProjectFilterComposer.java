@@ -26,9 +26,15 @@ public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed
         List<String> sourceFileList = seed.getSourceFileList() != null ? seed.getSourceFileList() : new ArrayList<>();
 
         String sourceFilesFilterName = "Source Files";
+        String headerFilesFilterName = "Header Files";
+        String resourceFilesFilterName = "Resource Files";
 
-        List<ClCompile> clCompileList = sourceFileList.stream().map(
+        List<ClCompile> sourceFileClCompileList = sourceFileList.stream().map(
                 sourceFile -> ClCompile.builder().include(sourceFile).filter(sourceFilesFilterName).build()
+        ).collect(Collectors.toList());
+
+        List<ClCompile> headerFileClCompileList = sourceFileList.stream().map(
+                sourceFile -> ClCompile.builder().include(sourceFile).filter(headerFilesFilterName).build()
         ).collect(Collectors.toList());
 
         return Project.builder()
@@ -42,17 +48,18 @@ public class ProjectFilterComposer implements Composer<Project, ProjectFilerSeed
                                                 .extensions("cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx")
                                                 .build(),
                                         Filter.builder()
-                                                .include("Header Files")
+                                                .include(headerFilesFilterName)
                                                 .uniqueIdentifier(headerFilesFilterGuid)
                                                 .extensions("h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd")
                                                 .build(),
                                         Filter.builder()
-                                                .include("Resource Files")
+                                                .include(resourceFilesFilterName)
                                                 .uniqueIdentifier(resourceFilesFilterGuid)
                                                 .extensions("rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms")
                                                 .build()
                                 )).build(),
-                                ItemGroup.builder().clCompileList(clCompileList).build()
+                                ItemGroup.builder().clCompileList(sourceFileClCompileList).build(),
+                                ItemGroup.builder().clCompileList(headerFileClCompileList).build()
                         )
                 )
                 .build();
