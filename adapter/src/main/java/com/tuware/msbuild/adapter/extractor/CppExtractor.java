@@ -5,7 +5,6 @@ import com.tuware.msbuild.contract.adapter.Extractor;
 import com.tuware.msbuild.contract.seed.ProjectSeed;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
@@ -27,11 +26,11 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
     private ProjectSeed extractProjectSeedFromCppRule(Build.Rule rule) {
         List<String> sourceFileList = rule.getRuleInputList().stream()
                 .filter(isCppSourceCode())
-                .map(this::getFilePath)
+                .map(this::getFileName)
                 .collect(Collectors.toList());
         return ProjectSeed.builder()
                 .path(Paths.get(getFolderPath(rule.getName())))
-                .name(getProjectName(rule.getName()))
+                .name(getFileName(rule.getName()))
                 .sourceFileList(sourceFileList)
                 .build();
     }
@@ -46,7 +45,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
         );
     }
 
-    private String getProjectName(String label) {
+    private String getFileName(String label) {
         String[] pair = label != null ? label.split(":") : new String[]{};
         return pair.length > 1 ? pair[1] : extractProjectName(label);
     }
@@ -58,10 +57,6 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
     private String getFolderPath(String label) {
         String[] pair = label.split(":");
         return pair[0].replace("//", "");
-    }
-
-    private String getFilePath(String label) {
-        return label.replace("//", "").replace(":", File.separator);
     }
 
 }
