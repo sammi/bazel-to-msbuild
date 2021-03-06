@@ -36,3 +36,8 @@ hs_err_pid*
 .idea/
 *.iml
 bazel-*
+
+*.sln
+Debug
+.vs*
+*.vcxproj*
