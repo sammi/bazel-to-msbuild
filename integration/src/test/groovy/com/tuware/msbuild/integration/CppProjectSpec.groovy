@@ -23,9 +23,9 @@ import spock.lang.Specification
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class HelloWorldCppProjectSpec extends Specification {
+class CppProjectSpec extends Specification {
 
-    def "generate msbuild solution from bazel hello world cpp project"() {
+    def "generate msbuild solution from bazel hello-world cpp workspace"() {
         given:
         BazelQueryAllProtoProvider bazelQueryAllProtoProvider = new BazelQueryAllProtoProvider()
         PackageQuery packageQuery = new PackageQuery()
