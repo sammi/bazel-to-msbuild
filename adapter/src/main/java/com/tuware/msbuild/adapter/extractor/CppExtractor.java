@@ -36,7 +36,10 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
     }
 
     private boolean isCppRule(Build.Rule rule) {
-        return rule.getRuleClass().equals("cc_binary") || rule.getRuleClass().equals("cc_library");
+        return
+                rule.getRuleClass().equals("cc_binary") ||
+                rule.getRuleClass().equals("cc_library") ||
+                rule.getRuleClass().equals("cc_test");
     }
 
     private Predicate<String> isCppSourceCode() {
