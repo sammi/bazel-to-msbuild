@@ -18,4 +18,5 @@ public class ProjectTemplate {
     private List<PropertyGroup> configurationPropertyGroupList;
     private String cppPropsImport;
     private ItemGroup clCompileItemGroup;
+    private ItemGroup projectReferenceItemGroup;
 }

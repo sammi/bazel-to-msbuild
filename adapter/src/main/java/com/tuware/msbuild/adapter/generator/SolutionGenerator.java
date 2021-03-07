@@ -18,9 +18,9 @@ public class SolutionGenerator implements Generator<Solution> {
     }
 
     @Override
-    public String generate(Solution templateData) throws AdapterException {
+    public String generate(Solution solution) throws AdapterException {
         try {
-            return templateBuilder.compileFromTemplateFile(TemplatePaths.solutionTemplate(), templateData);
+            return templateBuilder.compileFromTemplateFile(TemplatePaths.solutionTemplate(), solution);
         } catch (IOException | URISyntaxException e) {
             throw new AdapterException("Failed to compile solution xml content.", e);
         }

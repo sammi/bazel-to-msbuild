@@ -1,5 +1,6 @@
 package com.tuware.msbuild.contract.seed;
 
+import com.tuware.msbuild.contract.msbuild.property.ConfigurationType;
 import lombok.*;
 
 import java.nio.file.Path;
@@ -17,4 +18,6 @@ public class ProjectSeed {
     private String name;
     private List<String> sourceFileList;
     private List<String> headerFileList;
+    private ConfigurationType configurationType;
+    private List<ProjectSeed> dependentProjectSeedList;
 }

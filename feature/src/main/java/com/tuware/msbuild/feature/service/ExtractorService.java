@@ -30,7 +30,10 @@ public class ExtractorService {
 
     public List<ProjectSeed> extractProjectSeedList(Build.QueryResult queryResult) {
         List<ProjectSeed> projectSeedList = projectSeedExtractor.extract(queryResult);
-        projectSeedList.forEach(projectSeed -> projectSeed.setUuid(UUID.randomUUID()));
+        projectSeedList.forEach(projectSeed -> {
+            projectSeed.setUuid(UUID.randomUUID());
+            projectSeed.getDependentProjectSeedList().forEach( ps -> ps.setUuid(UUID.randomUUID()));
+        });
         return projectSeedList;
     }
 

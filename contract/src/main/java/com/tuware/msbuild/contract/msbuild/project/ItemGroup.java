@@ -19,4 +19,5 @@ public class ItemGroup {
     private List<None> noneList;
     private List<Filter> filterList;
     private List<ClCompile> clCompileList;
+    private List<ProjectReference> projectReferenceList;
 }

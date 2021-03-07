@@ -67,6 +67,7 @@
             <SDLCheck>true</SDLCheck>
             <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
             <ConformanceMode>true</ConformanceMode>
+            <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
         </ClCompile>
         <Link>
         <SubSystem>Console</SubSystem>
@@ -120,6 +121,13 @@
     <ItemGroup>
         {{#each clCompileItemGroup.clCompileList}}
             <ClCompile Include="{{include}}"/>
+        {{/each}}
+    </ItemGroup>
+    <ItemGroup>
+        {{#each projectReferenceItemGroup.projectReferenceList}}
+            <ProjectReference Include="{{include}}">
+                <Project>{{project.value}}</Project>
+            </ProjectReference>
         {{/each}}
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>

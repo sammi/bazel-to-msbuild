@@ -4,14 +4,13 @@ import com.tuware.msbuild.contract.adapter.Composer;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
 import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
+import com.tuware.msbuild.contract.msbuild.solution.UniqueProjectGuid;
 import com.tuware.msbuild.contract.seed.ProjectSeed;
 import com.tuware.msbuild.contract.template.ProjectTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.io.File;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +29,8 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
     @Override
     public ProjectTemplate compose(ProjectSeed projectSeed) {
         UUID projectGuild = projectSeed.getUuid();
+        ConfigurationType configurationType = projectSeed.getConfigurationType();
+
         ItemGroup projectConfigurationsItemGroup = ItemGroup.builder()
                 .label("ProjectConfigurations")
                 .projectConfigurationList(Arrays.asList(
@@ -67,14 +68,14 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
         List<PropertyGroup> configurationPropertyGroupList = Arrays.asList(
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
-                        .configurationType(ConfigurationType.Application)
+                        .configurationType(configurationType)
                         .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
                         .characterSet(CharacterSet.Unicode)
                         .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Release|Win32'")
-                        .configurationType(ConfigurationType.Application)
+                        .configurationType(configurationType)
                         .useDebugLibraries(UseDebugLibraries.builder().value(false).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
                         .wholeProgramOptimization(WholeProgramOptimization.builder().value(true).build())
@@ -82,14 +83,14 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                         .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Debug|x64'")
-                        .configurationType(ConfigurationType.Application)
+                        .configurationType(configurationType)
                         .useDebugLibraries(UseDebugLibraries.builder().value(true).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
                         .characterSet(CharacterSet.Unicode)
                         .build(),
                 PropertyGroup.builder()
                         .condition("'$(Configuration)|$(Platform)'=='Release|x64'")
-                        .configurationType(ConfigurationType.Application)
+                        .configurationType(configurationType)
                         .useDebugLibraries(UseDebugLibraries.builder().value(false).build())
                         .platformToolset(PlatformToolset.builder().value("v142").build())
                         .wholeProgramOptimization(WholeProgramOptimization.builder().value(true).build())
@@ -99,9 +100,24 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
 
         ItemGroup clCompileItemGroup = ItemGroup.builder()
                 .clCompileList(Stream.of(
-                    projectSeed.getSourceFileList().stream().map(sourceFile -> ClCompile.builder().include(sourceFile).build()).collect(Collectors.toList()),
-                    projectSeed.getHeaderFileList().stream().map(headerFile -> ClCompile.builder().include(headerFile).build()).collect(Collectors.toList())
+                        projectSeed.getSourceFileList().stream().map(sourceFile -> ClCompile.builder().include(sourceFile).build()).collect(Collectors.toList()),
+                        projectSeed.getHeaderFileList().stream().map(headerFile -> ClCompile.builder().include(headerFile).build()).collect(Collectors.toList())
                 ).flatMap(Collection::stream).collect(Collectors.toList())).build();
+
+        List<ProjectReference> projectReferenceList;
+        if (projectSeed.getDependentProjectSeedList() != null) {
+            projectReferenceList =
+                    projectSeed.getDependentProjectSeedList().stream().map(
+                            ps -> ProjectReference.builder()
+                                    .include(ps.getFolder().toFile().getPath() + File.separator + ps.getName())
+                                    .project(UniqueProjectGuid.builder().value(ps.getUuid()).build())
+                                    .build()).collect(Collectors.toList());
+        } else {
+            projectReferenceList = new ArrayList<>();
+        }
+
+
+        ItemGroup projectReferenceItemGroup = ItemGroup.builder().projectReferenceList(projectReferenceList).build();
 
         Project project = Project.builder()
                 .defaultTargets("Build")
@@ -128,6 +144,7 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                 .configurationPropertyGroupList(configurationPropertyGroupList)
                 .cppPropsImport(cppPropsImport)
                 .clCompileItemGroup(clCompileItemGroup)
+                .projectReferenceItemGroup(projectReferenceItemGroup)
                 .build();
     }
 }
