@@ -9,12 +9,14 @@ import java.nio.file.Paths
 
 class PackageQuerySpec extends Specification {
 
+    private static final String WORKSPACE = "workspace"
+
     PackageQuery packageQueryAdapter = new PackageQuery()
 
     def "parse the result from bazel query command as Build.QueryResult object"() {
 
         given:
-        Path bazelWorkspaceAbsolutePath = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
+        Path bazelWorkspaceAbsolutePath = Paths.get(new ClassPathResource(WORKSPACE).getFile().getAbsolutePath())
 
         when:
         def expectRule = Build.Rule.newBuilder()
