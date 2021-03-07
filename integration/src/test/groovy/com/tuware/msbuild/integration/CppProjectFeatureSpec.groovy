@@ -9,7 +9,7 @@ import com.tuware.msbuild.adapter.generator.ProjectFilterGenerator
 import com.tuware.msbuild.adapter.generator.ProjectGenerator
 import com.tuware.msbuild.adapter.generator.ProjectUserGenerator
 import com.tuware.msbuild.adapter.generator.SolutionGenerator
-import com.tuware.msbuild.adapter.provider.BazelQueryAllProtoProvider
+import com.tuware.msbuild.adapter.provider.BazelQueryAllProtoCommandsProvider
 import com.tuware.msbuild.adapter.provider.ProjectFilterSeedProvider
 import com.tuware.msbuild.adapter.query.PackageQuery
 import com.tuware.msbuild.adapter.repository.FileRepository
@@ -87,7 +87,7 @@ class CppProjectFeatureSpec extends Specification {
 
 
     private static CppProjectFeature buildFeature(FileRepository repository) {
-        BazelQueryAllProtoProvider bazelQueryAllProtoProvider = new BazelQueryAllProtoProvider()
+        BazelQueryAllProtoCommandsProvider bazelQueryAllProtoProvider = new BazelQueryAllProtoCommandsProvider()
         PackageQuery packageQuery = new PackageQuery()
         QueryService queryService = new QueryService(bazelQueryAllProtoProvider, packageQuery)
         CppExtractor cppExtractor = new CppExtractor()

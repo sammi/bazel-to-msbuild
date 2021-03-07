@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class CppExtractorSpec extends Specification {
 
-    def "Extract map of cpp ProjectSeed from bazel query result object"() {
+    def "Extract ProjectSeed list from bazel query result object"() {
         given:
 
         CppExtractor cppExtractor = new CppExtractor()

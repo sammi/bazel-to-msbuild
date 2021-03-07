@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class BazelQueryAllProtoProvider implements Provider {
+public class BazelQueryAllProtoCommandsProvider implements Provider<List<String>> {
 
     @Override
     public List<String> provide() {
