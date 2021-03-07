@@ -23,7 +23,7 @@ import spock.lang.Specification
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class MsbuildSpec extends Specification {
+class CppProjectFeatureSpec extends Specification {
 
     def "generate bazel cpp project with only 1 source file solution"() {
         given:
