@@ -16,7 +16,6 @@ import com.tuware.msbuild.adapter.repository.FileRepository
 import com.tuware.msbuild.contract.adapter.Provider
 import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.feature.CppProjectFeature
-import com.tuware.msbuild.feature.Feature
 import com.tuware.msbuild.feature.service.*
 import org.springframework.core.io.ClassPathResource
 import spock.lang.Specification
