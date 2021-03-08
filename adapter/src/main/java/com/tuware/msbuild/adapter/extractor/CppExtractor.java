@@ -56,7 +56,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
     }
 
     private ConfigurationType mapToConfigurationType(Build.Rule rule) {
-        return "cc_library".equals(rule.getRuleClass()) ? Application : StaticLibrary;
+        return "cc_library".equals(rule.getRuleClass()) ? StaticLibrary : Application;
     }
 
     private boolean isApplication(Build.Rule rule) {
