@@ -19,10 +19,10 @@ unzip b2m-0.2.0.zip
 Run the command:
 
 ```
-b2m bazelWorkspaceFoler msbuildSolutionFolder solutionName
+b2m {your_bazel_workspace_dir} {your_msbuild_solution_dir} {your_solution_file_name}
 ```
 
-Then Open solutionName.sln by visual studio.
+Then Open {your_solution_file_name}.sln by visual studio.
 
 # Project Layout
 
