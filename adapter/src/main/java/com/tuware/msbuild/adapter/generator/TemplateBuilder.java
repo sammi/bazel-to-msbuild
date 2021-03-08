@@ -1,13 +1,11 @@
 package com.tuware.msbuild.adapter.generator;
 
 import com.github.jknack.handlebars.Handlebars;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
 
 @Component
 class TemplateBuilder {
@@ -18,10 +16,10 @@ class TemplateBuilder {
         this.handlebars = new Handlebars();
     }
 
-    String compileFromTemplateFile(String xmlTemplateFilePath, Object data) throws IOException, URISyntaxException {
-        Path path = Paths.get(ProjectGenerator.class.getResource(xmlTemplateFilePath).toURI());
-        String template = String.join("\n", Files.readAllLines(path));
-        return handlebars.prettyPrint(true).compileInline(template).apply(data);
+    String compileFromTemplateFile(String xmlTemplateFilePath, Object data) throws IOException {
+        InputStream in = getClass().getResourceAsStream(xmlTemplateFilePath);
+        byte[] content = IOUtils.toByteArray(in);
+        return handlebars.prettyPrint(true).compileInline(new String(content)).apply(data);
     }
 
 }
