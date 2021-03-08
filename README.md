@@ -3,6 +3,22 @@ bazel-to-msbuild
 
 Generate msbuild project from bazel project
 
+# Quick start
+
+Unzip the tool and put it in your PATH
+```
+wget https://github.com/sammi/bazel-to-msbuild/releases/download/0.1.0/b2m-0.1.1.zip
+unzip b2m-0.1.1.zip
+```
+
+Run the command:
+
+```
+b2m bazelWorkspaceFoler msbuildSolutionFolder solutionName
+```
+
+Then Open solutionName.sln by visual studio.
+
 # Project Layout
 
 The project modules are organized
