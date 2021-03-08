@@ -6,7 +6,6 @@ import com.tuware.msbuild.contract.msbuild.solution.Solution;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 @Component
 public class SolutionGenerator implements Generator<Solution> {
@@ -21,7 +20,7 @@ public class SolutionGenerator implements Generator<Solution> {
     public String generate(Solution solution) throws AdapterException {
         try {
             return templateBuilder.compileFromTemplateFile(TemplatePaths.solutionTemplate(), solution);
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             throw new AdapterException("Failed to compile solution xml content.", e);
         }
     }

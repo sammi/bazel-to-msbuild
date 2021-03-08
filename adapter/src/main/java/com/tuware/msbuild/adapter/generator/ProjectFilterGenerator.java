@@ -6,7 +6,6 @@ import com.tuware.msbuild.contract.msbuild.project.Project;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 @Component
 public class ProjectFilterGenerator implements Generator<Project> {
@@ -21,7 +20,7 @@ public class ProjectFilterGenerator implements Generator<Project> {
     public String generate(Project templateData) throws AdapterException {
         try {
             return templateBuilder.compileFromTemplateFile(TemplatePaths.projectFilterTemplate(), templateData);
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             throw new AdapterException("Failed to compile project filter xml content.", e);
         }
     }

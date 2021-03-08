@@ -6,7 +6,6 @@ import com.tuware.msbuild.contract.template.ProjectTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 @Component
 public class ProjectGenerator implements Generator<ProjectTemplate> {
@@ -21,7 +20,7 @@ public class ProjectGenerator implements Generator<ProjectTemplate> {
     public String generate(ProjectTemplate templateData) throws AdapterException {
         try {
             return templateBuilder.compileFromTemplateFile(TemplatePaths.projectTemplate(), templateData);
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             throw new AdapterException("Failed to compile project xml content.", e);
         }
     }
