@@ -12,17 +12,17 @@ Generate msbuild project from bazel project
 
 Unzip the tool and put it in your PATH
 ```
-wget https://github.com/sammi/bazel-to-msbuild/releases/download/0.1.0/b2m-0.2.0.zip
+wget https://github.com/sammi/bazel-to-msbuild/releases/download/0.2.0/b2m-0.2.0.zip
 unzip b2m-0.2.0.zip
 ```
 
 Run the command:
 
 ```
-b2m bazelWorkspaceFoler msbuildSolutionFolder solutionName
+b2m {your_bazel_workspace_dir} {your_msbuild_solution_dir} {your_solution_file_name}
 ```
 
-Then Open solutionName.sln by visual studio.
+Then Open {your_solution_file_name}.sln by visual studio.
 
 # Project Layout
 
@@ -58,12 +58,12 @@ Integrate adapter and feature together to run end to end integration tests.
    in your PATH
 2. [Install lombok plugin](https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project ) in
    intellij to support lombok annotations.
-3. Run unit tests and install
+3. Run unit tests
 ```
 cd bazel-to-msbuild
-mvn clean install
+mvn clean test
 ```
-4. Run integration tests, note: you could not run ```mvn -P it clean install```, because you could not install integration test module.
+4. Run all tests including integration tests.
 
 ```
 cd bazel-to-msbuild
