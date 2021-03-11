@@ -38,6 +38,6 @@ jobs:
               run: ./mvnw -B release:prepare
 
             - name: Publish JAR
-              run: ./mvnw release:perform
+              run: cd cli && ./mvnw release:perform
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
