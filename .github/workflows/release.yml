@@ -17,7 +17,7 @@ jobs:
                 git config user.email "actions@github.com"
                 git config user.name "GitHub Actions"
             - name: Prepare Release
-              run: ./mvnw -B release:prepare
+              run: mvn -B release:prepare
             - name: Publish package
               run: mvn --batch-mode deploy
               env:
