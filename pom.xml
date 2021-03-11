@@ -128,7 +128,6 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/sammi/bazel-to-msbuild.git</developerConnection>
-        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
