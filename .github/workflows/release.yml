@@ -20,7 +20,7 @@ jobs:
             - name: Setup Java JDK
               uses: actions/setup-java@v1.4.2
               with:
-                  java-version: 14
+                  java-version: 8
                   server-id: github
             - name: Configure Git user
               run: |
