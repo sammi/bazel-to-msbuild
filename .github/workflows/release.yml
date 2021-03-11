@@ -19,6 +19,6 @@ jobs:
             - name: Prepare Release
               run: mvn --batch-mode release:prepare
             - name: Publish package
-              run: mvn --batch-mode deploy
+              run: mvn --batch-mode release:perform
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
