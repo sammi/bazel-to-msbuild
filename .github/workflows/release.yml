@@ -34,7 +34,5 @@ jobs:
             - name: Chmod mvnw permission
               run: chmod +x ./mvnw
 
-            - name: Release JAR
-              run: ./mvnw -B release:prepare release:perform
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Prepare Release
+              run: ./mvnw -B release:prepare
