@@ -1,37 +1,18 @@
-name: Release
+name: Publish package to GitHub Packages
 
 on:
-    push:
-        branches:
-            - release
+    release:
+        types: [created]
 
 jobs:
-    build:
+    publish:
         runs-on: ubuntu-latest
         steps:
-            
-            - name: Checkout project
-              uses: actions/checkout@v2
-
-            - name: Cache local Maven repository
-              uses: actions/cache@v2
+            - uses: actions/checkout@v2
+            - uses: actions/setup-java@v1
               with:
-                path: ~/.m2/repository
-                key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-                restore-keys: ${{ runner.os }}-maven-
-
-            - name: Setup Java JDK
-              uses: actions/setup-java@v1
-              with:
-                  java-version: 8
-                  server-id: github
-
-            - name: Configure Git user
-              run: |
-                git config user.email "actions@github.com"
-                git config user.name "GitHub Actions"
-
-            - name: Publish JAR
-              run: chmod +x ./mvnw && ./mvnw -B release:prepare release:perform
+                  java-version: 1.8
+            - name: Publish package
+              run: mvn --batch-mode deploy
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
