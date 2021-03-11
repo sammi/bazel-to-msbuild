@@ -24,3 +24,9 @@ jobs:
               uses: actions/setup-java@v1
               with:
                   java-version: 8
+                  server-id: github
+
+            - name: Configure Git user
+              run: |
+                git config user.email "actions@github.com"
+                git config user.name "GitHub Actions"
