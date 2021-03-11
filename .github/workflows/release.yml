@@ -31,8 +31,7 @@ jobs:
                 git config user.email "actions@github.com"
                 git config user.name "GitHub Actions"
 
-            - name: Chmod mvnw permission
-              run: chmod +x ./mvnw
-
             - name: Prepare Release
-              run: ./mvnw -B release:prepare
+              run: chmod +x ./mvnw && ./mvnw -B release:prepare
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
