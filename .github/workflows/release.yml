@@ -40,7 +40,9 @@ jobs:
                   dest: b2m.zip
 
             - name: Upload Release
-              uses: ncipollo/release-action@v1
+              uses: Roang-zero1/github-upload-release-artifacts-action@master
               with:
-                artifacts: 'b2m.zip'
-                token: ${{ secrets.GITHUB_TOKEN }}
+                args:
+                - b2m.zip
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
