@@ -30,9 +30,6 @@ jobs:
               run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
               id: project
 
-            - name: package cli module jar file
-              run: cd cli && mvn package && mkdir release && mv target/cli-${{steps.project.outputs.release_version}}.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
-
             - name: Prepare Release
               run: mvn -B release:prepare
 
@@ -48,6 +45,9 @@ jobs:
             - name: Remove letter v from tag
               run: echo ::set-output name=version::$( echo ${{steps.previoustag.outputs.tag}} | cut -c2-)
               id: tagVersion
+
+            - name: package cli module jar file
+              run: cd cli && mvn package && mkdir release && mv target/cli-${{steps.project.outputs.release_version}}.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
 
             - name: Zip release files
               uses: vimtor/action-zip@v1
