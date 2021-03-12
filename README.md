@@ -63,3 +63,10 @@ Integrate adapter and feature together to run end to end integration tests.
 cd bazel-to-msbuild
 mvn clean test
 ```
+
+# Release process
+1. When code pushed to release branch, it auto deploy maven packages and publish b2m.zip files to a new prerelease;
+2. Manually check content, and do a real release;
+3. Manually create a PR to merge code from release back to main;
+
+  
