@@ -39,20 +39,24 @@ jobs:
                   files: cli/cli.jar cli/b2m cli/b2m.cmd
                   dest: b2m.zip
 
+            - name: Prepare Release
+              run: mvn -B release:prepare
+
             - name: Publish JAR
               run: mvn -B deploy
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Prepare Release
-              run: mvn -B release:prepare
+            - name: 'Get Previous tag'
+              id: previoustag
+              uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
             - name: Pre release
-                  uses: marvinpinto/action-automatic-releases@latest
-                  with:
-                      repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                      automatic_release_tag: "latest"
-                      prerelease: true
-                      title: "bazel to msbuild command line tool"
-                      files: |
-                          b2m.zip
+              uses: marvinpinto/action-automatic-releases@latest
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "${{steps.previoustag.outputs.tag}}"
+                  prerelease: true
+                  title: "bazel to msbuild converter for cpp console app"
+                  files: |
+                      b2m.zip
