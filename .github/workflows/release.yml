@@ -23,15 +23,9 @@ jobs:
                 git config user.email "actions@github.com"
                 git config user.name "GitHub Actions"
 
-            - name: Install maven package locally
-              run: mvn clean install
-
             - name: get release version
               run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
               id: project
-
-            - name: package cli module jar file
-              run: git checkout release && cd cli && mvn package && mkdir b2m && mv target/cli-${{steps.project.outputs.release_version}}.jar b2m/cli.jar && mv target/libs b2m/.
 
             - name: Prepare Release
               run: mvn -B release:prepare
@@ -49,10 +43,13 @@ jobs:
               run: echo ::set-output name=version::$( echo ${{steps.previoustag.outputs.tag}} | cut -c2-)
               id: tagVersion
 
+            - name: package cli module jar file
+              run: mvn clean install && cd cli && mvn package && mkdir release && mv target/cli-*.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
+
             - name: Zip release files
               uses: vimtor/action-zip@v1
               with:
-                files: cli/b2m
+                files: cli/release
                 recursive: true
                 dest: b2m-${{steps.tagVersion.outputs.version}}.zip
 
