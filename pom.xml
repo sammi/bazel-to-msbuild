@@ -111,19 +111,8 @@
         <module>feature</module>
         <module>adapter</module>
         <module>cli</module>
+        <module>integration</module>
     </modules>
-
-    <profiles>
-        <profile>
-            <id>it</id>
-            <modules>
-                <module>contract</module>
-                <module>feature</module>
-                <module>adapter</module>
-                <module>integration</module>
-            </modules>
-        </profile>
-    </profiles>
 
     <scm>
         <developerConnection>scm:git:https://github.com/sammi/bazel-to-msbuild.git</developerConnection>
