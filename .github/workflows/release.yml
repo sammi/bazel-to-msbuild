@@ -49,17 +49,9 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  tag_name: ${{ github.ref }}
-                  release_name: Release ${{ github.ref }}
+                  tag_name: v${{steps.project.outputs.release_version}}
+                  release_name: Release ${{steps.project.outputs.release_version}}
                   body: |
                       ${{ steps.Changelog.outputs.changelog }}
                   draft: true
                   prerelease: true
-
-            - name: Prepare Release
-              run: mvn --batch-mode release:prepare
-
-            - name: Publish package
-              run: mvn --batch-mode release:perform
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
