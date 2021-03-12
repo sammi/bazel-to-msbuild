@@ -28,6 +28,19 @@ jobs:
               run: mvn --batch-mode release:perform
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: package cli module jar file
+              run:  cd cli && mvn package
+
+            - name: get release version
+              run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
+              id: project
+
+            - name: Zip release file
+              uses: vimtor/action-zip@v1
+              with:
+                  files: target/cli-${{steps.project.outputs.release_version}}.jar b2m b2m.cmd
+                  dest: b2m-${{steps.project.outputs.release_version}}.zip
+
 
 
 
