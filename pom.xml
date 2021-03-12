@@ -12,7 +12,7 @@
     <groupId>com.tuware.msbuild</groupId>
     <artifactId>bazel-to-msbuild</artifactId>
     <packaging>pom</packaging>
-    <version>0.3.3-SNAPSHOT</version>
+    <version>0.3.5-SNAPSHOT</version>
 
     <properties>
         <groovy.version>3.0.7</groovy.version>
@@ -111,19 +111,8 @@
         <module>feature</module>
         <module>adapter</module>
         <module>cli</module>
+        <module>integration</module>
     </modules>
-
-    <profiles>
-        <profile>
-            <id>it</id>
-            <modules>
-                <module>contract</module>
-                <module>feature</module>
-                <module>adapter</module>
-                <module>integration</module>
-            </modules>
-        </profile>
-    </profiles>
 
     <scm>
         <developerConnection>scm:git:https://github.com/sammi/bazel-to-msbuild.git</developerConnection>
