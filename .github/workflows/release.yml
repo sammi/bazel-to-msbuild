@@ -39,7 +39,7 @@ jobs:
                   files: cli/cli.jar cli/b2m cli/b2m.cmd
                   dest: b2m.zip
 
-            - name: Release
+            - name: Pre release
               uses: marvinpinto/action-automatic-releases@latest
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -48,3 +48,11 @@ jobs:
                   title: "bazel to msbuild command line tool"
                   files: |
                     b2m.zip
+
+            - name: Prepare Release
+              run: mvn -B release:prepare
+
+            - name: Publish JAR
+              run: mvn -B deploy
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
