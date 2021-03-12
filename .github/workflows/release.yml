@@ -48,12 +48,12 @@ jobs:
               run: mvn -B release:prepare
 
             - name: Pre release
-                  uses: marvinpinto/action-automatic-releases@latest
-                  with:
-                      repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                      automatic_release_tag: "latest"
-                      prerelease: true
-                      title: "bazel to msbuild command line tool"
-                      files: |
-                          b2m.zip
+              uses: marvinpinto/action-automatic-releases@latest
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "latest"
+                  prerelease: true
+                  title: "bazel to msbuild command line tool"
+                  files: |
+                      b2m.zip
 
