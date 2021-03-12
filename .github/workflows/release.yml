@@ -29,7 +29,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: package cli module jar file
-              run:  cd cli && mvn package
+              run:  git checkout release && cd cli && mvn package
 
             - name: get release version
               run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
