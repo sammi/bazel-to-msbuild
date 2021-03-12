@@ -31,7 +31,7 @@ jobs:
               id: project
 
             - name: package cli module jar file
-              run: cd cli && mvn package && mkdir release && mv target/cli-${{steps.project.outputs.release_version}}.jar release/cli.jar && mv target/libs release/.
+              run: cd cli && mvn package && mkdir release && mv target/cli-${{steps.project.outputs.release_version}}.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
 
             - name: Prepare Release
               run: mvn -B release:prepare
