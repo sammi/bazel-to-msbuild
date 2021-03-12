@@ -47,15 +47,15 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: get latest tag
-              id: tags
-              run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+            - name: 'Get Previous tag'
+              id: previoustag
+              uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
             - name: Pre release
               uses: marvinpinto/action-automatic-releases@latest
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  automatic_release_tag: "v${{steps.tags.outputs.tag}}"
+                  automatic_release_tag: "v${{steps.previoustag.outputs.tag}}"
                   prerelease: true
                   title: "bazel to msbuild converter for cpp console app"
                   files: |
