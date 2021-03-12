@@ -56,4 +56,3 @@ jobs:
                       title: "bazel to msbuild command line tool"
                       files: |
                           b2m.zip
-
