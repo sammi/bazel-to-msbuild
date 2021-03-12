@@ -27,20 +27,21 @@ jobs:
               run: mvn clean install
 
             - name: get release version
-              run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout//-SNAPSHOT/ )
+              run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
               id: project
 
             - name: package cli module jar file
-              run:  git checkout release && cd cli && mvn package
+              run: git checkout release && cd cli && mvn package && mv target\cli-${{steps.project.outputs.release_version}}.jar cli.jar
 
             - name: Zip release file
               uses: vimtor/action-zip@v1
               with:
-                  files: target/cli-${{steps.project.outputs.release_version}}.jar b2m b2m.cmd
-                  dest: b2m-${{steps.project.outputs.release_version}}.zip
+                  files: cli.jar b2m b2m.cmd
+                  dest: b2m.zip
 
             - name: Prepare Release
               run: mvn --batch-mode release:prepare
+
             - name: Publish package
               run: mvn --batch-mode release:perform
               env:
