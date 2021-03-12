@@ -41,15 +41,19 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: 'Get Previous tag'
+            - name: Get Previous tag
               id: previoustag
               uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+            - name: Remove letter v from tag
+              run: echo ::set-output name=version::$( echo steps.previoustag.outputs.tag | cut -c2-)
+              id: tagVersion
 
             - name: Zip release files
               uses: vimtor/action-zip@v1
               with:
                 files: cli/cli.jar cli/b2m cli/b2m.cmd
-              dest: b2m-${{echo steps.previoustag.outputs.tag | cut -c2-}}.zip
+                dest: b2m-${{steps.tagVersion.outputs.version}}.zip
 
             - name: Pre release
               uses: marvinpinto/action-automatic-releases@latest
