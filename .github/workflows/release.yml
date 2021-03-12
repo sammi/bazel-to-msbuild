@@ -33,12 +33,6 @@ jobs:
             - name: package cli module jar file
               run: git checkout release && cd cli && mvn package && mv target/cli-${{steps.project.outputs.release_version}}.jar cli.jar
 
-            - name: Zip release files
-              uses: vimtor/action-zip@v1
-              with:
-                  files: cli/cli.jar cli/b2m cli/b2m.cmd
-                  dest: b2m.zip
-
             - name: Prepare Release
               run: mvn -B release:prepare
 
@@ -50,6 +44,12 @@ jobs:
             - name: 'Get Previous tag'
               id: previoustag
               uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+            - name: Zip release files
+              uses: vimtor/action-zip@v1
+              with:
+                files: cli/cli.jar cli/b2m cli/b2m.cmd
+                dest: b2m-${{echo steps.previoustag.outputs.tag | cut -c2-}}.zip
 
             - name: Pre release
               uses: marvinpinto/action-automatic-releases@latest
