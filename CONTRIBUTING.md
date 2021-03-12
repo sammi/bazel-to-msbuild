@@ -1,19 +1,3 @@
-# Quick start
-
-Unzip the tool and put it in your PATH
-```
-wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.3.21/b2m-0.3.28.zip
-unzip b2m-0.3.28.zip
-```
-
-Run the command:
-
-```
-b2m {your_bazel_workspace_dir} {your_msbuild_solution_dir} {your_solution_file_name}
-```
-
-Then Open {your_solution_file_name}.sln by visual studio.
-
 # Project Layout
 
 The project modules are organized
