@@ -12,8 +12,8 @@ Generate msbuild project from bazel project
 
 Unzip the tool and put it in your PATH
 ```
-wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.3.20/b2m-0.3.20.zip
-unzip b2m-0.3.20.zip
+wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.3.21/b2m-0.3.21.zip
+unzip b2m-0.3.21.zip
 ```
 
 Run the command:
