@@ -43,7 +43,7 @@ jobs:
               run: mvn -B release:prepare
 
             - name: Publish JAR
-              run: mvn -B deploy
+              run: mvn -B release:perform
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
