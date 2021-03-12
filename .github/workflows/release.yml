@@ -63,4 +63,4 @@ jobs:
                   prerelease: true
                   title: "bazel to msbuild converter for cpp console app"
                   files: |
-                      b2m.zip
+                      b2m-${{steps.tagVersion.outputs.version}}.zip
