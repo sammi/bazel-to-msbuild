@@ -36,7 +36,7 @@ jobs:
             - name: Zip release files
               uses: vimtor/action-zip@v1
               with:
-                  files: cli.jar b2m b2m.cmd
+                  files: cli/cli.jar cli/b2m cli/b2m.cmd
                   dest: b2m.zip
 
             - name: Prepare Release
