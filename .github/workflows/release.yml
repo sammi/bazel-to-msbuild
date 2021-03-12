@@ -5,7 +5,7 @@ on:
         branches:
             - release
 jobs:
-    publish:
+    update_release_draft:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -39,10 +39,7 @@ jobs:
                   files: cli/cli.jar cli/b2m cli/b2m.cmd
                   dest: b2m.zip
 
-            - name: Upload Release
-              uses: Roang-zero1/github-upload-release-artifacts-action@master
-              with:
-                args:
-                - b2m.zip
+            - name: Release Drafter
+              uses: release-drafter/release-drafter@v5.12.1
               env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
