@@ -27,7 +27,7 @@ jobs:
               run: mvn clean install
 
             - name: get release version
-              run: echo ::set-output name=release_version::${$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )//-SNAPSHOT/}
+              run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout//-SNAPSHOT/ )
               id: project
 
             - name: package cli module jar file
