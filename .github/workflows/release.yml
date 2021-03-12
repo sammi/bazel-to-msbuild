@@ -44,7 +44,7 @@ jobs:
               id: tagVersion
 
             - name: package cli module jar file
-              run: mvn clean install && cd cli && mvn package && mkdir release && mv target/cli-${{steps.project.outputs.release_version}}.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
+              run: mvn clean install && cd cli && mvn package && mkdir release && mv target/cli-*.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
 
             - name: Zip release files
               uses: vimtor/action-zip@v1
