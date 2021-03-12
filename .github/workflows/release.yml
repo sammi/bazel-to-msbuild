@@ -39,19 +39,8 @@ jobs:
                   files: cli/cli.jar cli/b2m cli/b2m.cmd
                   dest: b2m.zip
 
-            - name: Generate changelog
-              uses: heinrichreimer/action-github-changelog-generator@v2.2
-              id: Changelog
-
-            - name: Create Release
-              id: create_release
-              uses: actions/create-release@latest
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Upload Release
+              uses: ncipollo/release-action@v1
               with:
-                  tag_name: v${{steps.project.outputs.release_version}}
-                  release_name: Release ${{steps.project.outputs.release_version}}
-                  body: |
-                      ${{ steps.Changelog.outputs.changelog }}
-                  draft: true
-                  prerelease: true
+                artifacts: 'b2m.zip'
+                token: ${{ secrets.GITHUB_TOKEN }}
