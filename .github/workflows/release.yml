@@ -46,7 +46,7 @@ jobs:
               uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
             - name: Remove letter v from tag
-              run: echo ::set-output name=version::$( echo steps.previoustag.outputs.tag | cut -c2-)
+              run: echo ::set-output name=version::$( echo ${{steps.previoustag.outputs.tag}} | cut -c2-)
               id: tagVersion
 
             - name: Zip release files
