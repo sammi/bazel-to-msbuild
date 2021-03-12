@@ -31,9 +31,9 @@ jobs:
               id: project
 
             - name: package cli module jar file
-              run: git checkout release && cd cli && mvn package && mv target\cli-${{steps.project.outputs.release_version}}.jar cli.jar
+              run: git checkout release && cd cli && mvn package && mv target/cli-${{steps.project.outputs.release_version}}.jar cli.jar
 
-            - name: Zip release file
+            - name: Zip release files
               uses: vimtor/action-zip@v1
               with:
                   files: cli.jar b2m b2m.cmd
