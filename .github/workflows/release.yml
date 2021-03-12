@@ -22,14 +22,12 @@ jobs:
               run: |
                 git config user.email "actions@github.com"
                 git config user.name "GitHub Actions"
+
+            - name: Install maven package locally
+              run: mvn clean install
+
             - name: Prepare Release
               run: mvn --batch-mode release:prepare
-            - name: Publish package
-              run: mvn --batch-mode release:perform
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: package cli module jar file
-              run:  git checkout release && cd cli && mvn package
 
             - name: get release version
               run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
@@ -40,6 +38,13 @@ jobs:
               with:
                   files: target/cli-${{steps.project.outputs.release_version}}.jar b2m b2m.cmd
                   dest: b2m-${{steps.project.outputs.release_version}}.zip
+
+            - name: Publish package
+              run: mvn --batch-mode release:perform
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: package cli module jar file
+              run:  git checkout release && cd cli && mvn package
 
 
 
