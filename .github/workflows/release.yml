@@ -26,12 +26,12 @@ jobs:
             - name: Install maven package locally
               run: mvn clean install
 
-            - name: Prepare Release
-              run: mvn --batch-mode release:prepare
-
             - name: get release version
-              run: echo ::set-output name=release_version::$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )
+              run: echo ::set-output name=release_version::${$( mvn help:evaluate -Dexpression=project.version -q -DforceStdout )//-SNAPSHOT/}
               id: project
+
+            - name: package cli module jar file
+              run:  git checkout release && cd cli && mvn package
 
             - name: Zip release file
               uses: vimtor/action-zip@v1
@@ -39,13 +39,9 @@ jobs:
                   files: target/cli-${{steps.project.outputs.release_version}}.jar b2m b2m.cmd
                   dest: b2m-${{steps.project.outputs.release_version}}.zip
 
+            - name: Prepare Release
+              run: mvn --batch-mode release:prepare
             - name: Publish package
               run: mvn --batch-mode release:perform
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: package cli module jar file
-              run:  git checkout release && cd cli && mvn package
-
-
-
-
