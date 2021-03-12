@@ -53,6 +53,7 @@ jobs:
               uses: vimtor/action-zip@v1
               with:
                 files: cli/cli.jar cli/b2m cli/b2m.cmd cli/target/libs/
+                recursive: true
                 dest: b2m-${{steps.tagVersion.outputs.version}}.zip
 
             - name: Pre release
