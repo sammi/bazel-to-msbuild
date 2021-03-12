@@ -55,7 +55,7 @@ jobs:
               uses: marvinpinto/action-automatic-releases@latest
               with:
                   repo_token: "${{ secrets.GITHUB_TOKEN }}"
-                  automatic_release_tag: "v${{steps.previoustag.outputs.tag}}"
+                  automatic_release_tag: "${{steps.previoustag.outputs.tag}}"
                   prerelease: true
                   title: "bazel to msbuild converter for cpp console app"
                   files: |
