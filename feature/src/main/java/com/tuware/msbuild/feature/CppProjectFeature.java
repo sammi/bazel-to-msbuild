@@ -38,14 +38,14 @@ public class CppProjectFeature implements Feature {
     }
 
     @Override
-    public void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String solutionName) throws FeatureException {
+    public void buildSolution(Path bazelWorkspaceFolder, String solutionName) throws FeatureException {
         try {
             Build.QueryResult queryResult = queryService.query(bazelWorkspaceFolder);
             List<ProjectSeed> projectSeedList = extractorService.extractProjectSeedList(queryResult);
-            buildProjects(msbuildSolutionFolder, projectSeedList);
-            buildProjectFilters(msbuildSolutionFolder, projectSeedList);
-            buildProjectUsers(msbuildSolutionFolder, projectSeedList);
-            buildSolution(msbuildSolutionFolder, solutionName, projectSeedList);
+            buildProjects(bazelWorkspaceFolder, projectSeedList);
+            buildProjectFilters(bazelWorkspaceFolder, projectSeedList);
+            buildProjectUsers(bazelWorkspaceFolder, projectSeedList);
+            buildSolution(bazelWorkspaceFolder, solutionName, projectSeedList);
         } catch (AdapterException e) {
             throw new FeatureException(e);
         }

@@ -88,7 +88,7 @@ class CppProjectFeatureSpec extends Specification {
         String solutionXml = GroovyMock()
 
         when:
-        cppProjectConverter.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, solutionName)
+        cppProjectConverter.buildSolution(bazelWorkspaceFolder, solutionName)
 
         then:
 

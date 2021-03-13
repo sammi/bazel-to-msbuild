@@ -28,12 +28,11 @@ class CppProjectFeatureSpec extends Specification {
     def "generate bazel cpp project with only 1 source file solution"() {
         given:
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
-        Path msbuildSolutionFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
         FileRepository repository = Mock()
         CppProjectFeature cppProjectFeature = buildFeature(repository)
 
         when:
-        cppProjectFeature.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, "App1")
+        cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App1")
 
         then:
         4 * repository.save({ it ->
@@ -48,12 +47,11 @@ class CppProjectFeatureSpec extends Specification {
     def "generate bazel cpp project with only source and header file solution"() {
         given:
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage2").getFile().getAbsolutePath())
-        Path msbuildSolutionFolder = Paths.get(new ClassPathResource("stage2").getFile().getAbsolutePath())
         FileRepository repository = Mock()
         CppProjectFeature cppProjectFeature = buildFeature(repository)
 
         when:
-        cppProjectFeature.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, "App2")
+        cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App2")
 
         then:
         7 * repository.save({ it ->
@@ -68,12 +66,11 @@ class CppProjectFeatureSpec extends Specification {
     def "generate bazel cpp project with multiple packages solution"() {
         given:
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage3").getFile().getAbsolutePath())
-        Path msbuildSolutionFolder = Paths.get(new ClassPathResource("stage3").getFile().getAbsolutePath())
         FileRepository repository = Mock()
         CppProjectFeature cppProjectFeature = buildFeature(repository)
 
         when:
-        cppProjectFeature.buildSolution(bazelWorkspaceFolder, msbuildSolutionFolder, "App3")
+        cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App3")
 
         then:
         10 * repository.save({ it ->

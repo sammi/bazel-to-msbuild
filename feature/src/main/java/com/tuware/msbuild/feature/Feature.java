@@ -4,6 +4,6 @@ import java.nio.file.Path;
 
 public interface Feature {
 
-    void buildSolution(Path bazelWorkspaceFolder, Path msbuildSolutionFolder, String solutionName) throws FeatureException;
+    void buildSolution(Path bazelWorkspaceFolder, String solutionName) throws FeatureException;
 
 }

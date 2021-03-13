@@ -29,17 +29,15 @@ public class BazelToMsbuildCommand implements Runnable {
 
     @Override
     public void run() {
-        String from = parameters.getBazelWorkspaceFolder();
-        String to = parameters.getMsbuildSolutionFolder();
-        Path bazelPath = Paths.get(from);
-        Path msBuildPath = Paths.get(to);
+        String bazelWorkspaceFolder = parameters.getBazelWorkspaceFolder();
+        Path bazelPath = Paths.get(bazelWorkspaceFolder);
 
-        String projectName = parameters.getProjectName();
+        String solutionName = parameters.getProjectName();
 
         try {
-            cppProjectFeature.buildSolution(bazelPath, msBuildPath, projectName);
+            cppProjectFeature.buildSolution(bazelPath, solutionName);
         } catch (FeatureException e) {
-            log.error("Failed to convert bazel workspace: {} to msbuild solution: {}", from, to, e);
+            log.error("Failed to convert bazel workspace: {} to msbuild solution", bazelWorkspaceFolder, e);
             System.exit(1);
         }
 
