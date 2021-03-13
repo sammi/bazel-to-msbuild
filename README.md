@@ -34,9 +34,11 @@ app.sln
 lib\hello-time.vcxproj
 lib\hello-time.filters
 lib\hello-time.user
+
 main\hello-greet.vcxproj
 main\hello-greet.filters
 main\hello-greet.user
+
 main\hello-world.vcxproj
 main\hello-world.filters
 main\hello-world.user
