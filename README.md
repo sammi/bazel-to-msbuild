@@ -4,9 +4,9 @@ bazel-to-msbuild
 Generate msbuild project from bazel project
 
 * It is using ```bazel query ... output=proto``` to gather all cc_library, cc_binary, and cc_test packages;
-* It generates one msbuild project for each package;
+* It generates one msbuild project for each target;
 * It generates one solution for one bazel workspace;
-* It detects package dependencies and manage them as project references in msbuild project;
+* It detects target dependencies and manage them as project references in msbuild project;
 
 
 # Install and Usage
