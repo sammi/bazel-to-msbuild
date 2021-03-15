@@ -28,6 +28,7 @@ def windows_dll_library(
         srcs = srcs + hdrs,
         deps = deps,
         linkshared = 1,
+        visibility = ["//visibility:public"],
         **kwargs
     )
 
