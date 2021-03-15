@@ -4,11 +4,5 @@ windows_dll_library(
     name = "clib",
     srcs = ["clib.cpp"],
     hdrs = ["clib.h"],
-    copts = ["/DCOMPILING_DLL"],
-)
-
-cc_binary(
-    name = "main",
-    srcs = ["main.cpp"],
-    deps = [":clib.dll"],
+    copts = ["/DCOMPILING_DLL", "/D_CRT_SECURE_NO_WARNINGS"],
 )
