@@ -2,6 +2,7 @@ package com.tuware.msbuild.adapter.composer;
 
 import com.tuware.msbuild.contract.adapter.Composer;
 import com.tuware.msbuild.contract.msbuild.clcompile.ClCompile;
+import com.tuware.msbuild.contract.msbuild.link.Link;
 import com.tuware.msbuild.contract.msbuild.project.*;
 import com.tuware.msbuild.contract.msbuild.property.*;
 import com.tuware.msbuild.contract.msbuild.solution.UniqueProjectGuid;
@@ -25,6 +26,9 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
     public static final String DEBUG = "Debug";
     public static final String RELEASE = "Release";
     public static final String X_64 = "x64";
+    private static final String LEVEL_3 = "Level3";
+    private static final String $_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES = "$(SolutionDir);%(AdditionalIncludeDirectories)";
+    private static final String CONSOLE = "Console";
 
     @Override
     public ProjectTemplate compose(ProjectSeed projectSeed) {
@@ -136,6 +140,64 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                         )
                 ).build();
 
+        List<ItemDefinitionGroup> itemDefinitionGroupList = Arrays.asList(
+                ItemDefinitionGroup.builder().condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
+                    .clCompile(ClCompile.builder()
+                            .warningLevel(LEVEL_3)
+                            .sDLCheck(true)
+                            .preprocessorDefinitions("WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                            .conformanceMode(true)
+                            .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
+                    .build())
+                    .link(Link.builder().subSystem(CONSOLE).generateDebugInformation(true).build())
+                .build(),
+                ItemDefinitionGroup.builder().condition("'$(Configuration)|$(Platform)'=='Release|Win32'")
+                        .clCompile(ClCompile.builder()
+                                .warningLevel(LEVEL_3)
+                                .functionLevelLinking(true)
+                                .intrinsicFunctions(true)
+                                .sDLCheck(true)
+                                .preprocessorDefinitions("WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                                .conformanceMode(true)
+                                .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
+                                .build())
+                        .link(Link.builder()
+                                .subSystem(CONSOLE)
+                                .enableCOMDATFolding(true)
+                                .optimizeReferences(true)
+                                .generateDebugInformation(true)
+                        .build())
+                .build(),
+                ItemDefinitionGroup.builder().condition("'$(Configuration)|$(Platform)'=='Debug|x64'")
+                        .clCompile(ClCompile.builder()
+                                .warningLevel(LEVEL_3)
+                                .sDLCheck(true)
+                                .preprocessorDefinitions("_DEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                                .conformanceMode(true)
+                                .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
+                                .build())
+                        .link(Link.builder()
+                                .subSystem(CONSOLE)
+                                .generateDebugInformation(true)
+                                .build())
+                .build(),
+                ItemDefinitionGroup.builder().condition("'$(Configuration)|$(Platform)'=='Release|x64'")
+                        .clCompile(ClCompile.builder()
+                                .warningLevel(LEVEL_3)
+                                .sDLCheck(true)
+                                .preprocessorDefinitions("NDEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                                .conformanceMode(true)
+                                .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
+                                .build())
+                        .link(Link.builder()
+                                .subSystem(CONSOLE)
+                                .enableCOMDATFolding(true)
+                                .optimizeReferences(true)
+                                .generateDebugInformation(true)
+                                .build())
+                .build()
+        );
+
         return ProjectTemplate.builder()
                 .defaultTargets(project.getDefaultTargets())
                 .projectConfigurations(projectConfigurationsItemGroup)
@@ -145,6 +207,7 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                 .cppPropsImport(cppPropsImport)
                 .clCompileItemGroup(clCompileItemGroup)
                 .projectReferenceItemGroup(projectReferenceItemGroup)
+                .itemDefinitionGroupList(itemDefinitionGroupList)
                 .build();
     }
 }

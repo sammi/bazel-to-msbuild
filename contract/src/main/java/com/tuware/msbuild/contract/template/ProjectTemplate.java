@@ -1,5 +1,6 @@
 package com.tuware.msbuild.contract.template;
 
+import com.tuware.msbuild.contract.msbuild.project.ItemDefinitionGroup;
 import com.tuware.msbuild.contract.msbuild.project.ItemGroup;
 import com.tuware.msbuild.contract.msbuild.project.PropertyGroup;
 import lombok.*;
@@ -19,4 +20,5 @@ public class ProjectTemplate {
     private String cppPropsImport;
     private ItemGroup clCompileItemGroup;
     private ItemGroup projectReferenceItemGroup;
+    private List<ItemDefinitionGroup> itemDefinitionGroupList;
 }

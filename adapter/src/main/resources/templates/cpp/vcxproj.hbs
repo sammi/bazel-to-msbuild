@@ -61,63 +61,35 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
     </PropertyGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+{{#each itemDefinitionGroupList}}
+    <ItemDefinitionGroup Condition="{{condition}}">
         <ClCompile>
-            <WarningLevel>Level3</WarningLevel>
-            <SDLCheck>true</SDLCheck>
-            <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-            <ConformanceMode>true</ConformanceMode>
-            <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            <WarningLevel>{{clCompile.warningLevel}}</WarningLevel>
+            <SDLCheck>{{clCompile.sDlCheck}}</SDLCheck>
+            <ConformanceMode>{{clCompile.conformanceMode}}</ConformanceMode>
+            <PreprocessorDefinitions>{{clCompile.preprocessorDefinitions}}</PreprocessorDefinitions>
+        {{#if clCompile.additionalIncludeDirectories}}
+            <AdditionalIncludeDirectories>{{clCompile.additionalIncludeDirectories}}</AdditionalIncludeDirectories>
+        {{/if}}
+        {{#if clCompile.functionLevelLinking}}
+            <FunctionLevelLinking>{{clCompile.functionLevelLinking}}</FunctionLevelLinking>
+        {{/if}}
+        {{#if clCompile.intrinsicFunctions}}
+            <IntrinsicFunctions>{{clCompile.intrinsicFunctions}}</IntrinsicFunctions>
+        {{/if}}
         </ClCompile>
         <Link>
-        <SubSystem>Console</SubSystem>
-        <GenerateDebugInformation>true</GenerateDebugInformation>
+            <SubSystem>{{link.subSystem}}</SubSystem>
+            <GenerateDebugInformation>{{link.generateDebugInformation}}</GenerateDebugInformation>
+        {{#if link.enableCOMDATFolding}}
+            <EnableCOMDATFolding>{{link.enableCOMDATFolding}}</EnableCOMDATFolding>
+        {{/if}}
+        {{#if link.optimizeReferences}}
+            <OptimizeReferences>{{link.optimizeReferences}}</OptimizeReferences>
+        {{/if}}
         </Link>
     </ItemDefinitionGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <ClCompile>
-            <WarningLevel>Level3</WarningLevel>
-            <FunctionLevelLinking>true</FunctionLevelLinking>
-            <IntrinsicFunctions>true</IntrinsicFunctions>
-            <SDLCheck>true</SDLCheck>
-            <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-            <ConformanceMode>true</ConformanceMode>
-        </ClCompile>
-        <Link>
-        <SubSystem>Console</SubSystem>
-        <EnableCOMDATFolding>true</EnableCOMDATFolding>
-        <OptimizeReferences>true</OptimizeReferences>
-        <GenerateDebugInformation>true</GenerateDebugInformation>
-        </Link>
-    </ItemDefinitionGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <ClCompile>
-            <WarningLevel>Level3</WarningLevel>
-            <SDLCheck>true</SDLCheck>
-            <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-            <ConformanceMode>true</ConformanceMode>
-        </ClCompile>
-        <Link>
-        <SubSystem>Console</SubSystem>
-        <GenerateDebugInformation>true</GenerateDebugInformation>
-        </Link>
-    </ItemDefinitionGroup>
-    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <ClCompile>
-            <WarningLevel>Level3</WarningLevel>
-            <FunctionLevelLinking>true</FunctionLevelLinking>
-            <IntrinsicFunctions>true</IntrinsicFunctions>
-            <SDLCheck>true</SDLCheck>
-            <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-            <ConformanceMode>true</ConformanceMode>
-        </ClCompile>
-        <Link>
-        <SubSystem>Console</SubSystem>
-        <EnableCOMDATFolding>true</EnableCOMDATFolding>
-        <OptimizeReferences>true</OptimizeReferences>
-        <GenerateDebugInformation>true</GenerateDebugInformation>
-        </Link>
-    </ItemDefinitionGroup>
+{{/each}}
     <ItemGroup>
         {{#each clCompileItemGroup.clCompileList}}
             <ClCompile Include="{{include}}"/>

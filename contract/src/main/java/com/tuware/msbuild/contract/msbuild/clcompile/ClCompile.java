@@ -12,9 +12,13 @@ public class ClCompile {
     private PrecompiledHeader precompiledHeader;
     private PrecompiledHeaderFile precompiledHeaderFile;
     private PrecompiledHeaderOutputFile precompiledHeaderOutputFile;
-    private WarningLevel warningLevel;
+    private String warningLevel;
+    private Boolean sDLCheck;
+    private Boolean conformanceMode;
     private AdditionalOptions additionalOptions;
     private DisableSpecificWarnings disableSpecificWarnings;
-    private PreprocessorDefinitions preprocessorDefinitions;
-    private AdditionalIncludeDirectories additionalIncludeDirectories;
+    private String preprocessorDefinitions;
+    private String additionalIncludeDirectories;
+    private Boolean functionLevelLinking;
+    private Boolean intrinsicFunctions;
 }

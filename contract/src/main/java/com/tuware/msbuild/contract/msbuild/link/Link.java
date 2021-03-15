@@ -7,7 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 public class Link {
-    private GenerateWindowsMetadata generateWindowsMetadata;
-    private EnableCOMDATFolding enableCOMDATFolding;
-    private OptimizeReferences optimizeReferences;
+    private String subSystem;
+    private Boolean generateDebugInformation;
+    private Boolean enableCOMDATFolding;
+    private Boolean optimizeReferences;
+    private Boolean generateWindowsMetadata;
 }

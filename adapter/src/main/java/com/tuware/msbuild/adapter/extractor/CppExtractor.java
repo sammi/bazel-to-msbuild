@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.tuware.msbuild.contract.msbuild.property.ConfigurationType.*;
+import static com.tuware.msbuild.contract.msbuild.property.ConfigurationType.Application;
+import static com.tuware.msbuild.contract.msbuild.property.ConfigurationType.StaticLibrary;
 
 @Component
 public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSeed>> {
