@@ -1,2 +1,2 @@
 #/bin/bash
-java -jar ./cli.jar
+java -jar ./cli.jar $1 $2
