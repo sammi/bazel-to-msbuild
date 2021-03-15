@@ -4,17 +4,17 @@ bazel-to-msbuild
 Generate msbuild project from bazel project
 
 * It is using ```bazel query ... output=proto``` to gather all cc_library, cc_binary, and cc_test packages;
-* It generates one msbuild project for each package;
+* It generates one msbuild project for one target;
 * It generates one solution for one bazel workspace;
-* It detects package dependencies and manage them as project references in msbuild project;
+* It detects target dependencies and manage them as project references in msbuild project;
 
 
 # Install and Usage
 
 Unzip the tool and put it in your PATH
 ```
-wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.1.0/b2m-0.1.0.zip
-unzip b2m-0.1.0.zip
+wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.1.1/b2m-0.1.1.zip
+unzip b2m-0.1.1.zip
 ```
 
 Run the command:
