@@ -57,7 +57,13 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
     }
 
     private ConfigurationType mapToConfigurationType(Build.Rule rule) {
-        return "cc_library".equals(rule.getRuleClass()) ? StaticLibrary : Application;
+        switch (rule.getRuleClass()) {
+            case "cc_library":
+                return StaticLibrary;
+            case "cc_binary":
+            default:
+                return Application;
+        }
     }
 
     private boolean isApplication(Build.Rule rule) {
@@ -69,12 +75,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
     }
 
     private Predicate<String> isDependentPackage() {
-        return ruleInput ->
-                !ruleInput.contains("@") &&
-                !ruleInput.endsWith(".cc") &&
-                !ruleInput.endsWith(".cpp") &&
-                !ruleInput.endsWith(".h") &&
-                !ruleInput.endsWith(".hpp");
+        return ruleInput -> !(isCppSourceFile(ruleInput) || isCppHeaderFile(ruleInput));
     }
 
     private boolean isCppSourceFile(String ruleInput) {
