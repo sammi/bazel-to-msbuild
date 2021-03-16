@@ -20,4 +20,5 @@ public class ProjectSeed {
     private List<String> headerFileList;
     private ConfigurationType configurationType;
     private List<ProjectSeed> dependentProjectSeedList;
+    private String preprocessorDefinitions;
 }

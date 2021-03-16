@@ -11,7 +11,7 @@ int main() {
 
   bool success = FALSE;
 
-  hellolib = LoadLibrary(TEXT("../clib/clib.dll"));
+  hellolib = LoadLibrary(TEXT("clib.dll"));
 
   if (hellolib != NULL) {
     get_time = (GET_TIME_PTR)GetProcAddress(hellolib, "get_time");

@@ -140,12 +140,14 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                         )
                 ).build();
 
+        String preprocessorDefinitions = projectSeed.getPreprocessorDefinitions() == null ? "" : ";" + projectSeed.getPreprocessorDefinitions();
+
         List<ItemDefinitionGroup> itemDefinitionGroupList = Arrays.asList(
                 ItemDefinitionGroup.builder().condition("'$(Configuration)|$(Platform)'=='Debug|Win32'")
                     .clCompile(ClCompile.builder()
                             .warningLevel(LEVEL_3)
                             .sDLCheck(true)
-                            .preprocessorDefinitions("WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                            .preprocessorDefinitions("WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)" + preprocessorDefinitions)
                             .conformanceMode(true)
                             .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
                     .build())
@@ -157,7 +159,7 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                                 .functionLevelLinking(true)
                                 .intrinsicFunctions(true)
                                 .sDLCheck(true)
-                                .preprocessorDefinitions("WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                                .preprocessorDefinitions("WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)" + preprocessorDefinitions)
                                 .conformanceMode(true)
                                 .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
                                 .build())
@@ -172,7 +174,7 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                         .clCompile(ClCompile.builder()
                                 .warningLevel(LEVEL_3)
                                 .sDLCheck(true)
-                                .preprocessorDefinitions("_DEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                                .preprocessorDefinitions("_DEBUG;_CONSOLE;%(PreprocessorDefinitions)" + preprocessorDefinitions)
                                 .conformanceMode(true)
                                 .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
                                 .build())
@@ -185,7 +187,7 @@ public class ProjectComposer implements Composer<ProjectTemplate, ProjectSeed> {
                         .clCompile(ClCompile.builder()
                                 .warningLevel(LEVEL_3)
                                 .sDLCheck(true)
-                                .preprocessorDefinitions("NDEBUG;_CONSOLE;%(PreprocessorDefinitions)")
+                                .preprocessorDefinitions("NDEBUG;_CONSOLE;%(PreprocessorDefinitions)" + preprocessorDefinitions)
                                 .conformanceMode(true)
                                 .additionalIncludeDirectories($_SOLUTION_DIR_ADDITIONAL_INCLUDE_DIRECTORIES)
                                 .build())
