@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.tuware.msbuild.contract.msbuild.property.ConfigurationType.*;
@@ -18,16 +17,18 @@ import static com.tuware.msbuild.contract.msbuild.property.ConfigurationType.*;
 @Component
 public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSeed>> {
 
+    private static final String CC_IMPORT = "cc_import";
     private static final String CC_LIBRARY = "cc_library";
     private static final String CC_BINARY = "cc_binary";
     private static final String CC_TEST = "cc_test";
+    private static final String FILEGROUP = "filegroup";
 
     @Override
     public List<ProjectSeed> extract(Build.QueryResult bazelQueryResult) {
         return bazelQueryResult.getTargetList().stream()
                 .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
                 .map(Build.Target::getRule)
-                .filter(rule -> isApplication(rule) || isStaticLibrary(rule) || isDynamicLibrary(rule))
+                .filter(rule -> isApplication(rule) || isStaticLibrary(rule) || isDynamicLibrary(rule) || isCcImport(rule) || isFileGroup(rule))
                 .map(this::extractProjectSeedFromCppRule)
                 .collect(Collectors.toList());
     }
@@ -44,11 +45,13 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
                 .map(this::getFileName)
                 .collect(Collectors.toList());
 
-        List<ProjectSeed> dependentProjectSeedList  = rule.getRuleInputList().stream().filter(isDependentPackage()).map(
+        List<ProjectSeed> dependentProjectSeedList = rule.getRuleInputList().stream().filter(
+                this::isDependentPackage
+        ).map(
                 ruleInput -> ProjectSeed.builder()
-                    .folder(Paths.get("$(SolutionDir)", getFolderPath(ruleInput)))
-                    .name(getFileName(ruleInput) + ".vcxproj")
-                .build()
+                        .folder(Paths.get("$(SolutionDir)", getFolderPath(ruleInput)))
+                        .name(getFileName(ruleInput) + ".vcxproj")
+                        .build()
         ).collect(Collectors.toList());
 
         return ProjectSeed.builder()
@@ -56,7 +59,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
                 .name(getFileName(rule.getName()))
                 .sourceFileList(sourceFileList)
                 .headerFileList(headerFileList)
-                .configurationType(mapToConfigurationType(rule))
+                .configurationType(getToConfigurationType(rule))
                 .dependentProjectSeedList(dependentProjectSeedList)
                 .preprocessorDefinitions(extractPreprocessorDefinitions(rule))
                 .build();
@@ -66,23 +69,36 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
         Optional<Build.Attribute> copts = rule.getAttributeList().stream()
                 .filter(attribute -> attribute.getName().equals("copts"))
                 .findFirst();
-        if(copts.isPresent()) {
+        if (copts.isPresent()) {
             Build.Attribute attribute = copts.get();
-            List<String> preprocessorDefinitions = attribute.getStringListValueList().stream().map(stringListValue -> StringUtils.stripStart(stringListValue, "/D")).collect(Collectors.toList());
+            List<String> preprocessorDefinitions = attribute.getStringListValueList().stream().map(
+                    stringListValue -> StringUtils.stripStart(stringListValue, "/D")
+            ).collect(Collectors.toList());
             return String.join(";", preprocessorDefinitions);
         }
         return null;
     }
 
-    private ConfigurationType mapToConfigurationType(Build.Rule rule) {
+    private ConfigurationType getToConfigurationType(Build.Rule rule) {
         switch (rule.getRuleClass()) {
             case CC_LIBRARY:
+            case CC_IMPORT:
+            case FILEGROUP:
                 return StaticLibrary;
             case CC_BINARY:
                 return isDynamicLibrary(rule) ? DynamicLibrary : Application;
+
             default:
                 return Application;
         }
+    }
+
+    private boolean isFileGroup(Build.Rule rule) {
+        return (rule.getRuleClass().equals(FILEGROUP));
+    }
+
+    private boolean isCcImport(Build.Rule rule) {
+        return (rule.getRuleClass().equals(CC_IMPORT));
     }
 
     private boolean isApplication(Build.Rule rule) {
@@ -97,31 +113,27 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
         return rule.getRuleClass().equals(CC_LIBRARY);
     }
 
-    private Predicate<String> isDependentPackage() {
-        return ruleInput -> !(isCorCppSourceFile(ruleInput) || isCorCppHeaderFile(ruleInput));
+    private boolean isDependentPackage(String ruleInput) {
+        return !ruleInput.startsWith("@") && !isCorCppSourceFile(ruleInput) && !isCorCppHeaderFile(ruleInput);
     }
 
     private boolean isCorCppSourceFile(String ruleInput) {
-        return !ruleInput.contains("@") && (
-                ruleInput.endsWith(".c") ||
+        return ruleInput.endsWith(".c") ||
                 ruleInput.endsWith(".cc") ||
                 ruleInput.endsWith(".cpp") ||
                 ruleInput.endsWith(".cxx") ||
                 ruleInput.endsWith(".c++") ||
-                ruleInput.endsWith(".C")
-        );
+                ruleInput.endsWith(".C");
     }
 
     private boolean isCorCppHeaderFile(String ruleInput) {
-        return !ruleInput.contains("@") && (
-                ruleInput.endsWith(".h") ||
+        return ruleInput.endsWith(".h") ||
                 ruleInput.endsWith(".hh") ||
                 ruleInput.endsWith(".hpp") ||
                 ruleInput.endsWith(".hxx") ||
                 ruleInput.endsWith(".inc") ||
                 ruleInput.endsWith(".inl") ||
-                ruleInput.endsWith(".H")
-        );
+                ruleInput.endsWith(".H");
     }
 
     private String getFileName(String label) {
