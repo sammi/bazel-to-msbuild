@@ -1,0 +1,65 @@
+namespace CloudBuilder
+{
+    runtimeclass Cluster
+    {
+        Cluster();
+
+        String Name{ get; };
+
+    }
+
+    runtimeclass ConfigViewModel
+    {
+        ConfigViewModel();
+
+        Config DefaultConfig{ get; };
+
+        Windows.Foundation.Collections.IVector<IInspectable> Configs{ get; };
+    }
+
+    runtimeclass StringFormatter : [default] Windows.UI.Xaml.Data.IValueConverter
+    {
+        StringFormatter();
+    }
+
+    [default_interface]
+    runtimeclass DesignPage : Windows.UI.Xaml.Controls.Page
+    {
+        DesignPage();
+    }
+
+    [default_interface]
+    runtimeclass FindPage : Windows.UI.Xaml.Controls.Page
+    {
+        FindPage();
+    }
+
+    [default_interface]
+    runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
+    {
+        MainPage();
+    }
+
+    [default_interface]
+    runtimeclass SettingsPage : Windows.UI.Xaml.Controls.Page
+    {
+        SettingsPage();
+
+        ConfigViewModel ViewModel{ get; };
+    }
+
+    [Windows.UI.Xaml.Data.Bindable]
+    runtimeclass Config
+    {
+        Config(String name, String token, Windows.Globalization.Calendar changedDate);
+
+        String Name{ get; };
+
+        String Token{ get; };
+
+        Windows.Globalization.Calendar ChangedDate{ get; };
+
+        String Summary{ get; };
+    }
+
+}
