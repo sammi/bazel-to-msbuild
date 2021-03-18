@@ -12,7 +12,7 @@
     <groupId>com.tuware.msbuild</groupId>
     <artifactId>bazel-to-msbuild</artifactId>
     <packaging>pom</packaging>
-    <version>0.2.1-SNAPSHOT</version>
+    <version>0.2.1</version>
 
     <properties>
         <groovy.version>3.0.7</groovy.version>
@@ -122,7 +122,7 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/sammi/bazel-to-msbuild.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.2.1</tag>
     </scm>
 
     <distributionManagement>
