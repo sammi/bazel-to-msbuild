@@ -7,14 +7,15 @@ Generate msbuild project from bazel project
 * It generates one msbuild project for one target;
 * It generates one solution for one bazel workspace;
 * It detects target dependencies and manage them as project references in msbuild project;
+* It detects windows dll library and mange dll libary as the application project reference;
 
 
 # Install and Usage
 
 Unzip the tool and put it in your PATH
 ```
-wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.1.3/b2m-0.1.3.zip
-unzip b2m-0.1.3.zip
+wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.2.0/b2m-0.2.0.zip
+unzip b2m-0.2.0.zip
 ```
 
 Run the command:
