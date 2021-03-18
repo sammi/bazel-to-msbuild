@@ -49,7 +49,7 @@ b2m . app
 ```
 Then you should be able to find msbuild solution and project files under dll folder:
 ```
-dll.sln
+app.sln
 clib\clib.vcxproj
 clib\clib.filters
 clib\clib.user
