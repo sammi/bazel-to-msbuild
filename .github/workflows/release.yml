@@ -44,7 +44,7 @@ jobs:
               id: tagVersion
 
             - name: package cli module jar file
-              run: mvn clean install && cd cli && mvn package && mkdir release && mv target/cli-*.jar release/cli.jar && mv target/libs release/. && mv b2m* release/.
+              run: mvn clean install && cd cli && mvn package && mkdir -p release/b2m && mv target/cli-*.jar release/b2m/cli.jar && mv target/libs release/b2m/. && mv b2m* release/b2m/.
 
 
             - name: Zip release files
