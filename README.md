@@ -24,7 +24,7 @@ Run the command:
 b2m {your_bazel_workspace_dir} {your_solution_file_name}
 ```
 
-For example:
+Generate project with static library
 ```
 cd bazel-to-msbuild\integration\src\test\resources\stage3
 b2m . app
@@ -35,16 +35,29 @@ app.sln
 lib\hello-time.vcxproj
 lib\hello-time.filters
 lib\hello-time.user
-
 main\hello-greet.vcxproj
 main\hello-greet.filters
 main\hello-greet.user
-
 main\hello-world.vcxproj
 main\hello-world.filters
 main\hello-world.user
 ```
+Generate project with static library
+```
+cd bazel-to-msbuild\integration\src\test\resources\dll
+b2m . app
+```
+Then you should be able to find msbuild solution and project files under dll folder:
+```
+dll.sln
+clib\clib.vcxproj
+clib\clib.filters
+clib\clib.user
+main\main.vcxproj
+main\main.filters
+main\main.user
+```
 
-Then Open app.sln by Visualstudio, set hello-world as the startup project, you should be able to debug the application.
+Then Open app.sln by Visualstudio, set main as the startup project, you should be able to debug the application and its dll library clib.
 
   
