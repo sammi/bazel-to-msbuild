@@ -8,7 +8,7 @@ Generate msbuild project from bazel project
 - [x] It generates one solution for one bazel workspace;
 - [x] It detects target dependencies and manage them as project references in msbuild project;
 - [x] It detects windows dll library and mange dll libary as the application project reference;
-- [ ] It detects midl file and manage it by <Midl> task in project;
+- [ ] It detects midl file and manage it by Midl task in project;
 
 # Install and Usage
 
