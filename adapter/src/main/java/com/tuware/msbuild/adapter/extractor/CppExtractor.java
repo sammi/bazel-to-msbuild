@@ -28,9 +28,21 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
         return bazelQueryResult.getTargetList().stream()
                 .filter(target -> target.getType().equals(Build.Target.Discriminator.RULE))
                 .map(Build.Target::getRule)
-                .filter(rule -> isApplication(rule) || isStaticLibrary(rule) || isDynamicLibrary(rule) || isCcImport(rule) || isFileGroup(rule))
+                .filter(this::isValidRule)
                 .map(this::extractProjectSeedFromCppRule)
                 .collect(Collectors.toList());
+    }
+
+    private boolean isValidRule(Build.Rule rule) {
+        return (isGeneratedByWindowsDllLibrary(rule) && isDynamicLibrary(rule)) ||
+                !isGeneratedByWindowsDllLibrary(rule) && (isApplication(rule) || isStaticLibrary(rule));
+    }
+
+    private boolean isGeneratedByWindowsDllLibrary(Build.Rule rule) {
+        Optional<Build.Attribute> generatorFunction = rule.getAttributeList().stream()
+                .filter(attribute -> attribute.getName().equals("generator_function"))
+                .findFirst();
+        return generatorFunction.map(attribute -> attribute.getStringValue().equals("windows_dll_library")).orElse(false);
     }
 
     private ProjectSeed extractProjectSeedFromCppRule(Build.Rule rule) {
@@ -56,7 +68,7 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
 
         return ProjectSeed.builder()
                 .folder(Paths.get(getFolderPath(rule.getName())))
-                .name(getFileName(rule.getName()))
+                .name(getFileName(StringUtils.stripEnd(rule.getName(), ".dll")))
                 .sourceFileList(sourceFileList)
                 .headerFileList(headerFileList)
                 .configurationType(getToConfigurationType(rule))
@@ -91,14 +103,6 @@ public class CppExtractor implements Extractor<Build.QueryResult, List<ProjectSe
             default:
                 return Application;
         }
-    }
-
-    private boolean isFileGroup(Build.Rule rule) {
-        return (rule.getRuleClass().equals(FILEGROUP));
-    }
-
-    private boolean isCcImport(Build.Rule rule) {
-        return (rule.getRuleClass().equals(CC_IMPORT));
     }
 
     private boolean isApplication(Build.Rule rule) {

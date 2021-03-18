@@ -82,6 +82,24 @@ class CppProjectFeatureSpec extends Specification {
 
     }
 
+    def "generate bazel cpp project for dll library sample project"() {
+        given:
+        Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("dll").getFile().getAbsolutePath())
+        FileRepository repository = Mock()
+        CppProjectFeature cppProjectFeature = buildFeature(repository)
+
+        when:
+        cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App4")
+
+        then:
+        7 * repository.save({ it ->
+            {
+                String path = it.toString()
+                path.contains("dll")
+            }
+        }, { it != null })
+
+    }
 
     private static CppProjectFeature buildFeature(FileRepository repository) {
         BazelQueryAllProtoCommandsProvider bazelQueryAllProtoProvider = new BazelQueryAllProtoCommandsProvider()
