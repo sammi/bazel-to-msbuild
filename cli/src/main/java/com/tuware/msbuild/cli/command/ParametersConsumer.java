@@ -12,7 +12,7 @@ public class ParametersConsumer implements CommandLine.IParameterConsumer {
             throw new CommandLine.ParameterException(commandSpec.commandLine(), "2 and only 2 parameters should be provided");
         }
         String bazelWorkspaceFolder = args.pop();
-        String projectName = args.pop();
-        argSpec.setValue(new Parameters(bazelWorkspaceFolder, projectName));
+        String solutionName = args.pop();
+        argSpec.setValue(new Parameters(bazelWorkspaceFolder, solutionName));
     }
 }

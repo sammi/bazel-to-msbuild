@@ -32,7 +32,7 @@ public class BazelToMsbuildCommand implements Runnable {
         String bazelWorkspaceFolder = parameters.getBazelWorkspaceFolder();
         Path bazelPath = Paths.get(bazelWorkspaceFolder);
 
-        String solutionName = parameters.getProjectName();
+        String solutionName = parameters.getSolutionName();
 
         try {
             cppProjectFeature.buildSolution(bazelPath, solutionName);

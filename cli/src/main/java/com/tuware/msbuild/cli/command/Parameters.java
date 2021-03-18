@@ -2,11 +2,11 @@ package com.tuware.msbuild.cli.command;
 
 public class Parameters {
     private String bazelWorkspaceFolder;
-    private String projectName;
+    private String solutionName;
 
-    public Parameters(String bazelWorkspaceFolder, String projectName) {
+    public Parameters(String bazelWorkspaceFolder, String solutionName) {
         this.bazelWorkspaceFolder = bazelWorkspaceFolder;
-        this.projectName = projectName;
+        this.solutionName = solutionName;
     }
 
     public String getBazelWorkspaceFolder() {
@@ -17,11 +17,11 @@ public class Parameters {
         this.bazelWorkspaceFolder = bazelWorkspaceFolder;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getSolutionName() {
+        return solutionName;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setSolutionName(String solutionName) {
+        this.solutionName = solutionName;
     }
 }
