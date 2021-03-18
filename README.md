@@ -3,12 +3,12 @@ bazel-to-msbuild
 
 Generate msbuild project from bazel project
 
-* It is using ```bazel query ... output=proto``` to gather all cc_library, cc_binary, and cc_test packages;
-* It generates one msbuild project for one target;
-* It generates one solution for one bazel workspace;
-* It detects target dependencies and manage them as project references in msbuild project;
-* It detects windows dll library and mange dll libary as the application project reference;
-
+- [x] It is using ```bazel query ... output=proto``` to gather all cc_library, cc_binary, and cc_test packages;
+- [x] It generates one msbuild project for one target;
+- [x] It generates one solution for one bazel workspace;
+- [x] It detects target dependencies and manage them as project references in msbuild project;
+- [x] It detects windows dll library and mange dll libary as the application project reference;
+- []  It detects midl file and manage it by <Midl> task in project;
 
 # Install and Usage
 
