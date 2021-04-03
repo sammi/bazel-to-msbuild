@@ -2,6 +2,11 @@
 MIDL compiler rule, generate c++ header only code and WinRT winmd binary meta file
 """
 
+MidlInfo = provider(fields = {
+    "winmd": "WinRT meta data binary file",
+    "header": "C++ header file",
+})
+
 def _impl(ctx):
     idl = ctx.file.idl
 
@@ -18,7 +23,7 @@ def _impl(ctx):
         progress_message = "Generating %s and %s from %s" % (header.path, winmd.path, idl.path),
     )
 
-    return [DefaultInfo(files = depset([winmd, header]))]
+    return [MidlInfo(winmd=winmd, header=header)]
 
 midl = rule(
     doc = "Generate winmd binary file and c++ header only library from IDL file",

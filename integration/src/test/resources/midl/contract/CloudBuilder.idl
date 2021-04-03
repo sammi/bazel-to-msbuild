@@ -1,5 +1,6 @@
 namespace CloudBuilder
 {
+    [default_interface]
     runtimeclass Cluster
     {
         Cluster();
@@ -8,6 +9,7 @@ namespace CloudBuilder
 
     }
 
+    [default_interface]
     runtimeclass ConfigViewModel
     {
         ConfigViewModel();
@@ -17,7 +19,8 @@ namespace CloudBuilder
         Windows.Foundation.Collections.IVector<IInspectable> Configs{ get; };
     }
 
-    runtimeclass StringFormatter : [default] Windows.UI.Xaml.Data.IValueConverter
+    [default_interface]
+    runtimeclass StringFormatter : Windows.UI.Xaml.Data.IValueConverter
     {
         StringFormatter();
     }
@@ -49,6 +52,7 @@ namespace CloudBuilder
     }
 
     [Windows.UI.Xaml.Data.Bindable]
+    [default_interface]
     runtimeclass Config
     {
         Config(String name, String token, Windows.Globalization.Calendar changedDate);
