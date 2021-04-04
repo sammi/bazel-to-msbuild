@@ -9,4 +9,4 @@ midl(
 )
 
 
-midl_test_suite(name="midl_test")
+midl_test_suite(name="midl_test_suite")

@@ -1,0 +1,9 @@
+namespace MidlTest
+{
+    [default_interface]
+    runtimeclass MidlClass
+    {
+        MidlClass();
+        String Name{ get; };
+    }
+}
