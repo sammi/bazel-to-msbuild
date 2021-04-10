@@ -15,7 +15,7 @@ midl_test = analysistest.make(_test_impl)
 
 def _test():
     midl(
-        name="midl_test_rule", 
+        name="midl_test_rule",
         idl="midl_test.idl",
         tags = ["manual"],
     )
