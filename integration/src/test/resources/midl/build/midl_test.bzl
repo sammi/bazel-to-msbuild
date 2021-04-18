@@ -1,5 +1,5 @@
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "analysistest")
-load(":midl.bzl", "midl", "MidlInfo")
+load(":midl.bzl", "midl")
 
 def _test_impl(ctx):
     env = analysistest.begin(ctx)
