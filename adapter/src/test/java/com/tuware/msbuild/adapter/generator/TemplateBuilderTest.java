@@ -14,7 +14,7 @@ class TemplateBuilderTest {
     TemplateBuilder templateBuilder = new TemplateBuilder();
 
     @Test
-    void compileFromTemplateFile() throws IOException, URISyntaxException {
+    void compileFromTemplateFile() throws IOException {
         Map<String, String> data = new HashMap<>();
         data.put("name", "builder");
         String xml = templateBuilder.compileFromTemplateFile("/handlebars/hello.hbs", data);
