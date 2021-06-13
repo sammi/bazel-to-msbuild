@@ -2,7 +2,7 @@
 
 set Platform=x64
 set WindowsSDKVersion=10.0.20206.0
-set VCToolsVersion=14.28.29910
+set VCToolsVersion=14.29.30037
 set VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
 set WindowsSdkDir=C:\Program Files (x86)\Windows Kits\10
 
@@ -11,9 +11,7 @@ set Path=%VSINSTALLDIR%\VC\Tools\MSVC\%VCToolsVersion%\bin\Host%Platform%\%Platf
 
 REM The header files is required by midl.exe
 set INCLUDE=%WindowsSdkDir%\include\%WindowsSDKVersion%\winrt;
-
 set ReferenceDir=%WindowsSdkDir%\References\%WindowsSDKVersion%
-
 set FoundationContractReference=%ReferenceDir%\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd
 set UniversalApiContractReference=%ReferenceDir%\Windows.Foundation.UniversalApiContract\12.0.0.0\Windows.Foundation.UniversalApiContract.winmd
 
