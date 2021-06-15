@@ -7,7 +7,6 @@ def _test_impl(ctx):
     actions = analysistest.target_actions(env)
     winmd_output = actions[0].outputs.to_list()[0]
     header_output = actions[0].outputs.to_list()[1]
-    print(winmd_output, header_output)
     asserts.equals(env, target_under_test.label.name + ".winmd", winmd_output.basename)
     asserts.equals(env, target_under_test.label.name + ".h", header_output.basename)
     return analysistest.end(env)
