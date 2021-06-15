@@ -1,5 +1,5 @@
 load("@bazel_skylib//lib:unittest.bzl", "asserts", "analysistest")
-load(":midl.bzl", "midl")
+load("midl.bzl", "midl")
 
 def _test_impl(ctx):
     env = analysistest.begin(ctx)
@@ -14,9 +14,10 @@ def _test_impl(ctx):
 midl_test = analysistest.make(_test_impl)
 
 def _test():
+    # Rule under test. Be sure to tag 'manual', as this target should not be built using `:all` except as a dependency of the test.
     midl(
         name="midl_test_rule",
-        idl="midl_test.idl",
+        idl="123midl_test.idl",
         tags = ["manual"],
     )
     midl_test(name="midl_test", target_under_test="midl_test_rule")
