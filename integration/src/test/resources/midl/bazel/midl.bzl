@@ -11,6 +11,7 @@ def _impl(ctx):
     header = ctx.actions.declare_file(ctx.label.name + ".h")
 
     ctx.actions.run(
+        use_default_shell_env = True,
         executable = ctx.executable._code_gen_tool,
         arguments = [midl_out_dir, idl.path],
         inputs = [idl],
@@ -36,7 +37,7 @@ midl = rule(
             executable = True,
             cfg = "exec",
             allow_files = True,
-            default = Label("//build:midl.bat"),
+            default = Label("@midl//:midl.bat"),
             doc = "Wrapper bat file to call midl compiler",
         ),
     },

@@ -1,0 +1,5 @@
+build --action_env=Stable_Platform=x64
+build --action_env=Stable_WindowsSDKVersion=10.0.20206.0
+build --action_env=Stable_VCToolsVersion=14.29.30037
+build --action_env=Stable_VSINSTALLDIR="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community"
+build --action_env=Stable_WindowsSdkDir="C:\\Program Files (x86)\\Windows Kits\\10"

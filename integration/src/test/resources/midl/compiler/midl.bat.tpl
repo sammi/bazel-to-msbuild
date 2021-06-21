@@ -1,10 +1,10 @@
 @echo OFF
 
-set Platform=x64
-set WindowsSDKVersion=10.0.20206.0
-set VCToolsVersion=14.29.30037
-set VSINSTALLDIR=C:\Program Files (x86)\Microsoft Visual Studio\2019\Community
-set WindowsSdkDir=C:\Program Files (x86)\Windows Kits\10
+set Platform=Stable_Platform
+set WindowsSDKVersion=Stable_WindowsSDKVersion
+set VCToolsVersion=Stable_VCToolsVersion
+set VSINSTALLDIR=Stable_VSINSTALLDIR
+set WindowsSdkDir=Stable_WindowsSdkDir
 
 REM The path which includes cl.exe
 set Path=%VSINSTALLDIR%\VC\Tools\MSVC\%VCToolsVersion%\bin\Host%Platform%\%Platform%;

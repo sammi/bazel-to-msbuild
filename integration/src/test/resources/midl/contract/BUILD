@@ -1,4 +1,4 @@
-load("//build:midl.bzl", "midl")
+load("//bazel:midl.bzl", "midl")
 
 package(default_visibility = ["//visibility:public"])
 
