@@ -9,6 +9,8 @@ def _impl(repository_ctx):
             "Stable_VCToolsVersion": environ.get("Stable_VCToolsVersion"),
             "Stable_VSINSTALLDIR": environ.get("Stable_VSINSTALLDIR"),
             "Stable_WindowsSdkDir": environ.get("Stable_WindowsSdkDir"),
+            "Stabel_FoundationContractVersion": environ.get("Stabel_FoundationContractVersion"),
+            "Stable_UniversalApiContractVersion": environ.get("Stable_UniversalApiContractVersion"),
         },
     )
     repository_ctx.file("BUILD", 'exports_files(["midl.bat"])')
