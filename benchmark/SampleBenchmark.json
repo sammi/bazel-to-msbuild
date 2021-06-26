@@ -1,0 +1,112 @@
+[
+    {
+        "jmhVersion" : "1.28",
+        "benchmark" : "com.tuware.msbuild.benchmark.SampleBenchmark.search",
+        "mode" : "avgt",
+        "threads" : 5,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Java\\jdk1.8.0_211\\jre\\bin\\java.exe",
+        "jvmArgs" : [
+            "-ea",
+            "-Didea.test.cyclic.buffer.size=1048576",
+            "-javaagent:C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2020.2.4\\lib\\idea_rt.jar=53321:C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2020.2.4\\bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "1.8.0_211",
+        "vmName" : "Java HotSpot(TM) 64-Bit Server VM",
+        "vmVersion" : "25.211-b12",
+        "warmupIterations" : 1,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 1,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "url" : "http://google.com"
+        },
+        "primaryMetric" : {
+            "score" : 457.1725293256296,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 457.1725293256296,
+                "50.0" : 457.1725293256296,
+                "90.0" : 457.1725293256296,
+                "95.0" : 457.1725293256296,
+                "99.0" : 457.1725293256296,
+                "99.9" : 457.1725293256296,
+                "99.99" : 457.1725293256296,
+                "99.999" : 457.1725293256296,
+                "99.9999" : 457.1725293256296,
+                "100.0" : 457.1725293256296
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    457.1725293256296
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.28",
+        "benchmark" : "com.tuware.msbuild.benchmark.SampleBenchmark.search",
+        "mode" : "avgt",
+        "threads" : 5,
+        "forks" : 1,
+        "jvm" : "C:\\Program Files\\Java\\jdk1.8.0_211\\jre\\bin\\java.exe",
+        "jvmArgs" : [
+            "-ea",
+            "-Didea.test.cyclic.buffer.size=1048576",
+            "-javaagent:C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2020.2.4\\lib\\idea_rt.jar=53321:C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2020.2.4\\bin",
+            "-Dfile.encoding=UTF-8"
+        ],
+        "jdkVersion" : "1.8.0_211",
+        "vmName" : "Java HotSpot(TM) 64-Bit Server VM",
+        "vmVersion" : "25.211-b12",
+        "warmupIterations" : 1,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 1,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "url" : "http://facebook.com"
+        },
+        "primaryMetric" : {
+            "score" : 395.92384593138456,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 395.92384593138456,
+                "50.0" : 395.92384593138456,
+                "90.0" : 395.92384593138456,
+                "95.0" : 395.92384593138456,
+                "99.0" : 395.92384593138456,
+                "99.9" : 395.92384593138456,
+                "99.99" : 395.92384593138456,
+                "99.999" : 395.92384593138456,
+                "99.9999" : 395.92384593138456,
+                "100.0" : 395.92384593138456
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    395.92384593138456
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

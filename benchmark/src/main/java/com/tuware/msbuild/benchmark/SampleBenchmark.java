@@ -11,43 +11,16 @@ import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
+@State(Scope.Benchmark)
 public class SampleBenchmark {
-    @State(Scope.Benchmark)
-    public static class StateObj {
-        private String google;
-        private String facebook;
 
-        @Setup
-        public void setup() {
-            google = "http://google.com";
-            facebook = "http://facebook.com";
-        }
-
-        @TearDown
-        public void tearDown() {
-            google = null;
-            facebook = null;
-        }
-
-        public String getGoogle() {
-            return google;
-        }
-
-        public String getFacebook() {
-            return facebook;
-        }
-    }
+    @Param({"http://google.com", "http://facebook.com"})
+    public String url;
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
-    public String google(StateObj stateObj) throws IOException {
-        return fetchContent(stateObj.getGoogle());
-    }
-
-    @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
-    public String facebook(StateObj stateObj) throws IOException {
-        return fetchContent(stateObj.getFacebook());
+    public String search() throws IOException {
+        return fetchContent(url);
     }
 
     private String fetchContent(String url) throws IOException {

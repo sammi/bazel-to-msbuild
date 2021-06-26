@@ -2,6 +2,7 @@ package com.tuware.msbuild.benchmark;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
