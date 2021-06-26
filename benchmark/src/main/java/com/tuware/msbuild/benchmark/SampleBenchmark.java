@@ -7,29 +7,31 @@ import okhttp3.ResponseBody;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Fork(1)
+@Measurement(iterations = 1)
 @State(Scope.Benchmark)
+@Threads(2)
+@BenchmarkMode(Mode.SingleShotTime)
 public class SampleBenchmark {
 
-    @Param({"http://google.com", "http://facebook.com"})
+    private static final OkHttpClient client = new OkHttpClient();
+
+    @Param({"http://google.com/search", "http://facebook.com/search"})
     public String url;
 
+    @Param({"benchmark", "c++20"})
+    public String keyword;
+
     @Benchmark
-    @BenchmarkMode(Mode.AverageTime)
     public String search() throws IOException {
         return fetchContent(url);
     }
 
     private String fetchContent(String url) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
         Request request = new Request.Builder()
-                .url(url)
+                .url(url + "?q=" + keyword)
                 .build();
-
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
             return responseBody == null ? ""  : responseBody.string();

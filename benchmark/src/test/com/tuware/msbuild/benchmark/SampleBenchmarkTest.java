@@ -2,7 +2,6 @@ package com.tuware.msbuild.benchmark;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
@@ -23,11 +22,6 @@ public class SampleBenchmarkTest {
         File file = new File(SampleBenchmark.class.getSimpleName() + ".json");
         Options opt = new OptionsBuilder()
                 .include(SampleBenchmark.class.getSimpleName())
-                .warmupIterations(1)
-                .measurementIterations(1)
-                .forks(1)
-                .warmupForks(0)
-                .threads(5)
                 .resultFormat(ResultFormatType.JSON)
                 .result(file.getAbsolutePath())
                 .build();
