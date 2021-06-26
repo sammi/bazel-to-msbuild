@@ -26,7 +26,7 @@ public class SampleBenchmarkTest {
                 .measurementIterations(1)
                 .forks(1)
                 .warmupForks(0)
-                .threads(50)
+                .threads(5)
                 .resultFormat(ResultFormatType.JSON)
                 .result(file.getAbsolutePath())
                 .build();
