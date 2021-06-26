@@ -118,6 +118,7 @@
         <module>adapter</module>
         <module>cli</module>
         <module>integration</module>
+        <module>benchmark</module>
     </modules>
 
     <scm>
