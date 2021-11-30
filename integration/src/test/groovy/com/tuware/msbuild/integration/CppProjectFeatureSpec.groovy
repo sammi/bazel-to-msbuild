@@ -35,7 +35,7 @@ class CppProjectFeatureSpec extends Specification {
         cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App1")
 
         then:
-        1 * repository.save({ it ->
+        4 * repository.save({ it ->
             {
                 String path = it.toString()
                 path.contains("main") || path.contains("App1")
@@ -54,7 +54,7 @@ class CppProjectFeatureSpec extends Specification {
         cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App2")
 
         then:
-        1 * repository.save({ it ->
+        7 * repository.save({ it ->
             {
                 String path = it.toString()
                 path.contains("main") || path.contains("App2")
@@ -73,7 +73,7 @@ class CppProjectFeatureSpec extends Specification {
         cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App3")
 
         then:
-        1 * repository.save({ it ->
+        10 * repository.save({ it ->
             {
                 String path = it.toString()
                 path.contains("stage3") || path.contains("hello-")
@@ -92,7 +92,7 @@ class CppProjectFeatureSpec extends Specification {
         cppProjectFeature.buildSolution(bazelWorkspaceFolder, "App4")
 
         then:
-        1 * repository.save({ it ->
+        7 * repository.save({ it ->
             {
                 String path = it.toString()
                 path.contains("dll")
