@@ -18,16 +18,15 @@ import com.tuware.msbuild.contract.seed.ProjectFilerSeed
 import com.tuware.msbuild.feature.CppProjectFeature
 import com.tuware.msbuild.feature.service.*
 import org.springframework.core.io.ClassPathResource
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import java.nio.file.Path
 import java.nio.file.Paths
 
-@Ignore
 class CppProjectFeatureSpec extends Specification {
 
     def "generate bazel cpp project with only 1 source file solution"() {
+
         given:
         Path bazelWorkspaceFolder = Paths.get(new ClassPathResource("stage1").getFile().getAbsolutePath())
         FileRepository repository = Mock()
