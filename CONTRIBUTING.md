@@ -56,5 +56,5 @@ mvn clean test
 # Release process
 
 1. When code pushed to release branch, it auto deploy maven packages, zip and upload b2m.zipfiles to a new prerelease;
-2. Manually check content, update release release nots, uncheck prerelease, then do a real release;
+2. Manually check content, update release notes, uncheck prerelease, then do a real release;
 3. Manually create a PR to merge code from release back to main, merge code back to main;
