@@ -32,7 +32,7 @@ Integrate adapter and feature together to run end to end integration tests.
    in your PATH
 2. [Install lombok plugin](https://stackoverflow.com/questions/41161076/adding-lombok-plugin-to-intellij-project ) in
    intellij to support lombok annotations.
-3. Clean up any manual bazel build results, if you do not clean it, the integration tests will fail..
+3. Clean up any manual bazel build results, if you do not clean it, the integration tests will fail.
 
 ```
 cd bazel-to-msbuild\integration\src\test\resources
