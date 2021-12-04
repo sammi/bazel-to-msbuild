@@ -15,5 +15,5 @@ bazel_skylib_workspace()
 
 load("//compiler:deps.bzl", "midl_bat_repo")
 
-#Build midl.bat as the code generator, which could generate c++ header source code and WinRT binaray meta file.
+#Build midl.bat as the code generator, which could generate c++ header source code and WinRT binary meta file.
 midl_bat_repo(name = "midl")
