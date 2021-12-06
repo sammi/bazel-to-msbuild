@@ -30,7 +30,7 @@ cppwinrt = rule(
         "winmd": attr.label(
             allow_single_file = True,
             mandatory = True,
-            doc = "IDL file path, only support 1 file",
+            doc = "winmd file path, only support 1 file",
         ),
         "_code_gen_tool": attr.label(
             executable = True,
