@@ -9,9 +9,6 @@ set FoundationContractVersion=Stabel_FoundationContractVersion
 set UniversalApiContractVersion=Stable_UniversalApiContractVersion
 set WwanContractContractVersion=Stable_WwanContractContractVersion
 
-REM The path which includes cl.exe
-set Path=%VSINSTALLDIR%\VC\Tools\MSVC\%VCToolsVersion%\bin\Host%Platform%\%Platform%;
-
 set ReferenceDir=%WindowsSdkDir%\References\%WindowsSDKVersion%
 set FoundationContractReference=%ReferenceDir%\Windows.Foundation.FoundationContract\%FoundationContractVersion%\Windows.Foundation.FoundationContract.winmd
 set UniversalApiContractReference=%ReferenceDir%\Windows.Foundation.UniversalApiContract\%UniversalApiContractVersion%\Windows.Foundation.UniversalApiContract.winmd
