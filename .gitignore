@@ -41,3 +41,5 @@ bazel-*
 Debug
 .vs*
 *.vcxproj*
+.obj
+.exe
