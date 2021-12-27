@@ -1,7 +1,7 @@
-def _midl_impl(repository_ctx):
+def _cppwinrt_impl(repository_ctx):
     environ = repository_ctx.os.environ
     repository_ctx.template(
-        "midl.bat",
+        "cppwinrt.bat",
         repository_ctx.attr._build_tpl,
         substitutions = {
             "Stable_Platform": environ.get("Stable_Platform"),
@@ -13,15 +13,16 @@ def _midl_impl(repository_ctx):
             "Stable_UniversalApiContractVersion": environ.get("Stable_UniversalApiContractVersion"),
         },
     )
-    repository_ctx.file("BUILD", 'exports_files(["midl.bat"])')
+    repository_ctx.file("BUILD", 'exports_files(["cppwinrt.bat"])')
 
 
-midl_bat_repo = repository_rule(
-    implementation = _midl_impl,
+cppwinrt_bat_repo = repository_rule(
+    implementation = _cppwinrt_impl,
     local = True,
     attrs = {
+        "deps": attr.label_list(),
         "_build_tpl": attr.label(
-            default = ":midl.bat.tpl",
+            default = ":cppwinrt.bat.tpl",
         ),
     }
 )

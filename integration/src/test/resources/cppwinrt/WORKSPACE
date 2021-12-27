@@ -1,4 +1,4 @@
-workspace(name = "com_github_sammi_tuware_b2m_midl")
+workspace(name = "com_github_sammi_tuware_b2m_cppwinrt")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -13,8 +13,7 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 
-load("//compiler:deps.bzl", "midl_bat_repo")
+load("//compiler:deps.bzl", "cppwinrt_bat_repo")
 
-#Build midl.bat as the code generator, which could generate c++ header source code and winmd binary meta file.
-midl_bat_repo(name = "midl")
-
+#Build cppwinrt.bat as the code generator, which could generate c++ header source code from winmd binary meta file.
+cppwinrt_bat_repo(name="cppwinrt")
