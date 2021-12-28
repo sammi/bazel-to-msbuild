@@ -1,0 +1,8 @@
+namespace ThermometerWRC
+{
+    runtimeclass Thermometer
+    {
+        Thermometer();
+        void AdjustTemperature(Single deltaFahrenheit);
+    }
+}
