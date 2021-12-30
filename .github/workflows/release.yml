@@ -15,7 +15,7 @@ jobs:
             - name: actions-setup-bazel
               uses: jwlawson/actions-setup-bazel@v1.6
               with:
-                  bazel-version: '4.0.0'
+                  bazel-version: '4.2.2'
             - name: Use bazel
               run: bazel --version
             - name: Configure Git user
