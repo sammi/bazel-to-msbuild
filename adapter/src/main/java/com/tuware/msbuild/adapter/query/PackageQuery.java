@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class PackageQuery implements Query<Build.QueryResult> {
 
-    private BazelProcessBuilder bazelProcessBuilder;
+    private final BazelProcessBuilder bazelProcessBuilder;
 
     public PackageQuery() {
         this.bazelProcessBuilder = new BazelProcessBuilder();

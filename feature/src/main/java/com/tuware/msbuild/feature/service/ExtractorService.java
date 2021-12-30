@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Component
 public class ExtractorService {
 
-    private Extractor<Build.QueryResult, List<ProjectSeed>> projectSeedExtractor;
-    private Provider<ProjectFilerSeed> projectFilerProvider;
+    private final Extractor<Build.QueryResult, List<ProjectSeed>> projectSeedExtractor;
+    private final Provider<ProjectFilerSeed> projectFilerProvider;
 
     public ExtractorService(
             Extractor<Build.QueryResult, List<ProjectSeed>> projectSeedExtractor,

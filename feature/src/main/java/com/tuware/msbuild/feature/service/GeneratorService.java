@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class GeneratorService {
 
-    private Generator<ProjectTemplate> cppProjectGenerator;
-    private Generator<Project> projectFilterGenerator;
-    private Generator<Solution> solutionGenerator;
-    private Generator<Object> projectUserGenerator;
+    private final Generator<ProjectTemplate> cppProjectGenerator;
+    private final Generator<Project> projectFilterGenerator;
+    private final Generator<Solution> solutionGenerator;
+    private final Generator<Object> projectUserGenerator;
 
     public GeneratorService(
             Generator<ProjectTemplate> cppProjectGenerator,

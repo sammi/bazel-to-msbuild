@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ComposerService {
-    private Composer<ProjectTemplate, ProjectSeed> projectComposer;
-    private Composer<Project, ProjectFilerSeed> projectFilterComposer;
-    private Composer<Project, Object> projectUserComposer;
-    private Composer<Solution, SolutionSeed> solutionComposer;
+    private final Composer<ProjectTemplate, ProjectSeed> projectComposer;
+    private final Composer<Project, ProjectFilerSeed> projectFilterComposer;
+    private final Composer<Project, Object> projectUserComposer;
+    private final Composer<Solution, SolutionSeed> solutionComposer;
 
     public ComposerService(
             Composer<ProjectTemplate, ProjectSeed> projectComposer,

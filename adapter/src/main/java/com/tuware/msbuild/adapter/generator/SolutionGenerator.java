@@ -10,7 +10,7 @@ import java.io.IOException;
 @Component
 public class SolutionGenerator implements Generator<Solution> {
 
-    private TemplateBuilder templateBuilder;
+    private final TemplateBuilder templateBuilder;
 
     public SolutionGenerator() {
         this.templateBuilder = new TemplateBuilder();

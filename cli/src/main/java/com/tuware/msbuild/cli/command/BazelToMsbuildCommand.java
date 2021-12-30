@@ -21,7 +21,7 @@ public class BazelToMsbuildCommand implements Runnable {
     @CommandLine.Parameters(parameterConsumer = ParametersConsumer.class, description = "bazelWorkspacePath msbuildSolutionPath SolutionName")
     private Parameters parameters;
     @CommandLine.Option(names = {"-h", "--help"}, usageHelp = true, description = "show usage info")
-    private boolean helpRequested = false;
+    private static final boolean helpRequested = false;
 
     public BazelToMsbuildCommand(CppProjectFeature cppProjectFeature) {
         this.cppProjectFeature = cppProjectFeature;

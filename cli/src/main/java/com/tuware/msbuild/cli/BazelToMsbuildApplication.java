@@ -10,7 +10,7 @@ import picocli.CommandLine;
 @Import(AppConfiguration.class)
 public class BazelToMsbuildApplication implements CommandLineRunner {
 
-    private BazelToMsbuildCommand bazelToMsbuildCommand;
+    private final BazelToMsbuildCommand bazelToMsbuildCommand;
 
     public BazelToMsbuildApplication(BazelToMsbuildCommand bazelToMsbuildCommand) {
         this.bazelToMsbuildCommand = bazelToMsbuildCommand;

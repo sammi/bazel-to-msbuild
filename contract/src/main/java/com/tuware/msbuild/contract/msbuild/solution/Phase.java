@@ -4,7 +4,7 @@ public enum Phase {
     PRE_SOLUTION("preSolution"),
     POST_SOLUTION("postSolution");
 
-    private String value;
+    private final String value;
 
     Phase(String value) {
         this.value = value;

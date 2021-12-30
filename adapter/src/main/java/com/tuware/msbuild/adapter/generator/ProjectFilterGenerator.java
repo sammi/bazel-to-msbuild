@@ -10,7 +10,7 @@ import java.io.IOException;
 @Component
 public class ProjectFilterGenerator implements Generator<Project> {
 
-    private TemplateBuilder templateBuilder;
+    private final TemplateBuilder templateBuilder;
 
     public ProjectFilterGenerator() {
         this.templateBuilder = new TemplateBuilder();
