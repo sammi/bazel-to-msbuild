@@ -3,12 +3,11 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
-    name = "winmd_reader",
+    name = "winmd_reader_impl",
     srcs = [
-        "winmd_reader.h",
+        "base.h",
     ],
     deps = [
-        "//src/impl:winmd_reader_impl"
-    ]
+        "//src/impl/winmd_reader:winmd_reader_lib",
+    ],
 )
-
