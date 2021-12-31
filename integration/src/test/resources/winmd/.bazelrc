@@ -1,1 +1,3 @@
 build --cxxopt="-std:c++17"
+build --toolchain_resolution_debug
+build --incompatible_enable_cc_toolchain_resolution
