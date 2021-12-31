@@ -80,7 +80,9 @@ cc_toolchain_config(
 )
 
 cc_toolchain(
-    name = "windows_msvc_cl_toolchain",
+    name = "cc-compiler-x64_windows",
+    toolchain_identifier = "msvc_x64",
+    toolchain_config = ":msvc_x64",
     all_files = ":empty",
     ar_files = ":empty",
     as_files = ":msvc_compiler_files",
@@ -90,8 +92,6 @@ cc_toolchain(
     objcopy_files = ":empty",
     strip_files = ":empty",
     supports_param_files = 1,
-    toolchain_config = ":msvc_x64",
-    toolchain_identifier = "msvc_x64",
 )
 
 filegroup(
@@ -109,6 +109,6 @@ toolchain(
         "@platforms//cpu:x86_64",
         "@platforms//os:windows",
     ],
-    toolchain = ":windows_msvc_cl_toolchain",
+    toolchain = ":cc-compiler-x64_windows",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
