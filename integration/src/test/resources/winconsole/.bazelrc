@@ -1,1 +1,4 @@
 build --cxxopt="-std:c++17"
+build --bes_results_url=https://app.buildbuddy.io/invocation/
+build --bes_backend=grpcs://cloud.buildbuddy.io
+build --remote_header=x-buildbuddy-api-key=zfTnayro9oNkkjpqGSMV
