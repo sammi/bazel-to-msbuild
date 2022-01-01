@@ -27,3 +27,7 @@ bazel_skylib_workspace()
 register_toolchains(
     "//toolchain:windows_toolchain",
 )
+
+register_execution_platforms(
+    ":windows_x86_64",
+)
