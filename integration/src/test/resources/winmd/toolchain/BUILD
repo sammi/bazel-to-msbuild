@@ -20,8 +20,6 @@ cc_toolchain_config(
     msvc_env_path = ";".join([
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\MSVC\\14.31.30818\\bin\\HostX64\\x64",
         "C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.20348.0\\x64",
-        "C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools\\x64",
-        "C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.8 Tools",
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\Common7\\tools",
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\Common7\\ide",
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\MSBuild\\Current\\Bin",
@@ -36,7 +34,6 @@ cc_toolchain_config(
         "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.20348.0\\shared",
         "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.20348.0\\winrt",
         "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.20348.0\\cppwinrt",
-        "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
     ]),
     msvc_env_lib = ";".join([
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\MSVC\\14.31.30818\\lib\\x64",
@@ -44,7 +41,6 @@ cc_toolchain_config(
         "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Auxiliary\\VS\\lib\\x64",
         "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.20348.0\\ucrt\\x64",
         "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.20348.0\\um\\x64",
-        "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\lib\\um\\x64",
     ]),
     msvc_cl_path = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\MSVC\\14.31.30818\\bin\\Hostx64\\x64\\cl.exe",
     msvc_ml_path = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\MSVC\\14.31.30818\\bin\\Hostx64\\x64\\ml64.exe",
@@ -59,7 +55,6 @@ cc_toolchain_config(
         "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.20348.0\\shared",
         "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.20348.0\\winrt",
         "C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.20348.0\\cppwinrt",
-        "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
     ],
     tool_paths = {
         "ar": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\MSVC\\14.31.30818\\bin\\Hostx64\\x64\\lib.exe",
