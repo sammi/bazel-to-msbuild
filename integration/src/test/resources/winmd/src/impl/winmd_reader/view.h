@@ -1,4 +1,3 @@
-
 namespace winmd::reader
 {
     template <typename T>
