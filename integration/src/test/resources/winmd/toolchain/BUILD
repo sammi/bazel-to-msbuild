@@ -95,7 +95,7 @@ filegroup(
 )
 
 toolchain(
-    name = "windows_toolchain",
+    name = "windows_msvc_toolchain",
     exec_compatible_with = [
         "@platforms//cpu:x86_64",
         "@platforms//os:windows",

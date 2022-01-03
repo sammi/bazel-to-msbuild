@@ -25,7 +25,7 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
 register_toolchains(
-    "//toolchain:windows_toolchain",
+    "//toolchain:windows_msvc_toolchain",
 )
 
 register_execution_platforms(
