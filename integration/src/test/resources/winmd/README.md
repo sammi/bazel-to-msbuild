@@ -9,7 +9,7 @@ We choose [winmd](https://github.com/microsoft/winmd) as the sample bazel projec
    
 *Notes*:
    we're using c++ toolchain to build the project on windows10 and visual studio 2002.
-* The toolchain is defeind in toolchain folder;
+* The toolchain is defined in toolchain folder;
 * In WORKSPACE, we register the toolchain;
 * In .bazelrc, we enable the c++ toolchain resolution process;
     ```
