@@ -4,9 +4,10 @@ cc_library(
     name = "pch",
     srcs = ["pch.cpp"],
     hdrs = ["pch.h", "catch.hpp"],
+    testonly = True,
 )
 
-cc_library(
+cc_test(
     name = "cache_test",
     srcs = ["cache.cpp"],
     deps = [
@@ -14,9 +15,10 @@ cc_library(
         "//src:winmd_reader"
     ],
     copts = ["-Isrc"],
+    testonly = True,
 )
 
-cc_library(
+cc_test(
     name = "database_test",
     srcs = ["database.cpp"],
     deps = [
@@ -24,9 +26,10 @@ cc_library(
         "//src:winmd_reader"
     ],
     copts = ["-Isrc"],
+    testonly = True,
 )
 
-cc_library(
+cc_test(
     name = "filter_test",
     srcs = ["filter.cpp"],
     deps = [
@@ -34,16 +37,5 @@ cc_library(
         "//src:winmd_reader"
     ],
     copts = ["-Isrc"],
+    testonly = True,
 )
-
-cc_test(
-    name = "main",
-    srcs = ["main.cpp"],
-    deps = [
-        ":cache_test",
-        ":database_test",
-        ":filter_test",
-    ],
-    copts = ["-Isrc"],
-)
-

@@ -8,9 +8,9 @@ std::filesystem::path get_local_winmd_path()
     std::array<char, 260> local{};
 
 #ifdef _WIN64
-    ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+    ExpandEnvironmentStringsA("C:\\WINDOWS\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #else
-    ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+    ExpandEnvironmentStringsA("C:\\WINDOWS\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #endif
 
     return local.data();
