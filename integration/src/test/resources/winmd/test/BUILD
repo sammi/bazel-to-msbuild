@@ -6,7 +6,7 @@ cc_library(
     hdrs = ["pch.h", "catch.hpp"],
 )
 
-cc_test(
+cc_library(
     name = "cache_test",
     srcs = ["cache.cpp"],
     deps = [
@@ -16,7 +16,7 @@ cc_test(
     copts = ["-Isrc"],
 )
 
-cc_test(
+cc_library(
     name = "database_test",
     srcs = ["database.cpp"],
     deps = [
@@ -26,7 +26,7 @@ cc_test(
     copts = ["-Isrc"],
 )
 
-cc_test(
+cc_library(
     name = "filter_test",
     srcs = ["filter.cpp"],
     deps = [
@@ -36,11 +36,13 @@ cc_test(
     copts = ["-Isrc"],
 )
 
-cc_binary(
+cc_test(
     name = "main",
     srcs = ["main.cpp"],
     deps = [
-        ":pch",
+        ":cache_test",
+        ":database_test",
+        ":filter_test",
     ],
     copts = ["-Isrc"],
 )
