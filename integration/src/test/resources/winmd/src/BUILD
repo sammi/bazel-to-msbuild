@@ -11,4 +11,3 @@ cc_library(
         "//src/impl:winmd_reader_impl"
     ]
 )
-
