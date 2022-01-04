@@ -5,6 +5,11 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(name = "empty")
 
+filegroup(
+    name = "msvc_compiler_files",
+    srcs = [":builtin_include_directory_paths_msvc"],
+)
+
 cc_toolchain_config(
     name = "msvc_x64",
     abi_libc_version = "local",
@@ -87,11 +92,6 @@ cc_toolchain(
     objcopy_files = ":empty",
     strip_files = ":empty",
     supports_param_files = 1,
-)
-
-filegroup(
-    name = "msvc_compiler_files",
-    srcs = [":builtin_include_directory_paths_msvc"],
 )
 
 toolchain(
