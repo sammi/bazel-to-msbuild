@@ -44,3 +44,6 @@ Debug
 *.obj
 *.exe
 *~
+#Nuget depedencies
+packages
+packages.config

@@ -1,12 +1,6 @@
 #include <gtest/gtest.h>
 
-int factorial(int n){
-  int ret = 1;
-  for(int i = 2; i <= n; ++i){
-    ret *= i;
-  }
-  return ret;
-}
+#include "src/factorial.h"
 
 TEST(FactorialTest, HandlesZeroInput) {
   EXPECT_EQ(factorial(0), 1);
