@@ -60,4 +60,9 @@ main\main.user
 
 Then Open app.sln by Visualstudio, set main as the startup project, you should be able to debug the application and its dll library clib.
 
+# Sample bazel projects
+We have sample projects in our integration test resources folder, which can be built by bazel, and be converted to msbuild solution and projects.
+
+https://github.com/sammi/bazel-to-msbuild/tree/main/integration/src/test/resources
+
   
