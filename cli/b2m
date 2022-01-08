@@ -1,2 +1,2 @@
 #/bin/bash
-java -jar ./cli.jar $1 $2
+java -jar `dirname "$0"`/cli.jar $1 $2
