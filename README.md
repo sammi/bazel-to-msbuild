@@ -16,7 +16,7 @@ Unzip the tool and put it in your PATH
 ```
 wget https://github.com/sammi/bazel-to-msbuild/releases/download/v0.2.11/b2m-0.2.11.zip
 unzip b2m-0.2.11.zip
-#On linux and/or Ma
+#On linux and/or Mac
 cd b2m
 chmod a+x b2m
 ```
