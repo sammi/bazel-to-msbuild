@@ -1,0 +1,16 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+  name = "factorial",
+  srcs = ["src/factorial.h"],
+)
+
+cc_test(
+  name = "factorial_test",
+  size = "small",
+  srcs = ["test/factorial_test.cc"],
+  deps = [
+    ":factorial",
+    "@com_google_googletest//:gtest_main",
+  ],
+)
